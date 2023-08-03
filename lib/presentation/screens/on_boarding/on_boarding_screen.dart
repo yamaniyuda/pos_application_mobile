@@ -8,7 +8,7 @@ class OnBoardingScreen extends GetView {
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Center(
-        child: Text("OnBoarding"),
+        child: Text("On Boarding"),
       ),
     );
   }
