@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart';
+import 'package:pos_application_mobile/app/config/routes/routes.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -20,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
     /* do redirect another page */
     Timer(
       const Duration(seconds: 3),
-      () => Get.offNamed('/onboarding')
+      () => Get.offNamed(Routes.onBoarding)
     );
   }
 

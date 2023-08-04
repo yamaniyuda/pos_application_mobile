@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:pos_application_mobile/app/config/localization/localization_controller.dart';
 import 'package:pos_application_mobile/app/config/routes/routes.dart';
+import 'package:pos_application_mobile/app/config/theme/theme_config.dart';
 import 'package:pos_application_mobile/app/utils/messages.dart';
 import 'package:pos_application_mobile/presentation/screens/splash/splash.dart';
 
@@ -18,6 +19,7 @@ class App extends StatelessWidget {
         home: const SplashScreen(),
         debugShowCheckedModeBanner: false,
         getPages: Routes.screens,
+        theme: ThemeConfig.themeData(),
         locale: localizationController.locale,
         translations: Messages(language: language),
       );
