@@ -6,7 +6,6 @@ import 'package:pos_application_mobile/domain/use_cases/auth/sign_in_use_case.da
 import 'package:pos_application_mobile/presentation/controllers/auth/auth_controller.dart';
 import 'package:pos_application_mobile/presentation/screens/auth/auth.dart';
 
-import '../../setup_test.dart';
 
 void main() {
   // Mock the GetX controller for testing
