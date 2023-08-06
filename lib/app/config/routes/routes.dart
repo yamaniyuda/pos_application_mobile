@@ -27,7 +27,7 @@ class Routes {
 
     GetPage(
       name: auth,
-      page: () => const AuthScreen(),
+      page: () => AuthScreen(),
       binding: AuthBinding()
     ),
 

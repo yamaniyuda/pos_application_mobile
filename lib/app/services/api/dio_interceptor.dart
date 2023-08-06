@@ -7,4 +7,16 @@ class DioInterceptor extends Interceptor {
     // options.headers["Authorization"] = token;
     super.onRequest(options, handler);
   }
+
+  @override
+  void onResponse(Response response, ResponseInterceptorHandler handler) {
+    // TODO: implement onResponse
+    super.onResponse(response, handler);
+  }
+
+  @override
+  void onError(DioException err, ErrorInterceptorHandler handler) {
+    // TODO: implement onError
+    super.onError(err, handler);
+  }
 }

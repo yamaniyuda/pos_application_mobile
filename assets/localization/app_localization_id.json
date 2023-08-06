@@ -8,5 +8,11 @@
   "skip": "lewatkan",
   "login": "masuk",
   "register": "daftar",
-  "welcome you": "selamat datang"
+  "welcome you": "selamat datang",
+  "remember me": "ingat saya",
+  "enter here": "masukan disini",
+  "forgot password": "lupa password",
+  "required": "wajib diisi",
+  "an error occurred please try again": "terjadi kesalahan silakan coba lagi",
+  "processed data": "data diproses"
 }

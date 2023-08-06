@@ -30,10 +30,10 @@ class OnBoardingScreen extends GetView {
   @override
   Widget build(BuildContext context) {
 
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      systemNavigationBarColor: Colors.white,
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      systemNavigationBarColor: Theme.of(context).scaffoldBackgroundColor,
       systemNavigationBarIconBrightness: Brightness.dark,
-      statusBarColor: Colors.white,
+      statusBarColor: Theme.of(context).scaffoldBackgroundColor,
       statusBarIconBrightness: Brightness.dark
     ));
 

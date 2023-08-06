@@ -6,10 +6,27 @@ import 'package:pos_application_mobile/app/config/theme/theme_config.dart';
 import 'package:pos_application_mobile/app/utils/messages.dart';
 import 'package:pos_application_mobile/presentation/screens/splash/splash.dart';
 
-class App extends StatelessWidget {
+class App extends StatefulWidget {
   final Map<String, Map<String, String>> language;
   const App({Key? key, required this.language}) : super(key: key);
 
+  @override
+  State<App> createState() => _AppState();
+}
+
+class _AppState extends State<App> with WidgetsBindingObserver {
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +38,7 @@ class App extends StatelessWidget {
         getPages: Routes.screens,
         theme: ThemeConfig.themeData(),
         locale: localizationController.locale,
-        translations: Messages(language: language),
+        translations: Messages(language: widget.language),
       );
     });
   }

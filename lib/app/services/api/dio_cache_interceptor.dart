@@ -1,10 +1,15 @@
-part of '../api/dio_client.dart';
+part of 'dio_client.dart';
 
 class DioCacheInterceptor extends Interceptor {
-
   DioCacheInterceptor();
 
-  late final Map<Uri, Response> _cache = {};
+  late final Map<Uri, Response> _cache = <Uri, Response>{};
+
+  @override
+  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+    // TODO: implement onRequest
+    super.onRequest(options, handler);
+  }
 
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
@@ -15,11 +20,11 @@ class DioCacheInterceptor extends Interceptor {
   @override
   dynamic onError(DioException err, ErrorInterceptorHandler handler) {
     if (err.type == DioExceptionType.connectionTimeout || err.type == DioExceptionType.badResponse) {
-      late Response? cacheRespone = _cache[err.requestOptions.uri];
-      if (cacheRespone != null) {
-        return cacheRespone;
+      late Response? cacheResponse = _cache[err.requestOptions.uri];
+      if (cacheResponse != null) {
+        return cacheResponse;
       }
-      super.onError(err, handler);
     }
+    super.onError(err, handler);
   }
 }

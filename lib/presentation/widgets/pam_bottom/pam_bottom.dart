@@ -17,22 +17,16 @@ class PAMBottom extends StatelessWidget {
           color: Theme.of(context).primaryColor,
           borderRadius: BorderRadius.circular(100)
         ),
-        child: Stack(
-          children: [
-            Positioned(
-              left: 92.26,
-              top: 16,
-              child: Text(
-                title.toCapitalize(),
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                  fontFamily: 'Lato',
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-            ),
-          ],
+        child: Text(
+          title.toCapitalize(),
+          textAlign: TextAlign.center,
+          style: const TextStyle( 
+            color: Colors.white,
+            height: 2.4,
+            fontSize: 16,
+            fontFamily: 'Lato',
+            fontWeight: FontWeight.w400,
+          ),
         ),
       ),
     );

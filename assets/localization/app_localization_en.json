@@ -8,5 +8,11 @@
   "get started": "get started",
   "login": "login",
   "register": "register",
-  "welcome you": "welcome you"
+  "welcome you": "welcome you",
+  "remember me": "remember me",
+  "enter here": "enter here",
+  "forgot password": "forgot password",
+  "required": "is required",
+  "an error occurred please try again": "an error occurred please try again",
+  "processed data": "processed data"
 }
