@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:json_annotation/json_annotation.dart';
 import 'package:pos_application_mobile/data/dtos/dto.dart';
 
@@ -36,8 +38,16 @@ class UserDTO implements DTO {
     return _$UserDTOFromJson(json);
   }
 
+  factory UserDTO.deserialize(String json) {
+    return UserDTO.fromJson(jsonDecode(json));
+  }
+
   @override
   Map<String, dynamic> toJson() {
     return _$UserDTOToJson(this);
+  }
+
+  String serialize() {
+    return jsonEncode(toJson());
   }
 }

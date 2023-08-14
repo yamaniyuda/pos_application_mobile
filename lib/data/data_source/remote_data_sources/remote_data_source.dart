@@ -1,4 +1,4 @@
-import 'package:pos_application_mobile/app/services/api/dio_client.dart';
+import 'package:pos_application_mobile/app/config/api/dio_client.dart';
 
 /// abstract class for remote data source
 /// like init dio client

@@ -1,10 +1,12 @@
 import 'package:pos_application_mobile/data/dtos/auth_dto.dart';
+import 'package:pos_application_mobile/data/dtos/user_dto.dart';
 
 import 'local_data_source.dart';
 
 class AuthDataSource extends LocalDataSource {
   final String _keyAuth = "store_auth";
   final String _keyAuthToken = "store_auth_token";
+  final String _keyAuthMe = "store_auth_me";
 
   Future<bool> storeData(AuthDTO data) async {
     try {
@@ -14,7 +16,7 @@ class AuthDataSource extends LocalDataSource {
           aOptions: getAndroidOptions(),
           iOptions: getIosOptions()
       );
-      await storeToken(data.token!);
+      await storeToken(data.accessToken!);
       return true;
     } catch (_) {
       return false;
@@ -22,6 +24,8 @@ class AuthDataSource extends LocalDataSource {
   }
 
   Future<bool> storeToken(String token) async {
+    print("================");
+    print(token);
     try {
       await storage.write(
         key: _keyAuthToken,
@@ -29,6 +33,8 @@ class AuthDataSource extends LocalDataSource {
         aOptions: getAndroidOptions(),
         iOptions: getIosOptions()
       );
+
+      print("Masuk store token");
       return true;
     } catch (_) {
       return false;
@@ -49,14 +55,15 @@ class AuthDataSource extends LocalDataSource {
     return null;
   }
 
-  Future<String?> getToken() async {
+  Future<String> getToken() async {
     String? data = await storage.read(
       key: _keyAuthToken,
       aOptions: getAndroidOptions(),
       iOptions: getIosOptions()
     );
 
-    return data;
+    print("Bearer $data");
+    return "Bearer $data";
   }
 
   Future<void> deleteData() async {
@@ -70,6 +77,37 @@ class AuthDataSource extends LocalDataSource {
   Future<void> deleteToken() async {
     await storage.delete(
       key: _keyAuthToken,
+      aOptions: getAndroidOptions(),
+      iOptions: getIosOptions()
+    );
+  }
+
+  Future<void> storeMe(UserDTO userDTO) async {
+    await storage.write(
+      key: _keyAuthMe,
+      value: userDTO.serialize(),
+      aOptions: getAndroidOptions(),
+      iOptions: getIosOptions()
+    );
+  }
+
+  Future<UserDTO?> getMe() async {
+    String? data = await storage.read(
+      key: _keyAuthMe,
+      aOptions: getAndroidOptions(),
+      iOptions: getIosOptions()
+    );
+
+    if (data != null) {
+      return UserDTO.deserialize(data);
+    }
+
+    return null;
+  }
+
+  Future<void> deleteMe() async {
+    await storage.delete(
+      key: _keyAuthMe,
       aOptions: getAndroidOptions(),
       iOptions: getIosOptions()
     );

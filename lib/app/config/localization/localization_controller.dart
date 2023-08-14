@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:pos_application_mobile/app/config/localization/localization_constant.dart';
 import 'package:pos_application_mobile/app/config/localization/localization_model.dart';
@@ -9,13 +10,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 /// Localization Controller
 /// For setting language
 class LocalizationController extends GetxController implements GetxService {
-  final SharedPreferences sharedPreferences;
+  final FlutterSecureStorage storage;
 
-  LocalizationController({ required this.sharedPreferences }) {
+  LocalizationController({ required this.storage }) {
     loadCurrentLanguage();
   }
 
-  Locale _locale = Locale(LocalizationConstant.languages[0].languageCode, LocalizationConstant.languages[0].countryCode);
+  Locale _locale = Locale(LocalizationConstant.languages[1].languageCode, LocalizationConstant.languages[1].countryCode);
   Locale get locale => _locale;
 
   int _selectedIndex = 0;
@@ -24,9 +25,9 @@ class LocalizationController extends GetxController implements GetxService {
   List<LocalizationModel> _languages = [];
   List<LocalizationModel> get languages => _languages;
 
-  void loadCurrentLanguage() {
-    final String? languageCode = sharedPreferences.getString(LocalizationConstant.LANGUAGE_CODE);
-    final String? countryCode = sharedPreferences.getString(LocalizationConstant.COUNTRY_CODE);
+  void loadCurrentLanguage() async {
+    final String? languageCode = await storage.read(key: LocalizationConstant.LANGUAGE_CODE);
+    final String? countryCode = await storage.read(key: LocalizationConstant.COUNTRY_CODE);
 
     _locale = Locale(
       languageCode ?? LocalizationConstant.languages[0].languageCode,
@@ -53,14 +54,14 @@ class LocalizationController extends GetxController implements GetxService {
   }
 
   void saveLanguage(Locale locale) {
-    sharedPreferences.setString(
-      LocalizationConstant.LANGUAGE_CODE,
-      locale.languageCode
+    storage.write(
+      key: LocalizationConstant.LANGUAGE_CODE,
+      value: locale.languageCode
     );
 
-    sharedPreferences.setString(
-      LocalizationConstant.COUNTRY_CODE,
-      locale.countryCode!
+    storage.write(
+      key: LocalizationConstant.COUNTRY_CODE,
+      value: locale.countryCode!
     );
   }
 

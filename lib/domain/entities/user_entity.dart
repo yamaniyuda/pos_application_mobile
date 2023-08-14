@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:flutter/foundation.dart';
 import 'package:pos_application_mobile/domain/entities/entity.dart';
 
 class UserEntity extends Entity {
@@ -17,8 +20,20 @@ class UserEntity extends Entity {
     this.role,
   });
 
+  factory UserEntity.deserialize(String json) {
+    Map<String, dynamic> cleanJson = jsonDecode(json);
+    UserEntity data = UserEntity(
+      name: cleanJson["name"],
+      role: cleanJson["role"],
+      gender: cleanJson["gender"],
+      phoneNumber: cleanJson["phoneNumber"],
+      email: cleanJson["email"],
+      id: cleanJson["id"]
+    );
+    return data;
+  }
+
   @override
-  // TODO: implement props
   List<Object?> get props => [
     id, name, email, phoneNumber, gender, role
   ];
@@ -40,5 +55,20 @@ class UserEntity extends Entity {
       gender: gender ?? this.gender,
       role: role ?? this.role
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      "id": id,
+      "name": name,
+      "email": email,
+      "phoneNumber": phoneNumber,
+      "gender": gender,
+      "role": role
+    };
+  }
+
+  String serialize() {
+    return jsonEncode(toJson());
   }
 }

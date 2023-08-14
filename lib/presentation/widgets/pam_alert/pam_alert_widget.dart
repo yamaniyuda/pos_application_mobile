@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 
 class PAMAlertWidget {
   static showLoadingAlert(BuildContext context) {
-
     return Get.defaultDialog(
       title: "processed data".tr.toCapitalize(),
       titlePadding: const EdgeInsets.only(top: 40),

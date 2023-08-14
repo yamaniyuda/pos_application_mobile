@@ -3,8 +3,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:pos_application_mobile/app/extensions/string_extention.dart';
 import 'package:pos_application_mobile/domain/use_cases/auth/sign_in_use_case.dart';
-import 'package:pos_application_mobile/presentation/controllers/auth/auth_controller.dart';
-import 'package:pos_application_mobile/presentation/screens/auth/auth.dart';
+import 'package:pos_application_mobile/presentation/app/auth/controllers/auth_controller.dart';
+import 'package:pos_application_mobile/presentation/app/auth/auth.dart';
 
 
 void main() {

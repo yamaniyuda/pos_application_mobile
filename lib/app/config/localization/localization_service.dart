@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:pos_application_mobile/app/config/localization/localization_constant.dart';
 import 'package:pos_application_mobile/app/config/localization/localization_controller.dart';
 import 'package:pos_application_mobile/app/config/localization/localization_model.dart';
@@ -13,9 +14,9 @@ class LocalizationService {
   ///
   /// Returns Map<String, String> language
   static Future<Map<String, Map<String, String>>> init() async {
-    final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    Get.lazyPut(() => sharedPreferences);
-    Get.lazyPut(() => LocalizationController(sharedPreferences: Get.find()));
+    const FlutterSecureStorage storage = FlutterSecureStorage();
+    Get.lazyPut(() => storage);
+    Get.lazyPut(() => LocalizationController(storage: Get.find()));
     Map<String, Map<String, String>> language = {};
 
     /* do while to file arb */

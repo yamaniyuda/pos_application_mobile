@@ -14,5 +14,20 @@
   "forgot password": "forgot password",
   "required": "is required",
   "an error occurred please try again": "an error occurred please try again",
-  "processed data": "processed data"
+  "processed data": "processed data",
+  "Login Failed": "Login Failed",
+  "Login failed, please try again": "Login failed, please try again",
+  "profile": "profile",
+  "order": "order",
+  "address": "address",
+  "logout": "logout",
+  "order list": "order list",
+  "see all": "see all",
+  "paid of  f": "paid off",
+  "pending": "pending",
+  "stand": "stand",
+  "language": "language",
+  "choose your choose": "choose your language",
+  "home": "home",
+  "account": "axxount"
 }

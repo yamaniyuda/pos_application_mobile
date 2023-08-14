@@ -14,5 +14,20 @@
   "forgot password": "lupa password",
   "required": "wajib diisi",
   "an error occurred please try again": "terjadi kesalahan silakan coba lagi",
-  "processed data": "data diproses"
+  "processed data": "data diproses",
+  "Login Failed": "Gagal login",
+  "Login failed, please try again": "gagal untuk login, silahkan coba lagi",
+  "profile": "profil",
+  "order": "order",
+  "address": "alamat",
+  "logout": "keluar",
+  "order list": "list Order",
+  "see all": "lihat semua",
+  "paid off": "lunas",
+  "pending": "tertunda",
+  "stand": "tahan",
+  "language": "bahasa",
+  "choose your choose": "pilih bahasa kamu",
+  "home": "beranda",
+  "account": "akun"
 }
