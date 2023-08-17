@@ -9,8 +9,6 @@ class SplashController extends GetxController {
   @override
   void onReady() async {
     super.onReady();
-    print("on ready  spalsh");
-    print(authService.rememberMe);
     if (authService.rememberMe) {
       Get.offAllNamed(Routes.main, arguments: { "screen": ChildMenuMain.homeScreen });
     } else {

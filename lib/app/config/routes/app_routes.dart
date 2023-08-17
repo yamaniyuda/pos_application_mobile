@@ -10,6 +10,11 @@ abstract class Routes {
   static const account = _Paths.account;
   static const main = _Paths.main;
   static const language = _Paths.language;
+  static const product = _Paths.product;
+  static const report = _Paths.report;
+  static const stock = _Paths.stock;
+  static const color = _Paths.color;
+  static const colorForm = _Paths.colorForm;
 }
 
 abstract class _Paths {
@@ -20,4 +25,9 @@ abstract class _Paths {
   static const String account = '/account';
   static const String main = '/main';
   static const String language = '/language';
+  static const String product = '/product';
+  static const String report = '/report';
+  static const String stock = '/stock';
+  static const String color = '/color';
+  static const String colorForm = '/color-form';
 }

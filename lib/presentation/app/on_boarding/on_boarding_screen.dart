@@ -39,9 +39,12 @@ class OnBoardingScreen extends StatelessWidget {
 
     Widget showGettingStarted(int currentIndex) {
       if ((_titles.length - 1) == currentIndex) {
-        return PAMBottom(
-          title: "get started".tr,
-          onTab: () => Get.offAllNamed(Routes.auth)
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: PAMBottom(
+              title: "get started".tr,
+              onTab: () => Get.offAllNamed(Routes.auth)
+          ),
         );
       }
 

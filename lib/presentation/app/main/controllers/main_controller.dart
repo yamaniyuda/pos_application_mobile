@@ -29,12 +29,7 @@ class MainController extends GetxController {
   @override
   void onInit() {
     _everInit();
-
-    print("mdk");
-    if (_currentIndex.value == 0) {
-      _changeColorBar(Get.context!, ChildMenuMain.homeScreen);
-    }
-
+    _changeColorBar(Get.context!, ChildMenuMain.homeScreen);
     super.onInit();
   }
 
@@ -46,12 +41,14 @@ class MainController extends GetxController {
       }
 
       /* handling status bar for account screen */
-      if (index == 1) {
+      if (index == 4) {
         _changeColorBar(Get.context!, ChildMenuMain.accountScreen);
       }
     });
   }
 
+  /// this function use for change theme from
+  /// status bar and bottom navigation bar
   void _changeColorBar(BuildContext context, ChildMenuMain menu) {
     late Color statusBarColor = Theme.of(context).primaryColor;
     late Brightness statusBarIconBrightness = Brightness.light;
@@ -72,6 +69,8 @@ class MainController extends GetxController {
     ));
   }
 
+  /// use for change current index from bottom
+  /// navigation bar
   void changeTabIndex(int index) {
     _currentIndex.value = index;
   }

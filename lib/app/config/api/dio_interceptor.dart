@@ -16,7 +16,17 @@ class DioInterceptor extends Interceptor {
 
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) {
-    // TODO: implement onError
-    super.onError(err, handler);
+    if (err.response != null) {
+      PAMSnackBarWidget.show(
+        title: "failed".tr.toCapitalize(),
+        message: err.response!.data["message"],
+        type: PAMSnackBarWidgetType.danger
+      );
+
+      if (err.response!.statusCode == 401) {
+        Get.Get.offNamed(Routes.auth);
+      }
+    }
+    handler.next(err);
   }
 }

@@ -1,13 +1,20 @@
 import 'package:get/get.dart';
 import 'package:pos_application_mobile/app/config/routes/middlewares/auth_guard_middleware.dart';
 import 'package:pos_application_mobile/presentation/app/account/account.dart';
+import 'package:pos_application_mobile/presentation/app/color/color.dart';
 import 'package:pos_application_mobile/presentation/app/home/controllers/home_binding.dart';
 import 'package:pos_application_mobile/presentation/app/main/main.dart';
+import 'package:pos_application_mobile/presentation/app/product/controllers/product_binding.dart';
+import 'package:pos_application_mobile/presentation/app/product/screens/product_screen.dart';
+import 'package:pos_application_mobile/presentation/app/report/report.dart';
+import 'package:pos_application_mobile/presentation/app/report/screens/report_screen.dart';
 import 'package:pos_application_mobile/presentation/app/splash/controllers/splash_binding.dart';
 import 'package:pos_application_mobile/presentation/app/auth/auth.dart';
 import 'package:pos_application_mobile/presentation/app/home/home.dart';
 import 'package:pos_application_mobile/presentation/app/on_boarding/on_boarding.dart';
 import 'package:pos_application_mobile/presentation/app/splash/splash.dart';
+import 'package:pos_application_mobile/presentation/app/stock/controllers/stock_binding.dart';
+import 'package:pos_application_mobile/presentation/app/stock/screens/stock_screen.dart';
 
 import '../../../presentation/app/auth/controllers/auth_binding.dart';
 
@@ -48,8 +55,9 @@ class AppScreens {
 
     GetPage(
       name: _Paths.account,
-      page: () => const AccountScreen(),
-      binding: AccountBinding()
+      page: () => AccountScreen(),
+      binding: AccountBinding(),
+      transition: Transition.downToUp
     ),
 
     GetPage(
@@ -60,7 +68,36 @@ class AppScreens {
 
     GetPage(
       name: _Paths.language,
-      page: () => LanguageScreen()
+      page: () => LanguageScreen(),
+    ),
+
+    GetPage(
+      name: _Paths.product,
+      page: () => const ProductScreen(),
+      binding: ProductBinding()
+    ),
+
+    GetPage(
+      name: _Paths.report,
+      page: () => const ReportScreen(),
+      binding: ReportBinding()
+    ),
+
+    GetPage(
+      name: _Paths.stock,
+      page: () => const StockScreen(),
+      binding: StockBinding()
+    ),
+
+    GetPage(
+      name: _Paths.color,
+      page: () => const ColorScreen(),
+      binding: ColorBinding()
+    ),
+    GetPage(
+      name: _Paths.colorForm,
+      page: () => ColorFormScreen(),
+      binding: ColorBinding()
     )
   ];
 }

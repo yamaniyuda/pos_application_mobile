@@ -10,20 +10,11 @@ import 'package:pos_application_mobile/presentation/app/account/account.dart';
 class AccountScreen extends GetView<AccountController> {
   const AccountScreen({Key? key}) : super(key: key);
 
-  void _changeColorBar(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-        statusBarColor: Colors.white,
-        statusBarIconBrightness: Brightness.dark,
-        systemNavigationBarColor: Colors.white,
-        systemNavigationBarIconBrightness: Brightness.dark
-    ));
-  }
-
   Widget _buildProfile(BuildContext context) {
     return Obx(() {
       return Container(
         width: double.infinity,
-        height: Get.height * 0.40,
+        height: Get.height * 0.30,
         padding: EdgeInsets.symmetric(vertical: 5.sp),
         decoration: BoxDecoration(
           color: Colors.white,
@@ -40,11 +31,6 @@ class AccountScreen extends GetView<AccountController> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
-              "Profile",
-              style: GoogleFonts.lato(fontSize: 16.sp),
-            ),
-            SizedBox(height: 20.sp),
             CircleAvatar(
               backgroundColor: Colors.white,
               radius: Get.width * 0.12,
@@ -89,39 +75,81 @@ class AccountScreen extends GetView<AccountController> {
     });
   }
 
+  Widget _buildMenuItem(Map<String, dynamic> data) {
+    return ListTile(
+      title: Text(
+        "${data["title"]}".toCapitalize(),
+        style: GoogleFonts.lato(
+            color: Theme.of(Get.context!).primaryColorDark.withOpacity(0.5)
+        ),
+      ),
+      leading: Container(
+        padding: EdgeInsets.all(6.sp),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5),
+          color: data["color"]
+        ),
+        child: data["icon"],
+      ),
+      onTap: () async {
+        if (data["screenRouter"] != "") {
+          Get.toNamed(data["screenRouter"]);
+        }
+
+        if (data["isLogout"] != null) {
+          await controller.authService.logout();
+        }
+      },
+      trailing: const Icon(Icons.keyboard_arrow_right),
+    );
+  }
+
   Widget _buildMenuSetting(BuildContext context) {
-    final List<Map<String, dynamic>> menuSetting = [
+    final List<Map<String, dynamic>> menuActivity = [
       { "title": "order".tr, "screenRouter": "", "icon": const Icon(Icons.add_card_sharp, color: Colors.white), "color": const Color(0xFFE50A0A) },
+      { "title": "color".tr, "screenRouter": Routes.color, "icon": const Icon(Icons.color_lens, color: Colors.white,), "color": const Color(0xFF4AD7C9) },
+      { "title": "user".tr, "screenRouter": "", "icon": const Icon(Icons.person_add_alt_1_rounded, color: Colors.white,), "color": Theme.of(Get.context!).primaryColor }
+    ];
+
+    final List<Map<String, dynamic>> menuSetting = [
       { "title": "address".tr, "screenRouter": "" , "icon": const Icon(Icons.location_on, color: Colors.white), "color": const Color(0xFF2CADE9) },
-      { "title": "language".tr, "screenRouter": Routes.language, "icon": const Icon(Icons.language, color: Colors.white), "color": Theme.of(context).primaryColor },
-      { "title": "logout".tr, "screenRouter": "" , "icon": const Icon(Icons.logout, color: Colors.white), "color": const Color(0xFF4AD7C9)},
+      { "title": "language".tr, "screenRouter": Routes.language, "icon": const Icon(Icons.language, color: Colors.white), "color": Theme.of(Get.context!).primaryColor },
+      { "title": "logout".tr, "screenRouter": "" , "icon": const Icon(Icons.logout, color: Colors.white), "color": const Color(0xFF4AD7C9), "isLogout": true },
     ];
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       child: Column(
-        children: menuSetting.map((e) => ListTile(
-          title: Text(
-            "${e["title"]}".toCapitalize(),
-            style: GoogleFonts.lato(
-              color: Theme.of(context).primaryColorDark.withOpacity(0.5)
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          /* activity menu list */
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            margin: const EdgeInsets.only(bottom: 10),
+            child: Text(
+              "my activity".tr.toCapitalize(),
+              style: GoogleFonts.lato(
+                fontSize: 18,
+                fontWeight: FontWeight.bold
+              ),
             ),
           ),
-          leading: Container(
-            padding: EdgeInsets.all(6.sp),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                color: e["color"]
+          ...menuActivity.map((e) => _buildMenuItem(e)).toList(),
+
+          /* setting menu list */
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            margin: const EdgeInsets.only(bottom: 10, top: 10),
+            child: Text(
+              "setting".tr.toCapitalize(),
+              style: GoogleFonts.lato(
+                fontSize: 18,
+                fontWeight: FontWeight.bold
+              ),
             ),
-            child: e["icon"],
           ),
-          onTap: () {
-            if (e["screenRouter"] != "") {
-              Get.toNamed(e["screenRouter"]);
-            }
-          },
-          trailing: const Icon(Icons.keyboard_arrow_right),
-        )).toList(),
+          ...menuSetting.map((e) => _buildMenuItem(e)).toList()
+        ],
       ),
     );
   }
@@ -129,8 +157,11 @@ class AccountScreen extends GetView<AccountController> {
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context);
-    _changeColorBar(context);
+
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Profile"),
+      ),
       body: SafeArea(
           child: ListView(
             children: [

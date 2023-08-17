@@ -1,7 +1,6 @@
 // ignore_for_file: constant_identifier_names
 
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:pos_application_mobile/app/config/routes/app_screens.dart';
@@ -9,10 +8,11 @@ import 'package:pos_application_mobile/app/utils/di_container.dart';
 import 'package:pos_application_mobile/data/payloads/sign_in_payload.dart';
 import 'package:pos_application_mobile/domain/entities/auth_entity.dart';
 import 'package:pos_application_mobile/domain/entities/user_entity.dart';
+import 'package:pos_application_mobile/domain/use_cases/auth/logout_use_case.dart';
 import 'package:pos_application_mobile/domain/use_cases/auth/me_use_case.dart';
 import 'package:pos_application_mobile/domain/use_cases/auth/sign_in_use_case.dart';
 import 'package:pos_application_mobile/presentation/app/main/main.dart';
-import 'package:pos_application_mobile/presentation/widgets/pam_alert/pam_bottom_sheet.dart';
+import 'package:pos_application_mobile/presentation/widgets/pam_alert/pam_alert.dart';
 import 'package:pos_application_mobile/presentation/widgets/pam_alert/pam_snackbar.dart';
 
 const ACCESS_TOKEN_KEY = "auth_service_access_token_key";
@@ -23,12 +23,14 @@ const ME_KEY = "auth_service_me_key";
 class AuthService extends GetxService {
   final MeUseCase meUseCase;
   final SignInUseCase signInUseCase;
+  final LogoutUseCase logoutUseCase;
   final FlutterSecureStorage storage;
   
 
   AuthService()
     : meUseCase = DIContainer().meUseCase,
       signInUseCase = DIContainer().signInUseCase,
+      logoutUseCase = DIContainer().logoutUseCase,
       storage = const FlutterSecureStorage();
 
   final Rx<UserEntity?> _userEntity = UserEntity().obs;
@@ -147,18 +149,21 @@ class AuthService extends GetxService {
       }
 
       Get.offAllNamed(Routes.main, arguments: { "screen": ChildMenuMain.homeScreen   });
-    } on DioException catch (e) {
-      PAMSnackBarWidget.show(
-        title: "Login Failed".tr,
-        message: e.response?.data["message"],
-        type: PAMSnackBarWidgetType.danger
-      );
-    } catch (e) {
-      PAMSnackBarWidget.show(
-        title: "Login Failed".tr,
-        message: "Login failed, please try again".tr,
-        type: PAMSnackBarWidgetType.danger
-      );
-    }
+    }  catch (e) {
+      if (e is! DioException) {
+        PAMSnackBarWidget.show(
+          title: "Login Failed".tr,
+          message: "Login failed, please try again".tr,
+          type: PAMSnackBarWidgetType.danger
+        );
+      }
+    } 
+  }
+
+  Future<void> logout() async {
+    PAMAlertWidget.showLoadingAlert(Get.context!);
+    await logoutUseCase.call();
+    clearState();
+    Get.offAllNamed(Routes.auth);
   }
 }

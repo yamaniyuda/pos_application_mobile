@@ -4,7 +4,6 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:pos_application_mobile/app/config/localization/localization_constant.dart';
 import 'package:pos_application_mobile/app/config/localization/localization_model.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 ///
 /// Localization Controller

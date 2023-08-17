@@ -33,4 +33,11 @@ class AuthDataSource extends RemoteDataSource {
 
     return response;
   }
+
+  Future<void> logout() async {
+    await dioClient.deleteRequest(
+      "api/logout", 
+      converter: (data) => null,
+    );
+  }
 }

@@ -7,13 +7,13 @@ import 'package:get/get.dart';
 import 'package:pos_application_mobile/presentation/app/splash/controllers/splash_controller.dart';
 
 class SplashScreen extends GetView<SplashController> {
-  SplashScreen({super.key});
+  const SplashScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-        systemNavigationBarColor: Color(0xff273773),
-        statusBarColor: Color(0xff273773)
+      systemNavigationBarColor: Color(0xff273773),
+      statusBarColor: Color(0xff273773)
     ));
 
     return Scaffold(

@@ -1,15 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pos_application_mobile/app/config/routes/app_screens.dart';
 import 'package:pos_application_mobile/app/config/theme/theme_config.dart';
 import 'package:pos_application_mobile/app/extensions/string_extention.dart';
+import 'package:pos_application_mobile/app/utils/system_utils.dart';
 import 'package:pos_application_mobile/presentation/app/home/controllers/home_controller.dart';
+import 'package:pos_application_mobile/presentation/app/home/widgets/bar_chart_widget.dart';
 import 'package:pos_application_mobile/presentation/widgets/pam_badge/pam_badge.dart';
+import 'package:pos_application_mobile/presentation/widgets/pam_bottom/pam_bottom_icon.dart';
 
+part 'header_home.g.dart';
+part 'feature_home.g.dart';
+
+/// Home screen
 class HomeScreen extends GetView<HomeController> {
   const HomeScreen({Key? key}) : super(key: key);
 
+  /// order status build
+  /// this widget put inside header
+  /// and show with horizontal
   Widget _orderStatusList(BuildContext context) {
     return ListView(
       scrollDirection: Axis.horizontal,
@@ -132,6 +144,7 @@ class HomeScreen extends GetView<HomeController> {
     );
   }
 
+  /// header building
   List<Widget> _headerBuild(BuildContext context) {
     return [
       SliverToBoxAdapter(
@@ -142,31 +155,40 @@ class HomeScreen extends GetView<HomeController> {
       ),
       SliverToBoxAdapter(
         child: Container(
-            padding: const EdgeInsets.symmetric(vertical: 20),
-            color: Theme.of(context).primaryColor,
-            width: double.infinity,
-            height: Get.height * 0.25,
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    const SizedBox(width: 10),
-                    Text(
-                      "order list".tr.toCapitalize(),
-                      style: GoogleFonts.lato(
-                          color: Colors.white,
-                          fontSize: 16
-                      ),
-                    )
-                  ],
-                ),
-                const SizedBox(height: 10),
-                SizedBox(
-                  height: Get.height * 0.12,
-                  child: _orderStatusList(context),
-                )
-              ],
-            )
+          padding: const EdgeInsets.symmetric(vertical: 20),
+          color: Theme.of(context).primaryColor,
+          width: double.infinity,
+          height: Get.height * 0.22,
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  const SizedBox(width: 10),
+                  Text(
+                    "order list".tr.toCapitalize(),
+                    style: GoogleFonts.lato(
+                        color: Colors.white,
+                        fontSize: 16
+                    ),
+                  ),
+                  const Spacer(),
+                  Text(
+                    "see all".tr.toCapitalize(),
+                    style: GoogleFonts.lato(
+                      color: Colors.white.withOpacity(0.5),
+                      fontSize: 16
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                ],
+              ),
+              const SizedBox(height: 10),
+              SizedBox(
+                height: Get.height * 0.12,
+                child: _orderStatusList(context),
+              )
+            ],
+          )
         ),
       ),
     ];
@@ -177,83 +199,49 @@ class HomeScreen extends GetView<HomeController> {
     ScreenUtil.init(context);
 
     return Scaffold(
-        body: SizedBox(
-          height: double.infinity,
-          width: double.infinity,
-          child: Stack(
-            children: [
-              CustomScrollView(
-                controller: controller.scrollController,
-                slivers: [
-                  /* header wrap */
-                  ..._headerBuild(context),
+      backgroundColor: Theme.of(context).primaryColor,
+      body: SizedBox(
+        height: double.infinity,
+        width: double.infinity,
+        child: Stack(
+          children: [
+            CustomScrollView(
+              controller: controller.scrollController,
+              slivers: [
+                /* header wrap */
+                ..._headerBuild(context),
 
-                  SliverToBoxAdapter(
-                    child: SizedBox(
-                      height: Get.height * 1.5,
-                      child: const Center(
-                        child: Text("hai"),
-                      ),
+                /* content wrap */
+                SliverToBoxAdapter(
+                  child: Container(
+                    width: double.infinity,
+                    height: Get.height,
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(20),
+                        topRight: Radius.circular(20)
+                      )
                     ),
-                  )
-                ],
-              ),
-              PreferredSize(
-                  preferredSize: Size(Get.width, 20),
-                  child: _FadeAppBar()
-              )
-            ],
-          ),
-        )
-    );
-  }
-}
-
-class _FadeAppBar extends StatelessWidget {
-  final controller = Get.find<HomeController>();
-
-  _FadeAppBar({super.key });
-
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-        top: false,
-        child: Obx(() {
-          return AnimatedContainer(
-            duration: const Duration(milliseconds: 200),
-            height: 50,
-            padding: const EdgeInsets.symmetric(
-              vertical: 10,
-              horizontal: 24
-            ),
-            color: Theme.of(context).primaryColor,
-            child: SafeArea(
-              child: Row(
-                children: [
-                  CircleAvatar(
-                    backgroundColor: Colors.white,
-                    radius: 14.sp,
-                    backgroundImage: const AssetImage(
-                      "assets/images/account.png",
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _FeatureHome()
+                      ],
                     )
                   ),
-                  const SizedBox(width: 10),
-                  Text(
-                    "${controller.authService.userEntity!.name} - ${controller.colorFadeOpacity}",
-                    style: Theme
-                        .of(context)
-                        .textTheme
-                        .titleMedium
-                        ?.copyWith(
-                      color: Colors.white,
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
-          );
-        })
+
+            /* nav header */
+            PreferredSize(
+              preferredSize: Size(Get.width, 20),
+              child: _HeaderHome()
+            )
+          ],
+        ),
+      )
     );
   }
 }
-

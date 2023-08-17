@@ -1,6 +1,10 @@
 import 'package:dio/dio.dart';
+import 'package:get/get.dart' as Get;
 import 'package:pos_application_mobile/app/config/constants.dart';
+import 'package:pos_application_mobile/app/config/routes/app_screens.dart';
+import 'package:pos_application_mobile/app/extensions/string_extention.dart';
 import 'package:pos_application_mobile/domain/use_cases/auth/get_token_use_case.dart';
+import 'package:pos_application_mobile/presentation/widgets/pam_alert/pam_snackbar.dart';
 
 part 'dio_cache_interceptor.dart';
 part 'dio_interceptor.dart';
@@ -19,17 +23,14 @@ class DioClient {
 
   DioClient.init([String baseUrl = Constants.baseUrl]) {
     _baseUrl = baseUrl;
-    _dio = Dio(
-      BaseOptions(
+    _dio = Dio(BaseOptions(
         baseUrl: _baseUrl,
         responseType: ResponseType.json,
         followRedirects: true,
         headers: {
           "Content-Type": "application/json",
           "Accept": "application/json"
-        }
-      )
-    );
+        }));
     addInterceptor();
   }
 
@@ -43,35 +44,39 @@ class DioClient {
     return this;
   }
 
-  Future<T> getRequest<T>(String endpoint, {
-    required ResponseConverter<T> converter,
-    Map<String, dynamic>? queryParameters
-  }) async {
-    final Response response = await _dio.get(endpoint, queryParameters: queryParameters);
+  Future<T> getRequest<T>(String endpoint,
+      {required ResponseConverter<T> converter,
+      Map<String, dynamic>? queryParameters}) async {
+    final Response response =
+        await _dio.get(endpoint, queryParameters: queryParameters);
     return converter(response.data);
   }
 
-  Future<T> postRequest<T>(String endpoint, {
-    required ResponseConverter<T> converter,
-    required Object payload
-  }) async {
+  Future<T> postRequest<T>(String endpoint,
+      {required ResponseConverter<T> converter,
+      required Object payload}) async {
     final Response response = await _dio.post(endpoint, data: payload);
     return converter(response.data);
   }
 
-  Future<T> patchRequest<T>(String endpoint, {
-    required ResponseConverter<T> converter,
-    required Object payload
-  }) async {
+  Future<T> patchRequest<T>(String endpoint,
+      {required ResponseConverter<T> converter,
+      required Object payload}) async {
     final Response response = await _dio.patch(endpoint, data: payload);
     return converter(response.data);
   }
 
-  Future<T> deleteRequest<T>(String endpoint, {
+  Future<T> deleteRequest<T>(
+    String endpoint, {
     required ResponseConverter<T> converter,
-    required String id,
+    String? id,
   }) async {
-    final Response response = await _dio.delete("$endpoint/$id");
+    final Response response;
+    if (id != null) {
+      response = await _dio.delete("$endpoint/$id");
+    } else {
+      response = await _dio.delete(endpoint);
+    }
     return converter(response.data);
   }
 }

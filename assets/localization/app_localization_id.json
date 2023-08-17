@@ -29,5 +29,18 @@
   "language": "bahasa",
   "choose your choose": "pilih bahasa kamu",
   "home": "beranda",
-  "account": "akun"
+  "account": "akun",
+  "report": "laporan",
+  "stock": "stok",
+  "purchase": "pembelian",
+  "booking": "pemesaanan",
+  "setting": "pengaturan",
+  "user": "pengguna",
+  "color": "warna",
+  "my activity": "aktifitas saya",
+  "search color": "cari warna",
+  "add color": "tambah warna",
+  "color name": "nama warna",
+  "choose color": "pilih warna",
+  "clear all": "bersihkan semua"
 }

@@ -7,16 +7,24 @@ class PAMFormTextFieldWidget extends StatefulWidget {
   final String? hintText;
   final int? maxLines;
   final Widget? suffixIcon;
+  final Widget? icon;
   final String? labelText;
+  final EdgeInsetsGeometry? padding;
+  final String? initialValue;
+  final BoxDecoration? decoration;
   final void Function(String?)? onSaved;
 
   const PAMFormTextFieldWidget({
     super.key,
     this.keyboardType,
+    this.initialValue,
     this.labelText,
     this.maxLines,
     this.suffixIcon,
     this.hintText,
+    this.padding,
+    this.decoration,
+    this.icon,
     this.validator,
     this.onSaved
   });
@@ -28,6 +36,47 @@ class PAMFormTextFieldWidget extends StatefulWidget {
 class _PAMFormTextFieldWidgetState extends State<PAMFormTextFieldWidget> {
   final _textFieldKey = GlobalKey();
   double _textFieldHeight = 0;
+
+
+  /*
+    This is variable use when nothing custom
+    style from this widgets
+   */
+  final BoxDecoration _textShadowStyle = BoxDecoration(
+    color: Colors.white,
+    boxShadow: const [
+      BoxShadow(
+        blurRadius: 10,
+        spreadRadius: -9,
+        offset: Offset(0, 2)
+      )
+    ],
+    borderRadius: BorderRadius.circular(10)
+  );
+
+
+  /*
+    Default styling form field
+    when you want to overwrite this style you
+    must call copy with for assign new styling
+   */
+  late final InputDecoration _inputFormStyle = InputDecoration(
+    icon: widget.icon,
+    labelText: widget.labelText?.toCapitalize(),
+    labelStyle: TextStyle(
+      color: Theme.of(context).primaryColorDark.withOpacity(0.5),
+      wordSpacing: 1,
+    ),
+    floatingLabelBehavior: FloatingLabelBehavior.always,
+    suffixIcon: widget.suffixIcon,
+    hintText: widget.hintText?.toCapitalize(),
+    border: InputBorder.none,
+    contentPadding: const EdgeInsets.symmetric(
+      horizontal: 16,
+      vertical: 12
+    )
+  );
+
 
   @override
   void initState() {
@@ -46,41 +95,18 @@ class _PAMFormTextFieldWidgetState extends State<PAMFormTextFieldWidget> {
       children: [
         Container(
           height: _textFieldHeight,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            boxShadow: const [
-              BoxShadow(
-                blurRadius: 10,
-                spreadRadius: -9,
-                offset: Offset(
-                  0, 2
-                )
-              )
-            ],
-            borderRadius: BorderRadius.circular(10)
-          ),
+          padding: widget.padding,
+          decoration: widget.decoration ?? _textShadowStyle
         ),
         TextFormField(
           key: _textFieldKey,
           onSaved: widget.onSaved,
+          initialValue: widget.initialValue,
           keyboardType: widget.keyboardType,
           validator: widget.validator,
+          maxLines: widget.maxLines,
           textAlignVertical: TextAlignVertical.center,
-          decoration: InputDecoration(
-            labelText: widget.labelText?.toCapitalize(),
-            labelStyle: TextStyle(
-              color: Theme.of(context).primaryColorDark.withOpacity(0.5),
-              wordSpacing: 1,
-            ),
-            floatingLabelBehavior: FloatingLabelBehavior.always,
-            suffixIcon: widget.suffixIcon,
-            hintText: widget.hintText?.toCapitalize(),
-            border: InputBorder.none,
-            contentPadding: const EdgeInsets.symmetric(
-                horizontal: 16,
-                vertical: 12
-            ),
-          ),
+          decoration: _inputFormStyle
         ),
       ]
     );

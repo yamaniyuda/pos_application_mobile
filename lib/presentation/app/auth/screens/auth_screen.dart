@@ -90,34 +90,29 @@ class AuthScreen extends StatelessWidget {
   }
 
   Widget _buildBottomSubmit(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Obx(() {
-          return PAMBottom(
-            title: "login".tr,
-            isLoading: isLoading.value,
-            onTab: () async {
-              if (_formKey.currentState!.validate()) {
-                _formKey.currentState!.save();
+    return Obx(() {
+      return PAMBottom(
+        title: "login".tr,
+        isLoading: isLoading.value,
+        onTab: () async {
+          if (_formKey.currentState!.validate()) {
+            _formKey.currentState!.save();
 
-                controller.signIn(
-                  SignInPayload(
-                    username: username.value,
-                    password: password.value
-                  )
-                );
+            controller.signIn(
+              SignInPayload(
+                username: username.value,
+                password: password.value
+              )
+            );
 
-                isLoading.value = true;
+            isLoading.value = true;
 
-                await Future.delayed(const Duration(seconds: 2));
-                isLoading.value = false;
-              }
-            },
-          );
-        }),
-      ],
-    );
+            await Future.delayed(const Duration(seconds: 2));
+            isLoading.value = false;
+          }
+        },
+      );
+    });
   }
 
   @override

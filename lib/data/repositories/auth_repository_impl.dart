@@ -19,9 +19,8 @@ class AuthRepositoryImpl extends AuthRepository {
     );
 
   @override
-  Future<void> logout() {
-    // TODO: implement logout
-    throw UnimplementedError();
+  Future<void> logout() async {
+    await remoteDataSource.logout();
   }
 
   @override
@@ -44,14 +43,12 @@ class AuthRepositoryImpl extends AuthRepository {
   @override
   Future<AuthEntity> signIn(SignInPayload payload) async {
     try {
-      print("masuk sign in repo");
       final AuthDTO dataDTO = await remoteDataSource.singIn(payload: payload);
       final AuthEntity dataEntity = mapper.convert<AuthDTO, AuthEntity>(dataDTO);
       await localDataSource.storeData(dataDTO);
 
       return dataEntity;
     }  catch (e) {
-      print(e);
       rethrow;
     }
   }

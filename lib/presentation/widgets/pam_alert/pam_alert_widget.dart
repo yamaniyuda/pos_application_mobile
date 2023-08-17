@@ -11,7 +11,7 @@ class PAMAlertWidget {
       barrierDismissible: false,
       content: LoadingAnimationWidget.waveDots(
         color: Theme.of(context).primaryColor,
-        size: 50
+        size: 40
       ),
     );
   }

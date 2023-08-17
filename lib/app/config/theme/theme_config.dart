@@ -7,8 +7,17 @@ class ThemeConfig {
     primaryColorDark: const Color(0xff111111),
     scaffoldBackgroundColor: const Color(0xffF7F7F7),
     textTheme: GoogleFonts.latoTextTheme(),
-    appBarTheme: const AppBarTheme(
-      backgroundColor: Color(0xff273773)
+    appBarTheme: AppBarTheme(
+      backgroundColor: Colors.white,
+      titleTextStyle: GoogleFonts.lato(
+        fontSize: 16,
+        color: const Color(0xff111111),
+      ),
+      centerTitle: true,
+      elevation: 0,
+      iconTheme: const IconThemeData(
+        color: Color(0xff111111),
+      )
     )
   );
 }
