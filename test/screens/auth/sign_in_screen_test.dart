@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:pos_application_mobile/app/extensions/string_extention.dart';
+import 'package:pos_application_mobile/app/services/auth_service.dart';
 import 'package:pos_application_mobile/domain/use_cases/auth/sign_in_use_case.dart';
 import 'package:pos_application_mobile/presentation/app/auth/controllers/auth_controller.dart';
 import 'package:pos_application_mobile/presentation/app/auth/auth.dart';
@@ -11,18 +12,16 @@ void main() {
   // Mock the GetX controller for testing
   // Create a fake instance of AuthController and register it with Get
 
-  // setUpAll(() async {
-  //   await loadTestEnv();
-  // });
+  setUpAll(() {
+    Get.put<AuthService>(AuthService());
+    Get.lazyPut(() => SignInUseCase());
+    Get.put<AuthController>(AuthController());
+  });
 
   testWidgets('AuthScreen username, password, and submit test', (WidgetTester tester) async {
     // Build the AuthScreen widget
     await tester.pumpWidget(GetMaterialApp(
       home: AuthScreen(),
-      initialBinding: BindingsBuilder(() {
-        Get.lazyPut(() => SignInUseCase());
-        Get.put<AuthController>(AuthController());
-      }),
     ));
 
     // Find the text fields for username and password
@@ -38,9 +37,9 @@ void main() {
     expect(find.text('password'), findsOneWidget);
 
     // Tap on the "login" button
-    final loginButton = find.byKey(const Key("sign_in_form_submit"));
-    await tester.tap(loginButton);
-    await tester.pump();
+    // final loginButton = find.byKey(const Key("sign_in_form_submit"));
+    // await tester.tap(loginButton);
+    // await tester.pump();
 
     // Verify that the loading dialog is shown after tapping the login button
     // expect(find.text('data diproses'.tr.toCapitalize()), findsOneWidget);

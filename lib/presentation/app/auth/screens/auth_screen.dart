@@ -92,6 +92,7 @@ class AuthScreen extends StatelessWidget {
   Widget _buildBottomSubmit(BuildContext context) {
     return Obx(() {
       return PAMBottom(
+        key: const Key("sign_in_form_submit"),
         title: "login".tr,
         isLoading: isLoading.value,
         onTab: () async {
