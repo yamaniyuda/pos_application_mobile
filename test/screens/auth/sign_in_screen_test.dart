@@ -30,11 +30,11 @@ void main() {
     final passwordTextField = find.byKey(const Key("sign_in_form_password"));
 
     // Enter text into the username and password text fields
-    await tester.enterText(usernameTextField, 'admin@alshaftour.com');
+    await tester.enterText(usernameTextField, 'owner@kaosnyaman.com');
     await tester.enterText(passwordTextField, 'password');
 
     // Verify that the entered text is correct
-    expect(find.text('admin@alshaftour.com'), findsOneWidget);
+    expect(find.text('owner@kaosnyaman.com'), findsOneWidget);
     expect(find.text('password'), findsOneWidget);
 
     // Tap on the "login" button
