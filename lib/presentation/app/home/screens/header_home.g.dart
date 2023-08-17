@@ -53,16 +53,14 @@ class _HeaderHome extends StatelessWidget {
                     ),
                   ),
                   const Spacer(),
-                  PAMBottomIcon(
-                      icon: const Icon(Icons.notifications, color: Colors.white),
-                      backgroundColor: Colors.black54.withOpacity(0.5)
+                  IconButton(
+                    onPressed: () {}, 
+                    icon: const Icon(Icons.notifications, color: Colors.white),
                   ),
-                  const SizedBox(width: 10),
-                  PAMBottomIcon(
-                    icon: const Icon(Icons.segment, color: Colors.white),
-                    backgroundColor: Colors.black54.withOpacity(0.5),
-                    onTab: handlingTabOptions,
-                  )
+                  IconButton(
+                    onPressed: handlingTabOptions, 
+                    icon: const Icon(Icons.segment, color: Colors.white)
+                  ),
                 ],
               ),
             ),

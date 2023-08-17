@@ -20,7 +20,7 @@ class PAMSnackBarWidget {
     Get.snackbar(
       title,
       message,
-      snackPosition: SnackPosition.BOTTOM,
+      snackPosition: SnackPosition.TOP,
       icon: icon
     );
   }

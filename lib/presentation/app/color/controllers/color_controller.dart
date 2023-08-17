@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:pos_application_mobile/app/extensions/string_extention.dart';
 import 'package:pos_application_mobile/data/payloads/color_payload.dart';
 import 'package:pos_application_mobile/domain/entities/color_entity.dart';
+import 'dart:async';
 import 'package:pos_application_mobile/domain/use_cases/color/delete_data_use_case.dart';
 import 'package:pos_application_mobile/domain/use_cases/color/fetch_data_use_case.dart';
 import 'package:pos_application_mobile/domain/use_cases/color/store_data_use_case.dart';
@@ -58,10 +59,19 @@ class ColorController extends GetxController {
   final Rx<int> _totalPage =  0.obs;
   int get totalPage => _totalPage.value;
 
+  /// Timer for handle debonce search color
+  Timer? _debonce;
+
   @override
   void onInit() {
     fetchDataColor();
     super.onInit();
+  }
+
+  @override
+  void onClose() {
+    _debonce?.cancel();
+    super.onClose();
   }
 
   /// Sets the color selected in the color picker.
@@ -69,24 +79,85 @@ class ColorController extends GetxController {
     _colorPicker.value = color;
   }
 
-  /// Fetches color data.
-  Future<void> fetchDataColor() async {
+  /// do clear data color
+  void clearDataColor() {
+    _totalPage.value = 0;
+    _currentPage.value = 1;
+    _dataColors.value = [];
+  }
+
+  /// Search data color handler
+  /// 
+  /// This function do to handling search by input value and
+  /// debonce for 500 milisecond
+  /// 
+  /// Usage example:
+  /// ```dart
+  /// TextFormField(onChanged: searchDataColor)
+  /// ```
+  void searchDataColor(String value) {
+    if (_debonce?.isActive ?? false) _debonce!.cancel();
+    _debonce = Timer(const Duration(milliseconds: 800), () {
+      fetchDataColor(
+        refresh: true,
+        queryParameters: {
+          "name": value
+        }
+      );
+    });
+  }
+
+ /// Fetches color data from a remote data source.
+  ///
+  /// The `fetchDataColor` function is responsible for fetching data from a remote
+  /// data source. It updates several states such as [currentPage], [totalPage],
+  /// [isLoading], and [dataColors] to manage the pagination and loading of color data.
+  ///
+  /// If the `refresh` parameter is set to `true`, the existing data will be cleared.
+  ///
+  /// Parameters:
+  /// - `refresh`: A boolean value indicating whether to refresh the data.
+  /// - `queryParameters`: Optional map of query parameters to be included in the request.
+  ///
+  /// Throws an exception if an error occurs during data fetching.
+  ///
+  Future<void> fetchDataColor({bool refresh = false, Map<String, dynamic>? queryParameters}) async {
+    // Clear data if refreshing
+    if (refresh) clearDataColor();
+
+    // Check if we have reached the total number of pages
     if (_currentPage.value == _totalPage.value) return;
-    
-    final Map<String, dynamic> queryParameter = {
+
+    // Build query parameters for the request
+    Map<String, dynamic> buildQueryParameters = {
       "order": "name",
       "ascending": 1,
-      "page": _currentPage.value
+      "page": _currentPage.value,
     };
 
+    // Merge additional query parameters if provided
+    if (queryParameters != null) {
+      buildQueryParameters = {
+        ...buildQueryParameters,
+        ...queryParameters,
+      };
+    }
+
+    // Set loading state
     _isLoading.value = true;
-    List<ColorEntity> data = await fetchDataUseCaseColor.call(queryParameter);
+
+    // Fetch data using the color data use case
+    List<ColorEntity> data = await fetchDataUseCaseColor.call(buildQueryParameters);
+
+    // Update state with fetched data
     _dataColors.value.addAll(data);
     _isLoading.value = false;
 
+    // Increment current page if data is fetched successfully
     if (data.isNotEmpty) {
       _currentPage.value = _currentPage.value + 1;
     } else {
+      // Set total page if no more data is available
       _totalPage.value = _currentPage.value;
     }
   }
@@ -96,16 +167,18 @@ class ColorController extends GetxController {
     try {
       PAMAlertWidget.showLoadingAlert(Get.context!);
       await storeDataUseCaseColor.call(
-          ColorPayload(
-              name: _colorName.value,
-              description: _colorDescription.value,
-              codeHexa: _colorPicker.value.value.toRadixString(16).substring(2)));
+        ColorPayload(
+          name: _colorName.value,
+          description: _colorDescription.value,
+          codeHexa: _colorPicker.value.value.toRadixString(16).substring(2)
+        )
+      );
       Get.back();
     } catch (e) {
       if (e is! DioException) {
         PAMSnackBarWidget.show(
-            title: "failed",
-            message: "gagal memproses data, silahkan coba lagi".tr.toCapitalize(),
+            title: "failed".tr.toCapitalize(),
+            message: "failed to process data, please try again".tr.toCapitalize(),
             type: PAMSnackBarWidgetType.danger);
       }
     } finally {
@@ -117,9 +190,28 @@ class ColorController extends GetxController {
   /// 
   /// This function required [id] is paramas
   void colorDelete(String id) async {
-    _dataColors.value.removeWhere((element) => element.id == id);
-    await deleteDataUseCase.call(id);
-    update(['color_list']);
+    try {
+      _dataColors.value.removeWhere((element) => element.id == id);
+      await deleteDataUseCase.call(id);
+
+      List<ColorEntity> currentData = _dataColors.value;
+      _dataColors.value = [];
+      _dataColors.value.addAll(currentData);
+
+      PAMSnackBarWidget.show(
+        title: "success".tr.toCapitalize(),
+        message: "the color has been removed successfully".tr.toCapitalize(),
+        type: PAMSnackBarWidgetType.success
+      );
+    } catch (e) {
+      if (e is! DioException) {
+        PAMSnackBarWidget.show(
+          title: "failed".tr.toCapitalize(),
+          message: "failed to process data, please try again".tr.toCapitalize(),
+          type: PAMSnackBarWidgetType.success
+        );
+      }
+    }
   }
 
   /// Update data color handling
@@ -141,9 +233,10 @@ class ColorController extends GetxController {
     } catch (e) {
       if (e is! DioException) {
         PAMSnackBarWidget.show(
-            title: "failed",
-            message: "gagal memproses data, silahkan coba lagi".tr.toCapitalize(),
-            type: PAMSnackBarWidgetType.danger);
+          title: "failed".tr.toCapitalize(),
+          message: "failed to process data, please try again".tr.toCapitalize(),
+          type: PAMSnackBarWidgetType.danger
+        );
       }
     } finally {
       Get.back();

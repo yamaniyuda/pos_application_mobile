@@ -42,4 +42,9 @@
   "add color": "add color",
   "color name": "color name",
   "choose color": "choose color",
-  "clear all": "clear all"}
+  "clear all": "clear all",
+  "success": "success",
+  "failed": "failed",
+  "failed to process data, please try again": "failed to process data, please try again",
+  "the color has been removed successfully": "the color has been removed successfully"
+}

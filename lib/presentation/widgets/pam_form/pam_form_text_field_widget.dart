@@ -11,6 +11,7 @@ class PAMFormTextFieldWidget extends StatefulWidget {
   final String? labelText;
   final EdgeInsetsGeometry? padding;
   final String? initialValue;
+  final ValueChanged<String>? onChanged;
   final BoxDecoration? decoration;
   final void Function(String?)? onSaved;
 
@@ -23,6 +24,7 @@ class PAMFormTextFieldWidget extends StatefulWidget {
     this.suffixIcon,
     this.hintText,
     this.padding,
+    this.onChanged,
     this.decoration,
     this.icon,
     this.validator,
@@ -95,12 +97,12 @@ class _PAMFormTextFieldWidgetState extends State<PAMFormTextFieldWidget> {
       children: [
         Container(
           height: _textFieldHeight,
-          padding: widget.padding,
           decoration: widget.decoration ?? _textShadowStyle
         ),
         TextFormField(
           key: _textFieldKey,
           onSaved: widget.onSaved,
+          onChanged: widget.onChanged,
           initialValue: widget.initialValue,
           keyboardType: widget.keyboardType,
           validator: widget.validator,

@@ -25,22 +25,7 @@ class SplashScreen extends GetView<SplashController> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Image.asset("./assets/images/logo-circle.png"),
-              const SizedBox(height: 20),
-              Text(
-                "Kaos Nyaman",
-                style: GoogleFonts.lemon(
-                  fontSize: 41,
-                  color: Colors.white
-                ),
-              ),
-              Text(
-                "Online clothes shop",
-                style: GoogleFonts.lato(
-                  fontSize: 16,
-                  color: Colors.white
-                ),
-              )
+              Image.asset("./assets/images/splash_logo.png", width: Get.width * .8),
             ],
           ),
         ),

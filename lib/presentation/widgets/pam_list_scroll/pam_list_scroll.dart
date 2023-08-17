@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'package:flutter/material.dart';
 
 /// A widget that displays a scrollable list with optional pull-to-refresh feature.
@@ -12,7 +14,7 @@ class PAMListScroll<T> extends StatefulWidget {
   final int itemCount;
 
   /// Whether to show a loading indicator at the end for more items.
-  final bool scrollToRefresh;
+  final RefreshCallback? scrollToRefresh;
 
   /// The padding to set in scroll view
   final EdgeInsetsGeometry? padding;
@@ -42,8 +44,9 @@ class _PAMListScrollState<T> extends State<PAMListScroll<T>> {
     super.initState();
 
     _controller.addListener(() {
+      if (widget.scrollToRefresh == null) return;
       if (_controller.position.maxScrollExtent == _controller.offset) {
-        widget.onRefresh();
+        widget.scrollToRefresh!();
       }
     });
   }
@@ -55,9 +58,9 @@ class _PAMListScrollState<T> extends State<PAMListScroll<T>> {
       child: ListView.builder(
         controller: _controller,
         padding: widget.padding,
-        itemCount: widget.scrollToRefresh ? widget.itemCount + 1 : widget.itemCount,
+        itemCount: widget.scrollToRefresh != null ? widget.itemCount + 1 : widget.itemCount,
         itemBuilder: (context, index) {
-          if (widget.scrollToRefresh && index == widget.itemCount) {
+          if (widget.scrollToRefresh != null && index == widget.itemCount) {
             if (widget.itemCount < 25) {
               return Container();
             }
