@@ -1,13 +1,10 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pos_application_mobile/app/services/auth_service.dart';
 import 'package:pos_application_mobile/data/payloads/sign_in_payload.dart';
-import 'package:pos_application_mobile/domain/entities/auth_entity.dart';
 import 'package:pos_application_mobile/domain/use_cases/auth/sign_in_use_case.dart';
-import 'package:pos_application_mobile/presentation/widgets/pam_alert/pam_snackbar.dart';
 
-class AuthController extends GetxController with GetSingleTickerProviderStateMixin, StateMixin<bool> {
+class AuthController extends GetxController with GetSingleTickerProviderStateMixin {
   final signInUseCase = Get.find<SignInUseCase>();
   final authService = Get.find<AuthService>();
   late TabController tabController;

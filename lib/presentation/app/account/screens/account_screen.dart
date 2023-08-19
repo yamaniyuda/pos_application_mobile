@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pos_application_mobile/app/config/routes/app_screens.dart';
 import 'package:pos_application_mobile/app/extensions/string_extention.dart';
+import 'package:pos_application_mobile/app/services/auth_service.dart';
 import 'package:pos_application_mobile/presentation/app/account/account.dart';
 
 class AccountScreen extends GetView<AccountController> {
@@ -75,7 +76,15 @@ class AccountScreen extends GetView<AccountController> {
     });
   }
 
+  bool _isShowMenuItem(Map<String, dynamic> data) {
+    return data["guards"] != null && !data["guards"]?.contains(controller.authService.userEntity?.role);
+  }
+
   Widget _buildMenuItem(Map<String, dynamic> data) {
+    if (_isShowMenuItem(data)) {
+      return Container();
+    }
+
     return ListTile(
       title: Text(
         "${data["title"]}".toCapitalize(),
@@ -106,9 +115,9 @@ class AccountScreen extends GetView<AccountController> {
 
   Widget _buildMenuSetting(BuildContext context) {
     final List<Map<String, dynamic>> menuActivity = [
-      { "title": "order".tr, "screenRouter": "", "icon": const Icon(Icons.add_card_sharp, color: Colors.white), "color": const Color(0xFFE50A0A) },
-      { "title": "color".tr, "screenRouter": Routes.color, "icon": const Icon(Icons.color_lens, color: Colors.white,), "color": const Color(0xFF4AD7C9) },
-      { "title": "user".tr, "screenRouter": "", "icon": const Icon(Icons.person_add_alt_1_rounded, color: Colors.white,), "color": Theme.of(Get.context!).primaryColor }
+      { "title": "order".tr, "screenRouter": "", "icon": const Icon(Icons.add_card_sharp, color: Colors.white), "color": const Color(0xFFE50A0A) , "guards": [AuthService.OWNER]},
+      { "title": "color".tr, "screenRouter": Routes.color, "icon": const Icon(Icons.color_lens, color: Colors.white,), "color": const Color(0xFF4AD7C9), "guards": [AuthService.OWNER]},
+      { "title": "user".tr, "screenRouter": Routes.user, "icon": const Icon(Icons.person_add_alt_1_rounded, color: Colors.white,), "color": Theme.of(Get.context!).primaryColor, "guards": [AuthService.OWNER] }
     ];
 
     final List<Map<String, dynamic>> menuSetting = [
@@ -160,7 +169,7 @@ class AccountScreen extends GetView<AccountController> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Profile"),
+        title: const Text("Profile"),
       ),
       body: SafeArea(
           child: ListView(

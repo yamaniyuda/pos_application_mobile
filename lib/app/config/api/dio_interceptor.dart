@@ -16,7 +16,10 @@ class DioInterceptor extends Interceptor {
 
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) {
-    if (err.response != null) {
+
+    // handling snackbar show when request method post or patch cannot show
+    // snackbar
+    if (err.response != null && !['POST', 'PATCH'].contains(err.requestOptions.method) && err.requestOptions.path != "api/me") {
       PAMSnackBarWidget.show(
         title: "failed".tr.toCapitalize(),
         message: err.response!.data["message"],

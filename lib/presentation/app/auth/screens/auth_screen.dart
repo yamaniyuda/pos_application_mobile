@@ -10,13 +10,13 @@ import 'package:pos_application_mobile/presentation/widgets/pam_bottom/pam_botto
 import 'package:pos_application_mobile/presentation/widgets/pam_form/pam_form.dart';
 import 'package:pos_application_mobile/presentation/widgets/pam_logo/pam_logo.dart';
 
-class AuthScreen extends StatelessWidget {
-  final controller = Get.find<AuthController>();
+class AuthScreen extends GetView<AuthController> {
   final _formKey = GlobalKey<FormState>();
 
   /* form state */
   RxString username = "".obs;
   RxString password = "".obs;
+  RxBool showPassword = false.obs;
 
   RxBool isLoading = false.obs;
 
@@ -50,6 +50,7 @@ class AuthScreen extends StatelessWidget {
         }
         return null;
       },
+      type: PAMFormTextFieldWidgetType.password,
       onSaved: (String? value) {
         password.value = value!;
       },
@@ -99,7 +100,7 @@ class AuthScreen extends StatelessWidget {
           if (_formKey.currentState!.validate()) {
             _formKey.currentState!.save();
 
-            controller.signIn(
+            await controller.signIn(
               SignInPayload(
                 username: username.value,
                 password: password.value

@@ -7,7 +7,6 @@ import 'package:pos_application_mobile/presentation/app/main/main.dart';
 import 'package:pos_application_mobile/presentation/app/product/controllers/product_binding.dart';
 import 'package:pos_application_mobile/presentation/app/product/screens/product_screen.dart';
 import 'package:pos_application_mobile/presentation/app/report/report.dart';
-import 'package:pos_application_mobile/presentation/app/report/screens/report_screen.dart';
 import 'package:pos_application_mobile/presentation/app/splash/controllers/splash_binding.dart';
 import 'package:pos_application_mobile/presentation/app/auth/auth.dart';
 import 'package:pos_application_mobile/presentation/app/home/home.dart';
@@ -15,6 +14,7 @@ import 'package:pos_application_mobile/presentation/app/on_boarding/on_boarding.
 import 'package:pos_application_mobile/presentation/app/splash/splash.dart';
 import 'package:pos_application_mobile/presentation/app/stock/controllers/stock_binding.dart';
 import 'package:pos_application_mobile/presentation/app/stock/screens/stock_screen.dart';
+import 'package:pos_application_mobile/presentation/app/user/user.dart';
 
 import '../../../presentation/app/auth/controllers/auth_binding.dart';
 
@@ -98,6 +98,17 @@ class AppScreens {
       name: _Paths.colorForm,
       page: () => ColorFormScreen(),
       binding: ColorBinding()
+    ),
+
+    GetPage(
+      name: _Paths.user, 
+      page: () => const UserScreen(),
+      binding: UserBinding()
+    ),
+    GetPage(
+      name: _Paths.userForm,
+      page: () => UserFormScreen(),
+      binding: UserBinding()
     )
   ];
 }

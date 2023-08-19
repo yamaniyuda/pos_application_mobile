@@ -15,6 +15,8 @@ abstract class Routes {
   static const stock = _Paths.stock;
   static const color = _Paths.color;
   static const colorForm = _Paths.colorForm;
+  static const user = _Paths.user;
+  static const userForm = _Paths.userForm;
 }
 
 abstract class _Paths {
@@ -30,4 +32,6 @@ abstract class _Paths {
   static const String stock = '/stock';
   static const String color = '/color';
   static const String colorForm = '/color-form';
+  static const String user = '/user';
+  static const String userForm = '/user-form';
 }

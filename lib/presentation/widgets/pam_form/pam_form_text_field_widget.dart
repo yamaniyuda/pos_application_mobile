@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pos_application_mobile/app/extensions/string_extention.dart';
 
+enum PAMFormTextFieldWidgetType { text, password }
+
 class PAMFormTextFieldWidget extends StatefulWidget {
   final TextInputType? keyboardType;
   final String? Function(String?)? validator;
@@ -9,23 +11,29 @@ class PAMFormTextFieldWidget extends StatefulWidget {
   final Widget? suffixIcon;
   final Widget? icon;
   final String? labelText;
+  final bool obscureText;
   final EdgeInsetsGeometry? padding;
   final String? initialValue;
   final ValueChanged<String>? onChanged;
+  final PAMFormTextFieldWidgetType type;
   final BoxDecoration? decoration;
   final void Function(String?)? onSaved;
+  final void Function()? onTabSuffixIcon;
 
   const PAMFormTextFieldWidget({
     super.key,
+    this.obscureText = false,
     this.keyboardType,
     this.initialValue,
     this.labelText,
     this.maxLines,
     this.suffixIcon,
     this.hintText,
+    this.type = PAMFormTextFieldWidgetType.text,
     this.padding,
     this.onChanged,
     this.decoration,
+    this.onTabSuffixIcon,
     this.icon,
     this.validator,
     this.onSaved
@@ -38,6 +46,7 @@ class PAMFormTextFieldWidget extends StatefulWidget {
 class _PAMFormTextFieldWidgetState extends State<PAMFormTextFieldWidget> {
   final _textFieldKey = GlobalKey();
   double _textFieldHeight = 0;
+  bool _showPassword = false;
 
 
   /*
@@ -70,7 +79,6 @@ class _PAMFormTextFieldWidgetState extends State<PAMFormTextFieldWidget> {
       wordSpacing: 1,
     ),
     floatingLabelBehavior: FloatingLabelBehavior.always,
-    suffixIcon: widget.suffixIcon,
     hintText: widget.hintText?.toCapitalize(),
     border: InputBorder.none,
     contentPadding: const EdgeInsets.symmetric(
@@ -102,13 +110,26 @@ class _PAMFormTextFieldWidgetState extends State<PAMFormTextFieldWidget> {
         TextFormField(
           key: _textFieldKey,
           onSaved: widget.onSaved,
+          obscureText: widget.type == PAMFormTextFieldWidgetType.password && !_showPassword 
+            ? true : false,
           onChanged: widget.onChanged,
           initialValue: widget.initialValue,
           keyboardType: widget.keyboardType,
           validator: widget.validator,
-          maxLines: widget.maxLines,
+          maxLines: widget.type == PAMFormTextFieldWidgetType.password ? 1 : widget.maxLines,
           textAlignVertical: TextAlignVertical.center,
-          decoration: _inputFormStyle
+          decoration: _inputFormStyle.copyWith(
+            suffixIcon: widget.type == PAMFormTextFieldWidgetType.password 
+              ? IconButton(
+                  hoverColor: Colors.transparent,
+                  splashColor: Colors.transparent,
+                  onPressed: () => setState(() {
+                    _showPassword = !_showPassword;
+                  }),
+                  icon: Icon(_showPassword ? Icons.visibility : Icons.visibility_off),
+                )
+              : null,
+          )
         ),
       ]
     );

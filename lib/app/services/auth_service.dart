@@ -1,9 +1,10 @@
-// ignore_for_file: constant_identifier_names
+// ignore_for_file: constant_identifier_names, non_constant_identifier_names
 
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:pos_application_mobile/app/config/routes/app_screens.dart';
+import 'package:pos_application_mobile/app/extensions/string_extention.dart';
 import 'package:pos_application_mobile/app/utils/di_container.dart';
 import 'package:pos_application_mobile/data/payloads/sign_in_payload.dart';
 import 'package:pos_application_mobile/domain/entities/auth_entity.dart';
@@ -32,6 +33,12 @@ class AuthService extends GetxService {
       signInUseCase = DIContainer().signInUseCase,
       logoutUseCase = DIContainer().logoutUseCase,
       storage = const FlutterSecureStorage();
+
+  static String OWNER = 'owner';
+  static String RESELLER = 'reseller';
+  static String KASIR = 'kasir';
+  static String MANAGER  = 'manager';
+  static String GUDANG = 'gudang';
 
   final Rx<UserEntity?> _userEntity = UserEntity().obs;
   UserEntity? get userEntity => _userEntity.value;
@@ -148,15 +155,19 @@ class AuthService extends GetxService {
         _storeState();
       }
 
-      Get.offAllNamed(Routes.main, arguments: { "screen": ChildMenuMain.homeScreen   });
-    }  catch (e) {
-      if (e is! DioException) {
-        PAMSnackBarWidget.show(
-          title: "Login Failed".tr,
-          message: "Login failed, please try again".tr,
-          type: PAMSnackBarWidgetType.danger
-        );
-      }
+      Get.offAllNamed(Routes.main, arguments: { "screen": ChildMenuMain.homeScreen });
+    }  on DioException catch (e) {
+      PAMSnackBarWidget.show(
+        title: "failed".tr.toCapitalize(),
+        message: e.response!.data["message"],
+        type: PAMSnackBarWidgetType.danger
+      );
+    } catch (e) {
+      PAMSnackBarWidget.show(
+        title: "Login Failed".tr,
+        message: "Login failed, please try again".tr,
+        type: PAMSnackBarWidgetType.danger
+      );
     } 
   }
 

@@ -107,7 +107,7 @@ class ColorController extends GetxController {
     });
   }
 
- /// Fetches color data from a remote data source.
+  /// Fetches color data from a remote data source.
   ///
   /// The `fetchDataColor` function is responsible for fetching data from a remote
   /// data source. It updates several states such as [currentPage], [totalPage],
@@ -200,7 +200,7 @@ class ColorController extends GetxController {
 
       PAMSnackBarWidget.show(
         title: "success".tr.toCapitalize(),
-        message: "the color has been removed successfully".tr.toCapitalize(),
+        message: "the user has been removed successfully".tr.toCapitalize(),
         type: PAMSnackBarWidgetType.success
       );
     } catch (e) {
