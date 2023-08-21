@@ -5,6 +5,8 @@ import 'package:pos_application_mobile/app/config/localization/localization_serv
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 /// The main entry point of the application.
 ///
@@ -45,6 +47,12 @@ void main() async {
 /// await initService();
 /// ```
 Future<void> initService() async {
+
+  // Initialize Firebase service
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform
+  );
+
   // Initialize AuthService asynchronously and register it using Get.putAsync
   await Get.putAsync(() => AuthService().init());
 }

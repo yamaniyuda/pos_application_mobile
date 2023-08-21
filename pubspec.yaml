@@ -54,6 +54,8 @@ dependencies:
   flutter_slidable: ^3.0.0
   fl_chart: ^0.63.0
   flutter_native_splash: ^2.3.2
+  firebase_messaging: ^14.6.6
+  firebase_core: ^2.15.1
 
 dev_dependencies:
   flutter_test:
