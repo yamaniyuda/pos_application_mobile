@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:pos_application_mobile/app/extensions/string_extention.dart';
 
 enum PAMFormTextFieldWidgetType { text, password }
@@ -12,6 +13,7 @@ class PAMFormTextFieldWidget extends StatefulWidget {
   final Widget? icon;
   final String? labelText;
   final bool obscureText;
+  final Widget? screen;
   final EdgeInsetsGeometry? padding;
   final String? initialValue;
   final ValueChanged<String>? onChanged;
@@ -28,6 +30,7 @@ class PAMFormTextFieldWidget extends StatefulWidget {
     this.labelText,
     this.maxLines,
     this.suffixIcon,
+    this.screen,
     this.hintText,
     this.type = PAMFormTextFieldWidgetType.text,
     this.padding,
@@ -45,9 +48,10 @@ class PAMFormTextFieldWidget extends StatefulWidget {
 
 class _PAMFormTextFieldWidgetState extends State<PAMFormTextFieldWidget> {
   final _textFieldKey = GlobalKey();
+  final TextEditingController _controller = TextEditingController();
+  String _hiddenValue = "";
   double _textFieldHeight = 0;
   bool _showPassword = false;
-
 
   /*
     This is variable use when nothing custom
@@ -97,6 +101,7 @@ class _PAMFormTextFieldWidgetState extends State<PAMFormTextFieldWidget> {
         _textFieldHeight = renderBox.size.height;
       });
     });
+    _controller.text = widget.initialValue ?? "";
   }
 
   @override
@@ -109,15 +114,19 @@ class _PAMFormTextFieldWidgetState extends State<PAMFormTextFieldWidget> {
         ),
         TextFormField(
           key: _textFieldKey,
-          onSaved: widget.onSaved,
-          obscureText: widget.type == PAMFormTextFieldWidgetType.password && !_showPassword 
-            ? true : false,
+          controller: _controller,
+          onSaved: widget.screen == null ? widget.onSaved : (String? string) {
+            widget.onSaved!(_hiddenValue);
+          },
           onChanged: widget.onChanged,
-          initialValue: widget.initialValue,
           keyboardType: widget.keyboardType,
           validator: widget.validator,
-          maxLines: widget.type == PAMFormTextFieldWidgetType.password ? 1 : widget.maxLines,
           textAlignVertical: TextAlignVertical.center,
+          readOnly: widget.screen != null ? true : false,
+          maxLines: widget.type == PAMFormTextFieldWidgetType.password ? 1 : widget.maxLines,
+          obscureText: widget.type == PAMFormTextFieldWidgetType.password && !_showPassword 
+            ? true : false,
+          onTap: onTapHandler,
           decoration: _inputFormStyle.copyWith(
             suffixIcon: widget.type == PAMFormTextFieldWidgetType.password 
               ? IconButton(
@@ -133,5 +142,29 @@ class _PAMFormTextFieldWidgetState extends State<PAMFormTextFieldWidget> {
         ),
       ]
     );
+  }
+
+  /// on tap hanler function
+  /// 
+  /// The `onTapHanler` function for handling text with option value
+  /// and options value redirect to screen options get from params
+  /// this screen will throw value by arguments.
+  void onTapHandler() async {
+    if (widget.screen != null) {
+      final result = await Get.to(widget.screen, arguments: {
+        "value": _controller.text
+      });
+
+      if (result is Map<String, String>) {
+        _controller.text = result["label"]!;
+        setState(() {
+          _hiddenValue = result["value"]!;
+
+          if (widget.onChanged != null) {
+            widget.onChanged!(result["value"]!);
+          }
+        });
+      }
+    }
   }
 }

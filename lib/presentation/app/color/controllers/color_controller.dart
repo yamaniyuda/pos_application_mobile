@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:pos_application_mobile/app/extensions/string_extention.dart';
+import 'package:pos_application_mobile/app/services/auth_service.dart';
 import 'package:pos_application_mobile/data/payloads/color_payload.dart';
 import 'package:pos_application_mobile/domain/entities/color_entity.dart';
 import 'dart:async';
@@ -16,6 +17,9 @@ import 'package:pos_application_mobile/presentation/widgets/pam_alert/pam_snackb
 
 /// Controller responsible for managing color-related operations.
 class ColorController extends GetxController {
+   /// Get depedency from auth service
+  final AuthService authService = Get.find<AuthService>();
+  
   /// Fetch data use case instance for color data.
   final FetchDataUseCase fetchDataUseCaseColor = Get.put(FetchDataUseCase());
 
@@ -62,9 +66,16 @@ class ColorController extends GetxController {
   /// Timer for handle debonce search color
   Timer? _debonce;
 
+  /// show crud access
+  final Rx<bool> _showSupperAccess = false.obs;
+  bool get showSuperAccess => _showSupperAccess.value;
+
   @override
   void onInit() {
     fetchDataColor();
+    _showSupperAccess.value = [AuthService.OWNER, AuthService.MANAGER].contains(
+      authService.userEntity?.role
+    );
     super.onInit();
   }
 

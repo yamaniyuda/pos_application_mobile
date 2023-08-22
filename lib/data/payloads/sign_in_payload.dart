@@ -19,3 +19,4 @@ class SignInPayload extends Payload {
     };
   }
 }
+
