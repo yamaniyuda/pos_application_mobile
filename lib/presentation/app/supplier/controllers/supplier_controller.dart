@@ -4,51 +4,51 @@ import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:pos_application_mobile/app/extensions/string_extention.dart';
 import 'package:pos_application_mobile/app/services/auth_service.dart';
-import 'package:pos_application_mobile/data/payloads/customer_type_payload.dart';
-import 'package:pos_application_mobile/domain/entities/customer_type_entity.dart';
-import 'package:pos_application_mobile/domain/use_cases/customer_type/delete_data_use_case.dart';
+import 'package:pos_application_mobile/data/payloads/supplier_payload.dart';
+import 'package:pos_application_mobile/domain/entities/supplier_entity.dart';
+import 'package:pos_application_mobile/domain/use_cases/supplier/delete_data_use_case.dart';
 import 'dart:async';
 
-import 'package:pos_application_mobile/domain/use_cases/customer_type/fetch_data_use_case.dart';
-import 'package:pos_application_mobile/domain/use_cases/customer_type/store_data_use_case.dart';
-import 'package:pos_application_mobile/domain/use_cases/customer_type/update_data_use_case.dart';
+import 'package:pos_application_mobile/domain/use_cases/supplier/fetch_data_use_case.dart';
+import 'package:pos_application_mobile/domain/use_cases/supplier/store_data_use_case.dart';
+import 'package:pos_application_mobile/domain/use_cases/supplier/update_data_use_case.dart';
 import 'package:pos_application_mobile/presentation/widgets/pam_alert/pam_alert.dart';
 import 'package:pos_application_mobile/presentation/widgets/pam_alert/pam_snackbar.dart';
 
-/// Controller responsible for managing CustomerType-related operations.
-class CustomerTypeController extends GetxController {
+/// Controller responsible for managing Supplier-related operations.
+class SupplierController extends GetxController {
   /// Get depedency from auth service
   final AuthService authService = Get.find<AuthService>();
 
-  /// Fetch data use case instance for CustomerType data.
-  final FetchDataUseCase fetchDataUseCaseCustomerType = Get.put(FetchDataUseCase());
+  /// Fetch data use case instance for Supplier data.
+  final FetchDataUseCase fetchDataUseCaseSupplier = Get.put(FetchDataUseCase());
 
-  /// Store data use case instance for CustomerType data.
-  final StoreDataUseCase storeDataUseCaseCustomerType = Get.put(StoreDataUseCase());
+  /// Store data use case instance for Supplier data.
+  final StoreDataUseCase storeDataUseCaseSupplier = Get.put(StoreDataUseCase());
 
-  /// Delete data use  case instance for CustomerType data.
-  final DeleteDataUseCase deleteDataUseCaseCustomerType = Get.put(DeleteDataUseCase());
+  /// Delete data use  case instance for Supplier data.
+  final DeleteDataUseCase deleteDataUseCaseSupplier = Get.put(DeleteDataUseCase());
 
-  /// Update data use case instance for CustomerType data.
-  final UpdateDataUseCase updateDataUseCaseCustomerType = Get.put(UpdateDataUseCase());
+  /// Update data use case instance for Supplier data.
+  final UpdateDataUseCase updateDataUseCaseSupplier = Get.put(UpdateDataUseCase());
 
-  /// List of fetched CustomerType data.
-  final RxList<CustomerTypeEntity> _dataCustomerType = <CustomerTypeEntity>[].obs;
-  List<CustomerTypeEntity> get dataCustomerType => _dataCustomerType.value;
+  /// List of fetched Supplier data.
+  final RxList<SupplierEntity> _dataSupplier = <SupplierEntity>[].obs;
+  List<SupplierEntity> get dataSupplier => _dataSupplier.value;
 
   /// Loading indicator state.
   final Rx<bool> _isLoading = false.obs;
   bool get isLoading => _isLoading.value;
 
-  /// CustomerType current state for pagination
+  /// Supplier current state for pagination
   final Rx<int> _currentPage = 1.obs;
   int get currentPage => _currentPage.value;
 
-  /// CustomerType total pagination state
+  /// Supplier total pagination state
   final Rx<int> _totalPage =  0.obs;
   int get totalPage => _totalPage.value;
 
-  /// Timer for handle debonce search CustomerType
+  /// Timer for handle debonce search Supplier
   Timer? _debonce;
 
   /// show crud access
@@ -57,7 +57,7 @@ class CustomerTypeController extends GetxController {
 
   @override
   void onInit() {
-    fetchDataCustomerType();
+    fetchDataSupplier();
     _showSupperAccess.value = [AuthService.OWNER].contains(
       authService.userEntity?.role
     );
@@ -71,26 +71,26 @@ class CustomerTypeController extends GetxController {
     super.onClose();
   }
 
-  /// do clear data CustomerType
-  void clearDataCustomerType() {
+  /// do clear data Supplier
+  void clearDataSupplier() {
     _totalPage.value = 0;
     _currentPage.value = 1;
-    _dataCustomerType.value = [];
+    _dataSupplier.value = [];
   }
 
-  /// Search data CustomerType handler
+  /// Search data ustomer handler
   /// 
   /// This function do to handling search by input value and
   /// debonce for 500 milisecond
   /// 
   /// Usage example:
   /// ```dart
-  /// TextFormField(onChanged: searchDataCustomerType)
+  /// TextFormField(onChanged: searchDataSupplier)
   /// ```
-  void searchDataCustomerType(String value) {
+  void searchDataSupplier(String value) {
     if (_debonce?.isActive ?? false) _debonce!.cancel();
     _debonce = Timer(const Duration(milliseconds: 800), () {
-      fetchDataCustomerType(
+      fetchDataSupplier(
         refresh: true,
         queryParameters: {
           "name": value
@@ -99,11 +99,11 @@ class CustomerTypeController extends GetxController {
     });
   }
 
-  /// Fetches CustomerType data from a remote data source.
+  /// Fetches Supplier data from a remote data source.
   ///
-  /// The `fetchDataCustomerType` function is responsible for fetching data from a remote
+  /// The `fetchDataSupplier` function is responsible for fetching data from a remote
   /// data source. It updates several states such as [currentPage], [totalPage],
-  /// [isLoading], and [dataCustomerTypes] to manage the pagination and loading of CustomerType data.
+  /// [isLoading], and [dataSuppliers] to manage the pagination and loading of Supplier data.
   ///
   /// If the `refresh` parameter is set to `true`, the existing data will be cleared.
   ///
@@ -113,9 +113,9 @@ class CustomerTypeController extends GetxController {
   ///
   /// Throws an exception if an error occurs during data fetching.
   ///
-  Future<void> fetchDataCustomerType({bool refresh = false, Map<String, dynamic>? queryParameters}) async {
+  Future<void> fetchDataSupplier({bool refresh = false, Map<String, dynamic>? queryParameters}) async {
     // Clear data if refreshing
-    if (refresh) clearDataCustomerType();
+    if (refresh) clearDataSupplier();
 
     // Check if we have reached the total number of pages
     if (_currentPage.value == _totalPage.value) return;
@@ -138,11 +138,11 @@ class CustomerTypeController extends GetxController {
     // Set loading state
     _isLoading.value = true;
 
-    // Fetch data using the CustomerType data use case
-    List<CustomerTypeEntity> data = await fetchDataUseCaseCustomerType.call(buildQueryParameters);
+    // Fetch data using the Supplier data use case
+    List<SupplierEntity> data = await fetchDataUseCaseSupplier.call(buildQueryParameters);
 
     // Update state with fetched data
-    _dataCustomerType.value.addAll(data);
+    _dataSupplier.value.addAll(data);
     _isLoading.value = false;
 
     // Increment current page if data is fetched successfully
@@ -154,23 +154,23 @@ class CustomerTypeController extends GetxController {
     }
   }
 
-  /// Store CustomerType data to remote data source.
+  /// Store Supplier data to remote data source.
   /// 
-  /// The `CustomerTypeStore` will store data to remote API and 
+  /// The `SupplierStore` will store data to remote API and 
   /// this function will auto update current state for listing prev
-  /// data CustomerType
+  /// data Supplier
   /// 
   /// Parameters:
-  /// - `paylaod`: A [CustomerTypePaylaod] entity while will store to remote data source.
+  /// - `paylaod`: A [SupplierPaylaod] entity while will store to remote data source.
   /// 
   /// Usage example:
   /// ```dart
-  /// CustomerTypeStore(payload(/*...*/))
+  /// supplierStore(payload(/*...*/))
   /// ```
-  void customerTypeStore(CustomerTypePayload paylaod) async {
+  void supplierStore(SupplierPayload paylaod) async {
     try {
       PAMAlertWidget.showLoadingAlert(Get.context!);
-      await storeDataUseCaseCustomerType.call(paylaod);
+      await storeDataUseCaseSupplier.call(paylaod);
 
       // back from load screen
       Get.back();
@@ -194,30 +194,30 @@ class CustomerTypeController extends GetxController {
     }
   }
 
-  /// Delete data CustomerType handling
+  /// Delete data Supplier handling
   /// 
-  /// The `CustomerTypeDelete` will delete data from API and will remove
-  /// local state list CustomerType.
+  /// The `SupplierDelete` will delete data from API and will remove
+  /// local state list Supplier.
   /// 
   /// Parameters:
   /// - `id`: A string reprentation of uniquer identifier.
   /// 
   /// Usage example:
   /// ```dart
-  /// CustomerTypeDelete(jslf293lf-32343fsaf-fsalfl3)
+  /// supplierDelete(jslf293lf-32343fsaf-fsalfl3)
   /// ```
-  void customerTypeDelete(String id) async {
+  void supplierDelete(String id) async {
     try {
-      _dataCustomerType.value.removeWhere((element) => element.id == id);
-      await deleteDataUseCaseCustomerType.call(id);
+      _dataSupplier.value.removeWhere((element) => element.id == id);
+      await deleteDataUseCaseSupplier.call(id);
 
-      List<CustomerTypeEntity> currentData = _dataCustomerType.value;
-      _dataCustomerType.value = [];
-      _dataCustomerType.value.addAll(currentData);
+      List<SupplierEntity> currentData = _dataSupplier.value;
+      _dataSupplier.value = [];
+      _dataSupplier.value.addAll(currentData);
 
       PAMSnackBarWidget.show(
         title: "success".tr.toCapitalize(),
-        message: "the CustomerType has been removed successfully".tr.toCapitalize(),
+        message: "the Supplier has been removed successfully".tr.toCapitalize(),
         type: PAMSnackBarWidgetType.success
       );
     } catch (e) {
@@ -231,14 +231,14 @@ class CustomerTypeController extends GetxController {
     }
   }
 
-  /// Update data CustomerType handling
-  void customerTypeUpdate(CustomerTypePayload paylaod) async {
+  /// Update data Supplier handling
+  void supplierUpdate(SupplierPayload paylaod) async {
     try {
       PAMAlertWidget.showLoadingAlert(Get.context!);
-      _dataCustomerType.value.removeWhere((element) => element.id == paylaod.id);
-      final CustomerTypeEntity data = await updateDataUseCaseCustomerType.call(paylaod);
+      _dataSupplier.value.removeWhere((element) => element.id == paylaod.id);
+      final SupplierEntity data = await updateDataUseCaseSupplier.call(paylaod);
 
-      _dataCustomerType.add(data);
+      _dataSupplier.add(data);
       // back from load screen
       Get.back();
 
@@ -248,7 +248,7 @@ class CustomerTypeController extends GetxController {
       Get.back();
       PAMSnackBarWidget.show(
         title: "failed".tr.toCapitalize(),
-        message: e.response!.data["message"],
+        message: e.response!.data["message"] ?? e.response!.data["errors"],
         type: PAMSnackBarWidgetType.danger
       );
     } catch (e) {

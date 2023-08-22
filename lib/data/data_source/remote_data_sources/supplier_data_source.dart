@@ -17,7 +17,7 @@ class SupplierDataSource extends RemoteDataSource {
   ///
   Future<List<SupplierDTO>> fetchData(Map<String, dynamic>? queryParameters) async {
     final List<SupplierDTO> response = await dioClient.getRequest(
-      "api/dsuppliers",
+      "api/suppliers",
       converter: (data) => List<SupplierDTO>.from(
         data["data"].map((d) => SupplierDTO.fromJson(d)),
       ),
@@ -41,7 +41,7 @@ class SupplierDataSource extends RemoteDataSource {
   /// 
   Future<SupplierDTO> fetchDetailData(String id, Map<String, dynamic>? queryParameters) async {
     final SupplierDTO response = await dioClient.getRequest(
-      "api/dsuppliers/$id",
+      "api/suppliers/$id",
       converter: (data) => SupplierDTO.fromJson(data),
       queryParameters: queryParameters
     );
@@ -51,7 +51,7 @@ class SupplierDataSource extends RemoteDataSource {
 
   /// Stores supplier data to the remote API.
   ///
-  /// This function sends a POST request to the remote API endpoint "api/dsuppliers"
+  /// This function sends a POST request to the remote API endpoint "api/suppliers"
   /// in order to store supplier data. It takes a [payload] parameter containing
   /// the supplier data to be stored. The function returns a [SupplierDTO] object
   /// representing the response received from the API after storing the data.
@@ -74,7 +74,7 @@ class SupplierDataSource extends RemoteDataSource {
   /// Returns a [Future<SupplierDTO>] representing the stored supplier data.
   Future<SupplierDTO> storeData(SupplierPayload payload) async {
     final SupplierDTO response = await dioClient.postRequest(
-      "api/dsuppliers", 
+      "api/suppliers", 
       converter: (data) => SupplierDTO.fromJson(data), 
       payload: payload
     );
@@ -83,7 +83,7 @@ class SupplierDataSource extends RemoteDataSource {
 
   /// Updates supplier data on the remote API.
   ///
-  /// This function sends a PATCH request to the remote API endpoint "api/dsuppliers"
+  /// This function sends a PATCH request to the remote API endpoint "api/suppliers"
   /// in order to update supplier data. It takes a [payload] parameter containing
   /// the updated supplier data to be sent to the API.
   ///
@@ -104,7 +104,7 @@ class SupplierDataSource extends RemoteDataSource {
   /// Returns a [Future<SupplierDTO>] representing the updated supplier data.
   Future<SupplierDTO> updateData(String id, SupplierPayload paylaod) async {
     final SupplierDTO response = await dioClient.patchRequest(
-      "api/dsuppliers/$id", 
+      "api/suppliers/$id", 
       converter: (data) => SupplierDTO.fromJson(data), 
       payload: paylaod
     );
@@ -113,7 +113,7 @@ class SupplierDataSource extends RemoteDataSource {
 
   /// Deletes supplier data from the remote API.
   ///
-  /// This function sends a DELETE request to the remote API endpoint "api/dsuppliers"
+  /// This function sends a DELETE request to the remote API endpoint "api/suppliers"
   /// to delete supplier data associated with the given [id].
   ///
   /// The [dioClient] should be a preconfigured instance of a Dio HTTP client,
@@ -136,7 +136,7 @@ class SupplierDataSource extends RemoteDataSource {
   /// Returns a [Future<void>] indicating the completion of the delete operation.
   Future<void> deleteData(String id) async {
     await dioClient.deleteRequest(
-      "api/dsuppliers", 
+      "api/suppliers", 
       converter: (data) => null,
       id: id
     );

@@ -81,44 +81,46 @@ class ClothCategoryScreen extends GetView<ClothCategoryController> {
               child: Slidable(
                 key: Key("${controller.dataClothCategory[index]}"),
                 closeOnScroll: false,
-                endActionPane: ActionPane(
-                  extentRatio: 0.4,
-                  motion: const ScrollMotion(),
-                  dismissible: DismissiblePane(onDismissed: () {}),
-                  dragDismissible: false,
-                  openThreshold: .1,
-                  children: [
+                endActionPane: controller.showSuperAccess 
+                  ? ActionPane(
+                      extentRatio: 0.4,
+                      motion: const ScrollMotion(),
+                      dismissible: DismissiblePane(onDismissed: () {}),
+                      dragDismissible: false,
+                      openThreshold: .1,
+                      children: [
 
-                    // update action
-                    SlidableAction(
-                      onPressed: (context) {
-                        Get.to(ClothCategoryFormScreen(type: ClothCategoryFormScreenType.update),
-                          binding: ClothCategoryBinding(),
-                          arguments: {
-                            "data": ClothCategoryPayload(
-                              id: controller.dataClothCategory[index].id ?? '',
-                              name: controller.dataClothCategory[index].name ?? '',
-                              description: controller.dataClothCategory[index].description ?? ''
-                            )
-                          }
-                        );
-                      },
-                      backgroundColor: const Color.fromARGB(255, 253, 207, 2),
-                      foregroundColor: Colors.white,
-                      icon: Icons.edit,
-                    ),
+                        // update action
+                        SlidableAction(
+                          onPressed: (context) {
+                            Get.to(ClothCategoryFormScreen(type: ClothCategoryFormScreenType.update),
+                              binding: ClothCategoryBinding(),
+                              arguments: {
+                                "data": ClothCategoryPayload(
+                                  id: controller.dataClothCategory[index].id ?? '',
+                                  name: controller.dataClothCategory[index].name ?? '',
+                                  description: controller.dataClothCategory[index].description ?? ''
+                                )
+                              }
+                            );
+                          },
+                          backgroundColor: const Color.fromARGB(255, 253, 207, 2),
+                          foregroundColor: Colors.white,
+                          icon: Icons.edit,
+                        ),
 
-                    // delete action
-                    SlidableAction(
-                      onPressed: (context) {
-                        controller.clothCategoryDelete(controller.dataClothCategory[index].id!);
-                      },
-                      backgroundColor: Colors.redAccent,
-                      foregroundColor: Colors.white,
-                      icon: Icons.delete,
+                        // delete action
+                        SlidableAction(
+                          onPressed: (context) {
+                            controller.clothCategoryDelete(controller.dataClothCategory[index].id!);
+                          },
+                          backgroundColor: Colors.redAccent,
+                          foregroundColor: Colors.white,
+                          icon: Icons.delete,
+                        )
+                      ],
                     )
-                  ],
-                ),
+                  : null,
                 child: ListTile(
                   leading: Container(
                     alignment: Alignment.center,

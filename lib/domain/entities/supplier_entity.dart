@@ -4,7 +4,8 @@ class SupplierEntity extends Entity {
   final String? id;
   final String? name;
   final String? email;
-  final String? phone;
+  final String? phoneNumber;
+  final String? address;
   final String? provinceId;
   final String? regencyId;
   final String? districtId;
@@ -15,7 +16,8 @@ class SupplierEntity extends Entity {
     this.id,
     this.name,
     this.email,
-    this.phone,
+    this.phoneNumber,
+    this.address,
     this.provinceId,
     this.regencyId,
     this.districtId,
@@ -28,7 +30,8 @@ class SupplierEntity extends Entity {
     String? id,
     String? name,
     String? email,
-    String? phone,
+    String? phoneNumber,
+    String? address,
     String? provinceId,
     String? regencyId,
     String? districtId,
@@ -39,7 +42,8 @@ class SupplierEntity extends Entity {
       id: id ?? this.id,
       name: name ?? this.name,
       email:  email ?? this.email,
-      phone: phone ?? this.phone,
+      phoneNumber: phoneNumber ?? this.phoneNumber,
+      address: address ?? this.address,
       provinceId: provinceId ?? this.provinceId,
       regencyId: regencyId ?? this.regencyId,
       districtId: districtId ?? this.districtId,
@@ -50,6 +54,6 @@ class SupplierEntity extends Entity {
   
   @override
   List<Object?> get props => [
-    id, name, email, phone, provinceId, regencyId, districtId, villageId, createdAt
+    id, name, email, phoneNumber, address, provinceId, regencyId, districtId, villageId, createdAt
   ];
 }

@@ -232,7 +232,8 @@ class $SupplierMapper implements AutoMapprInterface {
       id: model.id,
       name: model.name,
       email: model.email,
-      phone: model.phone,
+      phoneNumber: model.phoneNumber,
+      address: model.address,
       provinceId: model.provinceId,
       regencyId: model.regencyId,
       districtId: model.districtId,
@@ -252,11 +253,12 @@ class $SupplierMapper implements AutoMapprInterface {
       id: model.id,
       name: model.name,
       email: model.email,
-      phone: model.phone,
+      phoneNumber: model.phoneNumber,
       provinceId: model.provinceId,
       regencyId: model.regencyId,
       districtId: model.districtId,
       villageId: model.villageId,
+      address: model.address,
       createdAt: model.createdAt,
     );
   }

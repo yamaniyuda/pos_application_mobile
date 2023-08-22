@@ -4,14 +4,13 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:pos_application_mobile/app/config/routes/app_screens.dart';
 import 'package:pos_application_mobile/app/extensions/string_extention.dart';
-import 'package:pos_application_mobile/presentation/app/color/controllers/color_binding.dart';
-import 'package:pos_application_mobile/presentation/app/color/controllers/color_controller.dart';
-import 'package:pos_application_mobile/presentation/app/color/screens/color_form_screen.dart';
+import 'package:pos_application_mobile/data/payloads/supplier_payload.dart';
+import 'package:pos_application_mobile/presentation/app/supplier/supplier.dart';
 import 'package:pos_application_mobile/presentation/widgets/pam_form/pam_form.dart';
 import 'package:pos_application_mobile/presentation/widgets/pam_list_scroll/pam_list_scroll.dart';
 
-class ColorScreen extends GetView<ColorController> {
-  const ColorScreen({super.key});
+class SupplierScreen extends GetView<SupplierController> {
+  const SupplierScreen({super.key});
 
   Widget _buildHeader() {
     return Container(
@@ -38,9 +37,9 @@ class ColorScreen extends GetView<ColorController> {
                 borderRadius: BorderRadius.circular(10)
               ),
               child: PAMFormTextFieldWidget(
-                hintText: "search color".tr.toCapitalize(),
+                hintText: "search supplier".tr.toCapitalize(),
                 decoration: const BoxDecoration(),
-                onChanged: controller.searchDataColor,
+                onChanged: controller.searchDataSupplier,
               ),
             ),
           ),
@@ -60,18 +59,25 @@ class ColorScreen extends GetView<ColorController> {
     );
   }
 
-  List<Widget> _supperAccessListAction(int index, Color colorLeading) {
+  List<Widget> _supperAccessListAction(int index) {
     if (controller.showSuperAccess) {
       return [
         SlidableAction(
-          onPressed: (context) {
-            Get.to(ColorFormScreen(type: ColorFormScreenType.update),
-              binding: ColorBinding(),
+              onPressed: (context) {
+            Get.to(SupplierFormScreen(type: SupplierFormScreenType.update),
+              binding: SupplierBinding(),
               arguments: {
-                "id": controller.dataColors[index].id,
-                "name": controller.dataColors[index].name,
-                "description": controller.dataColors[index].description,
-                "codeHexa": colorLeading
+                "data": SupplierPayload(
+                  id: controller.dataSupplier[index].id ?? '',
+                  name: controller.dataSupplier[index].name ?? '',
+                  address: controller.dataSupplier[index].address ?? '',
+                  districtId: controller.dataSupplier[index].districtId ?? '',
+                  email: controller.dataSupplier[index].email ?? '',
+                  phoneNumber: controller.dataSupplier[index].phoneNumber ?? '',
+                  provinceId: controller.dataSupplier[index].provinceId ?? '',
+                  regencyId: controller.dataSupplier[index].regencyId ?? '',
+                  villageId: controller.dataSupplier[index].villageId ?? ''
+                )
               }
             );
           },
@@ -83,7 +89,7 @@ class ColorScreen extends GetView<ColorController> {
         // delete action
         SlidableAction(
           onPressed: (context) {
-            controller.colorDelete(controller.dataColors[index].id!);
+            controller.supplierDelete(controller.dataSupplier[index].id!);
           },
           backgroundColor: Colors.redAccent,
           foregroundColor: Colors.white,
@@ -94,9 +100,9 @@ class ColorScreen extends GetView<ColorController> {
     return [];
   }
 
-  Widget _buildListColor() {
+  Widget _buildListCustomer() {
     return Obx(() {
-      if (controller.isLoading && controller.dataColors.isEmpty) {
+      if (controller.isLoading && controller.dataSupplier.isEmpty) {
         return const Expanded(
           child: Center(
           child: CircularProgressIndicator(),
@@ -105,50 +111,41 @@ class ColorScreen extends GetView<ColorController> {
       return Expanded(
         child: PAMListScroll(
           padding: const EdgeInsets.symmetric(vertical: 20),
-          onRefresh: () => controller.fetchDataColor(refresh: true),
-          itemCount: controller.dataColors.length,
-          scrollToRefresh: controller.currentPage == controller.totalPage ? null : controller.fetchDataColor,
+          onRefresh: () => controller.fetchDataSupplier(refresh: true),
+          itemCount: controller.dataSupplier.length,
+          scrollToRefresh: controller.currentPage == controller.totalPage ? null : controller.fetchDataSupplier,
           itemBuilder: (context, index) {
-            Color colorLeading = Color(
-              int.parse("#${controller.dataColors[index].codeHexa ?? 'ffffff'}".substring(1, 7), radix: 16) + 0xFF000000
-            );
-            double luminance = colorLeading.computeLuminance();
-            Color textColor = luminance > 0.5 ? Colors.black : Colors.white;
-
             return Container(
               clipBehavior: Clip.hardEdge,
               margin: EdgeInsets.symmetric(horizontal: 20.sp, vertical: 5),
               decoration: const BoxDecoration(),
               child: Slidable(
-                key: Key("${controller.dataColors[index]}"),
+                key: Key("${controller.dataSupplier[index]}"),
                 closeOnScroll: false,
-                endActionPane: controller.showSuperAccess
+                endActionPane: controller.showSuperAccess 
                   ? ActionPane(
-                      extentRatio: 0.4,
-                      motion: const ScrollMotion(),
-                      dismissible: DismissiblePane(onDismissed: () {}),
-                      dragDismissible: false,
-                      openThreshold: .1,
-                      children: _supperAccessListAction(index, colorLeading)
-                    )
-                  : null,
-
-                  
+                    extentRatio: 0.4,
+                    motion: const ScrollMotion(),
+                    dismissible: DismissiblePane(onDismissed: () {}),
+                    dragDismissible: false,
+                    openThreshold: .1,
+                    children: _supperAccessListAction(index)
+                  ): null,
                 child: ListTile(
                   leading: Container(
                     alignment: Alignment.center,
                     height: 50,
                     width: 50,
                     decoration: BoxDecoration(
-                      color: colorLeading,
+                      color: Colors.black54,
                       borderRadius: BorderRadius.circular(10)
                     ),
-                    child: Icon(Icons.color_lens, color: textColor),
+                    child: const Icon(Icons.manage_accounts, color: Colors.white),
                   ),
                   dense: true,
-                  title: Text(controller.dataColors[index].name!.toCapitalize()),
+                  title: Text(controller.dataSupplier[index].name!.toCapitalize()),
                   tileColor: Colors.white,
-                  subtitle: Text("${controller.dataColors[index].description}".toCapitalize()),
+                  subtitle: Text("${controller.dataSupplier[index].email}".toCapitalize()),
                 ),
               ),
             );
@@ -159,13 +156,12 @@ class ColorScreen extends GetView<ColorController> {
   }
 
   Widget _buildButtonAdd() {
-    print(controller.authService.userEntity?.role);
     if (controller.showSuperAccess) {
       return FloatingActionButton(
         onPressed: () async {
-          final result = await Get.toNamed(Routes.colorForm);
+          final result = await Get.toNamed(Routes.supplierForm);
           if (result is String) {
-            controller.fetchDataColor(refresh: true);
+            controller.fetchDataSupplier(refresh: true);
           }
         },
         backgroundColor: Theme.of(Get.context!).primaryColor,
@@ -175,14 +171,15 @@ class ColorScreen extends GetView<ColorController> {
     return Container();
   }
 
+
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context);
-
+    
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "color".tr.toCapitalize(),
+          "supplier".tr.toCapitalize(),
         ),
       ),
       body: SafeArea(
@@ -190,7 +187,7 @@ class ColorScreen extends GetView<ColorController> {
           children: [
             /* build list view */
             _buildHeader(),
-            _buildListColor()
+            _buildListCustomer()
           ],
         ),
       ),

@@ -181,7 +181,7 @@ class SizeController extends GetxController {
       Get.back();
       PAMSnackBarWidget.show(
         title: "failed".tr.toCapitalize(),
-        message: e.response!.data["message"],
+        message: e.response!.data["message"] ?? e.response!.data["error"],
         type: PAMSnackBarWidgetType.danger
       );
     } catch (e) {

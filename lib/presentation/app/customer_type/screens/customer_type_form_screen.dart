@@ -7,8 +7,6 @@ import 'package:pos_application_mobile/presentation/app/customer_type/customer_t
 import 'package:pos_application_mobile/presentation/widgets/pam_bottom/pam_bottom.dart';
 import 'package:pos_application_mobile/presentation/widgets/pam_form/pam_form.dart';
 
-part 'customer_type_form_screen.g.dart';
-
 /// Type for widget CustomerTypeFormScreen
 enum CustomerTypeFormScreenType { store, update }
 

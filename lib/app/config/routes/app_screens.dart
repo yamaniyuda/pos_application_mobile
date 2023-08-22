@@ -18,6 +18,7 @@ import 'package:pos_application_mobile/presentation/app/on_boarding/on_boarding.
 import 'package:pos_application_mobile/presentation/app/splash/splash.dart';
 import 'package:pos_application_mobile/presentation/app/stock/controllers/stock_binding.dart';
 import 'package:pos_application_mobile/presentation/app/stock/screens/stock_screen.dart';
+import 'package:pos_application_mobile/presentation/app/supplier/supplier.dart';
 import 'package:pos_application_mobile/presentation/app/user/user.dart';
 
 import '../../../presentation/app/auth/controllers/auth_binding.dart';
@@ -157,6 +158,17 @@ class AppScreens {
       name: _Paths.clothCategoryForm,
       page: () => ClothCategoryFormScreen(),
       binding: ClothCategoryBinding()
+    ),
+
+    GetPage(
+      name: _Paths.supplier,
+      page: () => const SupplierScreen(),
+      binding: SupplierBinding()
+    ),
+    GetPage(
+      name: _Paths.supplierForm,
+      page: () => SupplierFormScreen(),
+      binding: SupplierBinding()
     )
   ];
 }

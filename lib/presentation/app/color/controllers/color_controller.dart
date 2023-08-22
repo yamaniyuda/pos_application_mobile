@@ -73,7 +73,7 @@ class ColorController extends GetxController {
   @override
   void onInit() {
     fetchDataColor();
-    _showSupperAccess.value = [AuthService.OWNER, AuthService.MANAGER].contains(
+    _showSupperAccess.value = [AuthService.OWNER].contains(
       authService.userEntity?.role
     );
     super.onInit();

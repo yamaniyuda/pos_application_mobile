@@ -14,8 +14,8 @@ class SupplierDTO implements DTO {
   @JsonKey(name: "email")
   late String? email;
 
-  @JsonKey(name: "phone")
-  late String? phone;
+  @JsonKey(name: "phone_number")
+  late String? phoneNumber;
 
   @JsonKey(name: "province_id")
   late String? provinceId;
@@ -29,6 +29,9 @@ class SupplierDTO implements DTO {
   @JsonKey(name: "village_id")
   late String? villageId;
 
+  @JsonKey(name: "address")
+  late String? address;
+
   @JsonKey(name: "created_at")
   late String? createdAt;
 
@@ -36,11 +39,12 @@ class SupplierDTO implements DTO {
     this.id,
     this.name,
     this.email,
-    this.phone,
+    this.phoneNumber,
     this.provinceId,
     this.regencyId,
     this.districtId,
     this.villageId,
+    this.address,
     this.createdAt
   });
 

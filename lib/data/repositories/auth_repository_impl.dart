@@ -21,6 +21,7 @@ class AuthRepositoryImpl extends AuthRepository {
   @override
   Future<void> logout() async {
     await remoteDataSource.logout();
+    await localDataSource.deleteMe();
   }
 
   @override

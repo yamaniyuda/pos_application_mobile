@@ -70,6 +70,8 @@ class AuthService extends GetxService {
     _isLoading.value = false;
     _isLogin.value = false;
     _userEntity.value = UserEntity();
+
+    _deleteRememberMe();
   }
 
   /// for handling store all state to local storage
@@ -141,6 +143,15 @@ class AuthService extends GetxService {
     } else {
       _rememberMe.value = true;
     }
+  }
+
+  Future<void> _deleteRememberMe() async {
+    await storage.delete(
+      key: REMEMBER_ME_KEY,
+      aOptions: const AndroidOptions(
+        encryptedSharedPreferences: true
+      )
+    );
   }
 
   /// Sign in the user using the provide [payload]

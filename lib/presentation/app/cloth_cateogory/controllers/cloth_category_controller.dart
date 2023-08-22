@@ -58,7 +58,7 @@ class ClothCategoryController extends GetxController {
   @override
   void onInit() {
     fetchdataClothCategory();
-    _showSupperAccess.value = [AuthService.OWNER, AuthService.MANAGER].contains(
+    _showSupperAccess.value = [AuthService.OWNER].contains(
       authService.userEntity?.role
     );
     

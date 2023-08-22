@@ -25,6 +25,8 @@ abstract class Routes {
   static const sizeForm = _Paths.sizeForm;
   static const clothCategory = _Paths.clothCategory;
   static const clothCategoryForm = _Paths.clothCategoryForm;
+  static const supplier = _Paths.supplier;
+  static const supplierForm = _Paths.supplierForm;
 }
 
 abstract class _Paths {
@@ -50,4 +52,6 @@ abstract class _Paths {
   static const String sizeForm = '/size-form';
   static const String clothCategory = '/cloth-category';
   static const String clothCategoryForm = '/cloth-category-form';
+  static const String supplier = '/supplier';
+  static const String supplierForm = '/supplier-form';
 }

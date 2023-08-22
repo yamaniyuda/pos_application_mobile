@@ -37,7 +37,7 @@ class CustomerScreen extends GetView<CustomerController> {
                 borderRadius: BorderRadius.circular(10)
               ),
               child: PAMFormTextFieldWidget(
-                hintText: "search customer type".tr.toCapitalize(),
+                hintText: "search customer".tr.toCapitalize(),
                 decoration: const BoxDecoration(),
                 onChanged: controller.searchDataCustomer,
               ),
@@ -81,51 +81,54 @@ class CustomerScreen extends GetView<CustomerController> {
               child: Slidable(
                 key: Key("${controller.dataCustomer[index]}"),
                 closeOnScroll: false,
-                endActionPane: ActionPane(
-                  extentRatio: 0.4,
-                  motion: const ScrollMotion(),
-                  dismissible: DismissiblePane(onDismissed: () {}),
-                  dragDismissible: false,
-                  openThreshold: .1,
-                  children: [
+                endActionPane: controller.showSuperAccess
+                  ? ActionPane(
+                      extentRatio: 0.4,
+                      motion: const ScrollMotion(),
+                      dismissible: DismissiblePane(onDismissed: () {}),
+                      dragDismissible: false,
+                      openThreshold: .1,
+                      children: [
 
-                    // update action
-                    SlidableAction(
-                      onPressed: (context) {
-                        Get.to(CustomerFormScreen(type: CustomerFormScreenType.update),
-                          binding: CustomerBinding(),
-                          arguments: {
-                            "data": CustomerPayload(
-                              id: controller.dataCustomer[index].id ?? '',
-                              name: controller.dataCustomer[index].name ?? '',
-                              customerCategoryId: controller.dataCustomer[index].customerCategoryId ?? '',
-                              address: controller.dataCustomer[index].address ?? '',
-                              districtId: controller.dataCustomer[index].districtId ?? '',
-                              email: controller.dataCustomer[index].email ?? '',
-                              phoneNumber: controller.dataCustomer[index].phoneNumber ?? '',
-                              provinceId: controller.dataCustomer[index].provinceId ?? '',
-                              regencyId: controller.dataCustomer[index].regencyId ?? '',
-                              villageId: controller.dataCustomer[index].villageId ?? ''
-                            )
-                          }
-                        );
-                      },
-                      backgroundColor: const Color.fromARGB(255, 253, 207, 2),
-                      foregroundColor: Colors.white,
-                      icon: Icons.edit,
-                    ),
+                        // update action
+                        SlidableAction(
+                          onPressed: (context) {
+                            Get.to(CustomerFormScreen(type: CustomerFormScreenType.update),
+                              binding: CustomerBinding(),
+                              arguments: {
+                                "data": CustomerPayload(
+                                  id: controller.dataCustomer[index].id ?? '',
+                                  name: controller.dataCustomer[index].name ?? '',
+                                  customerCategoryId: controller.dataCustomer[index].customerCategoryId ?? '',
+                                  address: controller.dataCustomer[index].address ?? '',
+                                  districtId: controller.dataCustomer[index].districtId ?? '',
+                                  email: controller.dataCustomer[index].email ?? '',
+                                  phoneNumber: controller.dataCustomer[index].phoneNumber ?? '',
+                                  provinceId: controller.dataCustomer[index].provinceId ?? '',
+                                  regencyId: controller.dataCustomer[index].regencyId ?? '',
+                                  villageId: controller.dataCustomer[index].villageId ?? ''
+                                )
+                              }
+                            );
+                          },
+                          backgroundColor: const Color.fromARGB(255, 253, 207, 2),
+                          foregroundColor: Colors.white,
+                          icon: Icons.edit,
+                        ),
 
-                    // delete action
-                    SlidableAction(
-                      onPressed: (context) {
-                        controller.customerDelete(controller.dataCustomer[index].id!);
-                      },
-                      backgroundColor: Colors.redAccent,
-                      foregroundColor: Colors.white,
-                      icon: Icons.delete,
+                        // delete action
+                        SlidableAction(
+                          onPressed: (context) {
+                            controller.customerDelete(controller.dataCustomer[index].id!);
+                          },
+                          backgroundColor: Colors.redAccent,
+                          foregroundColor: Colors.white,
+                          icon: Icons.delete,
+                        )
+                      ]
                     )
-                  ],
-                ),
+                  : null,
+
                 child: ListTile(
                   leading: Container(
                     alignment: Alignment.center,
@@ -137,7 +140,6 @@ class CustomerScreen extends GetView<CustomerController> {
                     ),
                     child: const Icon(Icons.manage_accounts, color: Colors.white),
                   ),
-                  trailing: const Icon(Icons.density_medium_rounded),
                   dense: true,
                   title: Text(controller.dataCustomer[index].name!.toCapitalize()),
                   tileColor: Colors.white,

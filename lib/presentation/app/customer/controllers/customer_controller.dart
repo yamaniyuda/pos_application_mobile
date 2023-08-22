@@ -58,7 +58,7 @@ class CustomerController extends GetxController {
   @override
   void onInit() {
     fetchDataCustomer();
-    _showSupperAccess.value = [AuthService.OWNER, AuthService.MANAGER].contains(
+    _showSupperAccess.value = [AuthService.OWNER].contains(
       authService.userEntity?.role
     );
     

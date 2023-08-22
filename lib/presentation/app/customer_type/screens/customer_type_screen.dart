@@ -81,44 +81,48 @@ class CustomerTypeScreen extends GetView<CustomerTypeController> {
               child: Slidable(
                 key: Key("${controller.dataCustomerType[index]}"),
                 closeOnScroll: false,
-                endActionPane: ActionPane(
-                  extentRatio: 0.4,
-                  motion: const ScrollMotion(),
-                  dismissible: DismissiblePane(onDismissed: () {}),
-                  dragDismissible: false,
-                  openThreshold: .1,
-                  children: [
+                endActionPane: controller.showSuperAccess
+                  ? ActionPane(
+                      extentRatio: 0.4,
+                      motion: const ScrollMotion(),
+                      dismissible: DismissiblePane(onDismissed: () {}),
+                      dragDismissible: false,
+                      openThreshold: .1,
+                      children: [
 
-                    // update action
-                    SlidableAction(
-                      onPressed: (context) {
-                        Get.to(CustomerTypeFormScreen(type: CustomerTypeFormScreenType.update),
-                          binding: CustomerTypeBinding(),
-                          arguments: {
-                            "data": CustomerTypePayload(
-                              id: controller.dataCustomerType[index].id ?? '',
-                              name: controller.dataCustomerType[index].name ?? '',
-                              description: controller.dataCustomerType[index].description ?? ''
-                            )
-                          }
-                        );
-                      },
-                      backgroundColor: const Color.fromARGB(255, 253, 207, 2),
-                      foregroundColor: Colors.white,
-                      icon: Icons.edit,
-                    ),
+                        // update action
+                        SlidableAction(
+                          onPressed: (context) {
+                            Get.to(CustomerTypeFormScreen(type: CustomerTypeFormScreenType.update),
+                              binding: CustomerTypeBinding(),
+                              arguments: {
+                                "data": CustomerTypePayload(
+                                  id: controller.dataCustomerType[index].id ?? '',
+                                  name: controller.dataCustomerType[index].name ?? '',
+                                  description: controller.dataCustomerType[index].description ?? ''
+                                )
+                              }
+                            );
+                          },
+                          backgroundColor: const Color.fromARGB(255, 253, 207, 2),
+                          foregroundColor: Colors.white,
+                          icon: Icons.edit,
+                        ),
 
-                    // delete action
-                    SlidableAction(
-                      onPressed: (context) {
-                        controller.customerTypeDelete(controller.dataCustomerType[index].id!);
-                      },
-                      backgroundColor: Colors.redAccent,
-                      foregroundColor: Colors.white,
-                      icon: Icons.delete,
+                        // delete action
+                        SlidableAction(
+                          onPressed: (context) {
+                            controller.customerTypeDelete(controller.dataCustomerType[index].id!);
+                          },
+                          backgroundColor: Colors.redAccent,
+                          foregroundColor: Colors.white,
+                          icon: Icons.delete,
+                        )
+                      ],
                     )
-                  ],
-                ),
+                  : null,
+
+
                 child: ListTile(
                   leading: Container(
                     alignment: Alignment.center,
@@ -130,7 +134,6 @@ class CustomerTypeScreen extends GetView<CustomerTypeController> {
                     ),
                     child: const Icon(Icons.manage_accounts, color: Colors.white),
                   ),
-                  trailing: const Icon(Icons.density_medium_rounded),
                   dense: true,
                   title: Text(controller.dataCustomerType[index].name!.toCapitalize()),
                   tileColor: Colors.white,
@@ -168,7 +171,7 @@ class CustomerTypeScreen extends GetView<CustomerTypeController> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "CustomerType".tr.toCapitalize(),
+          "customer type".tr.toCapitalize(),
         ),
       ),
       body: SafeArea(

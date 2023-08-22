@@ -5,7 +5,6 @@ class SupplierPayload extends Payload {
   final String name;
   final String email;
   final String address;
-  final String phone;
   final String phoneNumber;
   final String provinceId;
   final String regencyId;
@@ -15,7 +14,6 @@ class SupplierPayload extends Payload {
   SupplierPayload({
     required this.name,
     this.id = '',
-    this.phone = '',
     this.email = '',
     this.address = '',
     this.phoneNumber = '',
@@ -31,7 +29,6 @@ class SupplierPayload extends Payload {
       "name": name,
       "email": email,
       "address": address,
-      "phone": phone,
       "phone_number": phoneNumber,
       "province_id": provinceId,
       "regency_id": regencyId,
