@@ -4,13 +4,13 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:pos_application_mobile/app/config/routes/app_screens.dart';
 import 'package:pos_application_mobile/app/extensions/string_extention.dart';
-import 'package:pos_application_mobile/data/payloads/size_payload.dart';
-import 'package:pos_application_mobile/presentation/app/size/size.dart';
+import 'package:pos_application_mobile/data/payloads/cloth_category_payload.dart';
+import 'package:pos_application_mobile/presentation/app/cloth_cateogory/cloth_category.dart';
 import 'package:pos_application_mobile/presentation/widgets/pam_form/pam_form.dart';
 import 'package:pos_application_mobile/presentation/widgets/pam_list_scroll/pam_list_scroll.dart';
 
-class SizeScreen extends GetView<SizeController> {
-  const SizeScreen({super.key});
+class ClothCategoryScreen extends GetView<ClothCategoryController> {
+  const ClothCategoryScreen({super.key});
 
   Widget _buildHeader() {
     return Container(
@@ -37,9 +37,9 @@ class SizeScreen extends GetView<SizeController> {
                 borderRadius: BorderRadius.circular(10)
               ),
               child: PAMFormTextFieldWidget(
-                hintText: "search size".tr.toCapitalize(),
+                hintText: "search ClothCategory".tr.toCapitalize(),
                 decoration: const BoxDecoration(),
-                onChanged: controller.searchdataSize,
+                onChanged: controller.searchdataClothCategory,
               ),
             ),
           ),
@@ -59,9 +59,9 @@ class SizeScreen extends GetView<SizeController> {
     );
   }
 
-  Widget _buildListsize() {
+  Widget _buildListClothCategory() {
     return Obx(() {
-      if (controller.isLoading && controller.dataSize.isEmpty) {
+      if (controller.isLoading && controller.dataClothCategory.isEmpty) {
         return const Expanded(
           child: Center(
           child: CircularProgressIndicator(),
@@ -70,16 +70,16 @@ class SizeScreen extends GetView<SizeController> {
       return Expanded(
         child: PAMListScroll(
           padding: const EdgeInsets.symmetric(vertical: 20),
-          onRefresh: () => controller.fetchdataSize(refresh: true),
-          itemCount: controller.dataSize.length,
-          scrollToRefresh: controller.currentPage == controller.totalPage ? null : controller.fetchdataSize,
+          onRefresh: () => controller.fetchdataClothCategory(refresh: true),
+          itemCount: controller.dataClothCategory.length,
+          scrollToRefresh: controller.currentPage == controller.totalPage ? null : controller.fetchdataClothCategory,
           itemBuilder: (context, index) {
             return Container(
               clipBehavior: Clip.hardEdge,
               margin: EdgeInsets.symmetric(horizontal: 20.sp, vertical: 5),
               decoration: const BoxDecoration(),
               child: Slidable(
-                key: Key("${controller.dataSize[index]}"),
+                key: Key("${controller.dataClothCategory[index]}"),
                 closeOnScroll: false,
                 endActionPane: ActionPane(
                   extentRatio: 0.4,
@@ -92,13 +92,13 @@ class SizeScreen extends GetView<SizeController> {
                     // update action
                     SlidableAction(
                       onPressed: (context) {
-                        Get.to(SizeFormScreen(type: SizeFormScreenType.update),
-                          binding: SizeBinding(),
+                        Get.to(ClothCategoryFormScreen(type: ClothCategoryFormScreenType.update),
+                          binding: ClothCategoryBinding(),
                           arguments: {
-                            "data": SizePayload(
-                              id: controller.dataSize[index].id ?? '',
-                              name: controller.dataSize[index].name ?? '',
-                              description: controller.dataSize[index].description ?? ''
+                            "data": ClothCategoryPayload(
+                              id: controller.dataClothCategory[index].id ?? '',
+                              name: controller.dataClothCategory[index].name ?? '',
+                              description: controller.dataClothCategory[index].description ?? ''
                             )
                           }
                         );
@@ -111,7 +111,7 @@ class SizeScreen extends GetView<SizeController> {
                     // delete action
                     SlidableAction(
                       onPressed: (context) {
-                        controller.sizeDelete(controller.dataSize[index].id!);
+                        controller.clothCategoryDelete(controller.dataClothCategory[index].id!);
                       },
                       backgroundColor: Colors.redAccent,
                       foregroundColor: Colors.white,
@@ -128,12 +128,12 @@ class SizeScreen extends GetView<SizeController> {
                       color: Colors.black54,
                       borderRadius: BorderRadius.circular(10)
                     ),
-                    child: const Icon(Icons.photo_size_select_large, color: Colors.white),
+                    child: const Icon(Icons.loyalty, color: Colors.white),
                   ),
                   dense: true,
-                  title: Text(controller.dataSize[index].name!.toCapitalize()),
+                  title: Text(controller.dataClothCategory[index].name!.toCapitalize()),
                   tileColor: Colors.white,
-                  subtitle: Text("${controller.dataSize[index].description}".toCapitalize()),
+                  subtitle: Text("${controller.dataClothCategory[index].description}".toCapitalize()),
                 ),
               ),
             );
@@ -147,9 +147,9 @@ class SizeScreen extends GetView<SizeController> {
     if (controller.showSuperAccess) {
       return FloatingActionButton(
         onPressed: () async {
-          final result = await Get.toNamed(Routes.sizeForm);
+          final result = await Get.toNamed(Routes.clothCategoryForm);
           if (result is String) {
-            controller.fetchdataSize(refresh: true);
+            controller.fetchdataClothCategory(refresh: true);
           }
         },
         backgroundColor: Theme.of(Get.context!).primaryColor,
@@ -167,7 +167,7 @@ class SizeScreen extends GetView<SizeController> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "size".tr.toCapitalize(),
+          "ClothCategory".tr.toCapitalize(),
         ),
       ),
       body: SafeArea(
@@ -175,7 +175,7 @@ class SizeScreen extends GetView<SizeController> {
           children: [
             /* build list view */
             _buildHeader(),
-            _buildListsize()
+            _buildListClothCategory()
           ],
         ),
       ),

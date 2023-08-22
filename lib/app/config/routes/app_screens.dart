@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:pos_application_mobile/app/config/routes/middlewares/auth_guard_middleware.dart';
 import 'package:pos_application_mobile/presentation/app/account/account.dart';
+import 'package:pos_application_mobile/presentation/app/cloth_cateogory/cloth_category.dart';
 import 'package:pos_application_mobile/presentation/app/color/color.dart';
 import 'package:pos_application_mobile/presentation/app/customer/customer.dart';
 import 'package:pos_application_mobile/presentation/app/customer_type/customer_type.dart';
@@ -145,6 +146,17 @@ class AppScreens {
       name: _Paths.sizeForm,
       page: () => SizeFormScreen(),
       binding: SizeBinding()
+    ),
+
+    GetPage(
+      name: _Paths.clothCategory,
+      page: () => const ClothCategoryScreen(),
+      binding: ClothCategoryBinding()
+    ),
+    GetPage(
+      name: _Paths.clothCategoryForm,
+      page: () => ClothCategoryFormScreen(),
+      binding: ClothCategoryBinding()
     )
   ];
 }

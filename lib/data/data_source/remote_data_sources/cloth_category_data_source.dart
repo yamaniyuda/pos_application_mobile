@@ -42,7 +42,7 @@ class ClothCategoryDataSource extends RemoteDataSource {
   /// 
   Future<ClothCategoryDTO> fetchDetailData(String id, Map<String, dynamic>? queryParameters) async {
     final ClothCategoryDTO response = await dioClient.getRequest(
-      "api/cloth_categories/$id",
+      "api/cloth-categories/$id",
       converter: (data) => ClothCategoryDTO.fromJson(data),
       queryParameters: queryParameters
     );
@@ -105,7 +105,7 @@ class ClothCategoryDataSource extends RemoteDataSource {
   /// Returns a [Future<ClothCategoryDTO>] representing the updated cloth category data.
   Future<ClothCategoryDTO> updateData(String id, ClothCategoryPayload paylaod) async {
     final ClothCategoryDTO response = await dioClient.patchRequest(
-      "api/cloth_categories/$id", 
+      "api/cloth-categories/$id", 
       converter: (data) => ClothCategoryDTO.fromJson(data), 
       payload: paylaod
     );
