@@ -119,7 +119,8 @@ class AccountScreen extends GetView<AccountController> {
       { "title": "color".tr, "screenRouter": Routes.color, "icon": const Icon(Icons.color_lens, color: Colors.white,), "color": const Color(0xFF4AD7C9), "guards": [AuthService.OWNER]},
       { "title": "user".tr, "screenRouter": Routes.user, "icon": const Icon(Icons.person_add_alt_1_rounded, color: Colors.white,), "color": Theme.of(Get.context!).primaryColor, "guards": [AuthService.OWNER] },
       { "title": "customer".tr, "screenRouter": Routes.customer, "icon": const Icon(Icons.lock_person_sharp, color: Colors.white,), "color": Colors.orange[800], "guards": [AuthService.OWNER] },
-      { "title": "customer type".tr, "screenRouter": Routes.customerType, "icon": const Icon(Icons.manage_accounts, color: Colors.white,), "color": Colors.yellow[600], "guards": [AuthService.OWNER] }
+      { "title": "customer type".tr, "screenRouter": Routes.customerType, "icon": const Icon(Icons.manage_accounts, color: Colors.white,), "color": Colors.yellow[600], "guards": [AuthService.OWNER] },
+      { "title": "size".tr, "screenRouter": Routes.size, "icon": const Icon(Icons.photo_size_select_large, color: Colors.white,), "color": const Color(0xFF2CADE9) },
     ];
 
     final List<Map<String, dynamic>> menuSetting = [

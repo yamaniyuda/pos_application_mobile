@@ -102,6 +102,12 @@ class _PAMFormTextFieldWidgetState extends State<PAMFormTextFieldWidget> {
       });
     });
     _controller.text = widget.initialValue ?? "";
+
+    /// State optional screen form
+    /// if widget screen exist hidden value  set to inital value
+    setState(() {
+      _hiddenValue = widget.initialValue ?? "";
+    });
   }
 
   @override

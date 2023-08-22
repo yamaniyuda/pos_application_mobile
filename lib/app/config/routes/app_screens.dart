@@ -9,6 +9,7 @@ import 'package:pos_application_mobile/presentation/app/main/main.dart';
 import 'package:pos_application_mobile/presentation/app/product/controllers/product_binding.dart';
 import 'package:pos_application_mobile/presentation/app/product/screens/product_screen.dart';
 import 'package:pos_application_mobile/presentation/app/report/report.dart';
+import 'package:pos_application_mobile/presentation/app/size/size.dart';
 import 'package:pos_application_mobile/presentation/app/splash/controllers/splash_binding.dart';
 import 'package:pos_application_mobile/presentation/app/auth/auth.dart';
 import 'package:pos_application_mobile/presentation/app/home/home.dart';
@@ -133,6 +134,17 @@ class AppScreens {
       name: _Paths.customerForm,
       page: () => CustomerFormScreen(),
       binding: CustomerBinding()
+    ),
+
+    GetPage(
+      name: _Paths.size,
+      page: () => const SizeScreen(),
+      binding: SizeBinding()
+    ),
+    GetPage(
+      name: _Paths.sizeForm,
+      page: () => SizeFormScreen(),
+      binding: SizeBinding()
     )
   ];
 }

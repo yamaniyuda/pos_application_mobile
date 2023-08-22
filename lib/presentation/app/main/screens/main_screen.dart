@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pos_application_mobile/app/extensions/string_extention.dart';
 import 'package:pos_application_mobile/app/utils/system_utils.dart';
-import 'package:pos_application_mobile/presentation/app/account/account.dart';
 import 'package:pos_application_mobile/presentation/app/booking/booking.dart';
 import 'package:pos_application_mobile/presentation/app/home/home.dart';
 import 'package:pos_application_mobile/presentation/app/main/controllers/main_controller.dart';
 import 'package:pos_application_mobile/presentation/app/product/product.dart';
 import 'package:pos_application_mobile/presentation/app/purchase/purchase.dart';
-import 'package:pos_application_mobile/presentation/app/report/screens/report_screen.dart';
 import 'package:pos_application_mobile/presentation/app/stock/screens/stock_screen.dart';
 
 class MainScreen extends GetView<MainController> {
