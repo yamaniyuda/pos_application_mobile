@@ -208,6 +208,7 @@ class SupplierController extends GetxController {
   /// ```
   void supplierDelete(String id) async {
     try {
+      PAMAlertWidget.showLoadingAlert(Get.context!);
       _dataSupplier.value.removeWhere((element) => element.id == id);
       await deleteDataUseCaseSupplier.call(id);
 
@@ -215,9 +216,12 @@ class SupplierController extends GetxController {
       _dataSupplier.value = [];
       _dataSupplier.value.addAll(currentData);
 
+      // remove dialog
+      Get.back();
+
       PAMSnackBarWidget.show(
         title: "success".tr.toCapitalize(),
-        message: "the Supplier has been removed successfully".tr.toCapitalize(),
+        message: "data deleted successfully".tr.toCapitalize(),
         type: PAMSnackBarWidgetType.success
       );
     } catch (e) {
@@ -228,6 +232,9 @@ class SupplierController extends GetxController {
           type: PAMSnackBarWidgetType.success
         );
       }
+
+      // remove dialog
+      Get.back();
     }
   }
 

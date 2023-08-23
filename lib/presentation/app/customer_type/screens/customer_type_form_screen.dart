@@ -36,7 +36,8 @@ class CustomerTypeFormScreen extends GetView<CustomerTypeController> {
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context);
-    final String typeFormTitle = (type == CustomerTypeFormScreenType.store ? "store customer type" : "update customer type").tr.toCapitalize();
+    late String typeFormTitle = (type == CustomerTypeFormScreenType.store ? "store" : "update").tr;
+    typeFormTitle = "$typeFormTitle ${"customer type".tr}".toCapitalize();
 
     return Scaffold(
       appBar: AppBar(
@@ -55,11 +56,11 @@ class CustomerTypeFormScreen extends GetView<CustomerTypeController> {
                   initialValue: type == CustomerTypeFormScreenType.update
                     ? Get.arguments["data"].name
                     : "",
-                  labelText: "customer type name".tr.toCapitalize(),
-                  hintText: "customer type name".tr.toCapitalize(),
+                  labelText: "name".tr.toCapitalize(),
+                  hintText: "name".tr.toCapitalize(),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
-                      return "customer type is required".tr.toCapitalize();
+                      return "${"name".tr} ${"required".tr}".toCapitalize();
                     }
                     return null;
                   },
@@ -70,8 +71,8 @@ class CustomerTypeFormScreen extends GetView<CustomerTypeController> {
                   initialValue: type == CustomerTypeFormScreenType.update
                     ? Get.arguments["data"].description
                     : "",
-                  labelText: "customer type description".tr.toCapitalize(),
-                  hintText: "customer type description".tr.toCapitalize(),
+                  labelText: "description".tr.toCapitalize(),
+                  hintText: "description".tr.toCapitalize(),
                   maxLines: 5,
                 ),
                 const SizedBox(height: 50),
@@ -84,7 +85,7 @@ class CustomerTypeFormScreen extends GetView<CustomerTypeController> {
                       _formKey.currentState!.save();
                       
                       final CustomerTypePayload paylaod = CustomerTypePayload(
-                        id: Get.arguments["data"].id ?? "",
+                        id: Get.arguments?["data"].id ?? "",
                         name: name.value,
                         description: description.value
                       );

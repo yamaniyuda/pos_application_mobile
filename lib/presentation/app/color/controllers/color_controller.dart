@@ -202,6 +202,7 @@ class ColorController extends GetxController {
   /// This function required [id] is paramas
   void colorDelete(String id) async {
     try {
+      PAMAlertWidget.showLoadingAlert(Get.context!);
       _dataColors.value.removeWhere((element) => element.id == id);
       await deleteDataUseCase.call(id);
 
@@ -209,9 +210,12 @@ class ColorController extends GetxController {
       _dataColors.value = [];
       _dataColors.value.addAll(currentData);
 
+      // remove dialog
+      Get.back();
+
       PAMSnackBarWidget.show(
         title: "success".tr.toCapitalize(),
-        message: "the user has been removed successfully".tr.toCapitalize(),
+        message: "data deleted successfully".tr.toCapitalize(),
         type: PAMSnackBarWidgetType.success
       );
     } catch (e) {
@@ -222,6 +226,9 @@ class ColorController extends GetxController {
           type: PAMSnackBarWidgetType.success
         );
       }
+
+      // remove dialog
+      Get.back();
     }
   }
 

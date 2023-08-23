@@ -49,7 +49,8 @@ class CustomerFormScreen extends GetView<CustomerController> {
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context);
-    final String typeFormTitle = (type == CustomerFormScreenType.store ? "store customer type" : "update customer type").tr.toCapitalize();
+    late String typeFormTitle = (type == CustomerFormScreenType.store ? "store" : "update").tr.toCapitalize();
+    typeFormTitle = "$typeFormTitle ${"customer".tr}".toCapitalize();
 
     return Scaffold(
       appBar: AppBar(
@@ -67,7 +68,7 @@ class CustomerFormScreen extends GetView<CustomerController> {
                 // name
                 PAMFormTextFieldWidget(
                   onSaved: (newValue) => name.value = newValue!,
-                  initialValue: type == CustomerFormScreenType.update
+                  initialValue: type == CustomerFormScreenType.update && Get.arguments != null
                     ? Get.arguments["data"].name
                     : "",
                   labelText: "name".tr.toCapitalize(),
@@ -84,7 +85,7 @@ class CustomerFormScreen extends GetView<CustomerController> {
                 // customer type
                 PAMFormTextFieldWidget(
                   onSaved: (newValue) => customerType.value = newValue!,
-                  initialValue: type == CustomerFormScreenType.update
+                  initialValue: type == CustomerFormScreenType.update && Get.arguments != null
                     ? Get.arguments["data"].customerCategoryId
                     : "",
                   screen: SelectOptionCustomerTypeScreen(),
@@ -96,7 +97,7 @@ class CustomerFormScreen extends GetView<CustomerController> {
                 // email
                 PAMFormTextFieldWidget(
                   onSaved: (newValue) => email.value = newValue!,
-                  initialValue: type == CustomerFormScreenType.update
+                  initialValue: type == CustomerFormScreenType.update && Get.arguments != null
                     ? Get.arguments["data"].email
                     : "",
                   labelText: "email".tr.toCapitalize(),
@@ -107,22 +108,23 @@ class CustomerFormScreen extends GetView<CustomerController> {
                 // phone number
                 PAMFormTextFieldWidget(
                   onSaved: (newValue) => phoneNumber.value = newValue!,
-                  initialValue: type == CustomerFormScreenType.update
+                  initialValue: type == CustomerFormScreenType.update  && Get.arguments != null
                     ? Get.arguments["data"].phoneNumber
                     : "",
                   labelText: "phone number".tr.toCapitalize(),
                   hintText: "phone number".tr.toCapitalize(),
+                  keyboardType: TextInputType.phone,
                 ),
                 const SizedBox(height: 10),
 
                 // provincy
                 PAMFormTextFieldWidget(
                   onSaved: (newValue) => provinceId.value = newValue!,
-                  initialValue: type == CustomerFormScreenType.update
+                  initialValue: type == CustomerFormScreenType.update && Get.arguments != null
                     ? Get.arguments["data"].provinceId
                     : "",
-                  labelText: "provincy".tr.toCapitalize(),
-                  hintText: "provincy".tr.toCapitalize(),
+                  labelText: "province".tr.toCapitalize(),
+                  hintText: "province".tr.toCapitalize(),
                   screen: SearchProvincyScreen(),
                   onChanged: (String? value) {
                     provinceId.value = value!;
@@ -133,7 +135,7 @@ class CustomerFormScreen extends GetView<CustomerController> {
                 // regency
                 PAMFormTextFieldWidget(
                   onSaved: (newValue) => regencyId.value = newValue!,
-                  initialValue: type == CustomerFormScreenType.update
+                  initialValue: type == CustomerFormScreenType.update && Get.arguments != null
                     ? Get.arguments["data"].regencyId
                     : "",
                   labelText: "regency".tr.toCapitalize(),
@@ -148,14 +150,14 @@ class CustomerFormScreen extends GetView<CustomerController> {
                 // district
                 PAMFormTextFieldWidget(
                   onSaved: (newValue) => districtId.value = newValue!,
-                  initialValue: type == CustomerFormScreenType.update
+                  initialValue: type == CustomerFormScreenType.update && Get.arguments != null
                     ? Get.arguments["data"].districtId
                     : "",
                   labelText: "district".tr.toCapitalize(),
                   hintText: "district".tr.toCapitalize(),
                   onChanged: (String? value) => districtId.value = value!,
                   screen: Obx(() => SearchDistrictScreen(
-                    provincyId: regencyId.value,
+                    regencyId: regencyId.value,
                   ))
                 ),
                 const SizedBox(height: 10),
@@ -163,21 +165,21 @@ class CustomerFormScreen extends GetView<CustomerController> {
                 // village
                 PAMFormTextFieldWidget(
                   onSaved: (newValue) => villageId.value = newValue!,
-                  initialValue: type == CustomerFormScreenType.update
+                  initialValue: type == CustomerFormScreenType.update && Get.arguments != null
                     ? Get.arguments["data"].villageId
                     : "",
                   labelText: "village".tr.toCapitalize(),
                   hintText: "village".tr.toCapitalize(),
                   onChanged: (String? value) => villageId.value = value!,
                   screen: Obx(() => SearchVillageScreen(
-                    provincyId: districtId.value,
+                    districtId: districtId.value,
                   ))
                 ),
                 const SizedBox(height: 10),
                 
                 PAMFormTextFieldWidget(
                   onSaved: (newValue) => address.value = newValue!,
-                  initialValue: type == CustomerFormScreenType.update
+                  initialValue: type == CustomerFormScreenType.update && Get.arguments != null
                     ? Get.arguments["data"].address
                     : "",
                   labelText: "address".tr.toCapitalize(),

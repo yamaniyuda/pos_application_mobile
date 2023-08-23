@@ -61,15 +61,6 @@ class AccountScreen extends GetView<AccountController> {
               ),
             ),
             SizedBox(height: 15.sp),
-            Text(
-              "Edit ${"profile".tr}".toCapitalize(),
-              style: GoogleFonts.lato(
-                fontSize: 16.sp,
-                fontWeight: FontWeight.bold,
-                decoration: TextDecoration.underline,
-                color: Theme.of(context).primaryColor
-              ),
-            )
           ],
         )
       );
@@ -116,19 +107,19 @@ class AccountScreen extends GetView<AccountController> {
   Widget _buildMenuSetting(BuildContext context) {
 
     final List<Map<String, dynamic>> menuActivity = [
-      { "title": "order".tr, "screenRouter": "", "icon": const Icon(Icons.add_card_sharp, color: Colors.white), "color": const Color(0xFFE50A0A) , "guards": [AuthService.OWNER]},
-      { "title": "color".tr, "screenRouter": Routes.color, "icon": const Icon(Icons.color_lens, color: Colors.white,), "color": const Color(0xFF4AD7C9) },
       { "title": "user".tr, "screenRouter": Routes.user, "icon": const Icon(Icons.person_add_alt_1_rounded, color: Colors.white,), "color": Theme.of(Get.context!).primaryColor, "guards": [AuthService.OWNER] },
-      { "title": "customer".tr, "screenRouter": Routes.customer, "icon": const Icon(Icons.lock_person_sharp, color: Colors.white,), "color": Colors.orange[800] },
+      { "title": "customer".tr, "screenRouter": Routes.customer, "icon": const Icon(Icons.lock_person_sharp, color: Colors.white,), "color": Theme.of(Get.context!).primaryColor },
       { "title": "customer type".tr, "screenRouter": Routes.customerType, "icon": const Icon(Icons.manage_accounts, color: Colors.white,), "color": Theme.of(context).primaryColor },
-      { "title": "size".tr, "screenRouter": Routes.size, "icon": const Icon(Icons.photo_size_select_large, color: Colors.white,), "color": const Color(0xFF2CADE9) },
-      { "title": "cloth category".tr, "screenRouter": Routes.clothCategory, "icon": const Icon(Icons.loyalty, color: Colors.white,), "color": const Color(0xFF4AD7C9) },
       { "title": "supplier".tr, "screenRouter": Routes.supplier, "icon": const Icon(Icons.support_outlined, color: Colors.white,), "color": Theme.of(context).primaryColor },
+      { "title": "color".tr, "screenRouter": Routes.color, "icon": const Icon(Icons.color_lens, color: Colors.white,), "color": Theme.of(Get.context!).primaryColor },
+      { "title": "size".tr, "screenRouter": Routes.size, "icon": const Icon(Icons.photo_size_select_large, color: Colors.white,), "color": Theme.of(Get.context!).primaryColor },
+      { "title": "cloth category".tr, "screenRouter": Routes.clothCategory, "icon": const Icon(Icons.loyalty, color: Colors.white,), "color": Theme.of(Get.context!).primaryColor },
     ];
 
     final List<Map<String, dynamic>> menuSetting = [
-      { "title": "address".tr, "screenRouter": "" , "icon": const Icon(Icons.location_on, color: Colors.white), "color": const Color(0xFF2CADE9) },
-      { "title": "language".tr, "screenRouter": Routes.language, "icon": const Icon(Icons.language, color: Colors.white), "color": Theme.of(Get.context!).primaryColor },
+      // { "title": "address".tr, "screenRouter": "" , "icon": const Icon(Icons.location_on, color: Colors.white), "color": const Color(0xFF2CADE9) },
+      // { "title": "language".tr, "screenRouter": Routes.language, "icon": const Icon(Icons.language, color: Colors.white), "color": Theme.of(Get.context!).primaryColor },
+      { "title": "password".tr, "screenRouter": "", "icon": const Icon(Icons.password, color: Colors.white), "color": Theme.of(Get.context!).primaryColor },
       { "title": "logout".tr, "screenRouter": "" , "icon": const Icon(Icons.logout, color: Colors.white), "color":const Color(0xFFE50A0A), "isLogout": true },
     ];
 

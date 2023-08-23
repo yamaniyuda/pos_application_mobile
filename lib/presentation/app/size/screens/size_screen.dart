@@ -37,7 +37,7 @@ class SizeScreen extends GetView<SizeController> {
                 borderRadius: BorderRadius.circular(10)
               ),
               child: PAMFormTextFieldWidget(
-                hintText: "search size".tr.toCapitalize(),
+                hintText: "${"search".tr} ${"size".tr}".toCapitalize(),
                 decoration: const BoxDecoration(),
                 onChanged: controller.searchdataSize,
               ),
@@ -133,7 +133,7 @@ class SizeScreen extends GetView<SizeController> {
                   dense: true,
                   title: Text(controller.dataSize[index].name!.toCapitalize()),
                   tileColor: Colors.white,
-                  subtitle: Text("${controller.dataSize[index].description}".toCapitalize()),
+                  subtitle: Text((controller.dataSize[index].description ?? "-").toCapitalize()),
                 ),
               ),
             );

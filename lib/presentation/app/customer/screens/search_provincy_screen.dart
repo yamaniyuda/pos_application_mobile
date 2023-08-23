@@ -36,7 +36,7 @@ class SearchProvincyScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10)
               ),
               child: PAMFormTextFieldWidget(
-                hintText: "search customer type".tr.toCapitalize(),
+                hintText: "${"search".tr} ${"province".tr}".toCapitalize(),
                 decoration: const BoxDecoration(),
                 onChanged: controller.searchDataCustomer,
               ),
@@ -95,8 +95,6 @@ class SearchProvincyScreen extends StatelessWidget {
                       value: controller.dataProvincy[index].id as String,
                       groupValue: controller.chooseValue,
                       onChanged: (String? value) {
-                        print("masuk klik");
-                        print(controller.dataProvincy[index].name);
                         controller.changeRadioSelection(
                           value!,
                           controller.dataProvincy[index].name!
@@ -126,7 +124,7 @@ class SearchProvincyScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Provincy".tr.toCapitalize(),
+          "province".tr.toCapitalize(),
         ),
       ),
       body: SafeArea(
@@ -136,9 +134,9 @@ class SearchProvincyScreen extends StatelessWidget {
             _buildHeader(),
             _buildListCustomer(),
             Padding(
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               child: PAMBottom(
-                title: "choosee customer type".tr.toCapitalize(),
+                title: "${"choose".tr} ${"province".tr}".toCapitalize(),
                 isLoading: false,
                 borderRadius: BorderRadius.circular(10),
                 onTab: () async {

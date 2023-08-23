@@ -37,7 +37,7 @@ class SupplierScreen extends GetView<SupplierController> {
                 borderRadius: BorderRadius.circular(10)
               ),
               child: PAMFormTextFieldWidget(
-                hintText: "search supplier".tr.toCapitalize(),
+                hintText: "${"search".tr} supplier".toCapitalize(),
                 decoration: const BoxDecoration(),
                 onChanged: controller.searchDataSupplier,
               ),
@@ -145,7 +145,7 @@ class SupplierScreen extends GetView<SupplierController> {
                   dense: true,
                   title: Text(controller.dataSupplier[index].name!.toCapitalize()),
                   tileColor: Colors.white,
-                  subtitle: Text("${controller.dataSupplier[index].email}".toCapitalize()),
+                  subtitle: Text((controller.dataSupplier[index].email ?? "-").toCapitalize()),
                 ),
               ),
             );

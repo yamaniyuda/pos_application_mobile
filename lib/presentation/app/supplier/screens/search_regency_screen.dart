@@ -42,7 +42,7 @@ class SearchRegencyScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10)
               ),
               child: PAMFormTextFieldWidget(
-                hintText: "search customer type".tr.toCapitalize(),
+                hintText: "${"search".tr} ${"regency".tr}".toCapitalize(),
                 decoration: const BoxDecoration(),
                 onChanged: controller.searchDataCustomer,
               ),
@@ -140,7 +140,7 @@ class SearchRegencyScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Provincy".tr.toCapitalize(),
+          "regency".tr.toCapitalize(),
         ),
       ),
       body: SafeArea(
@@ -152,7 +152,7 @@ class SearchRegencyScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(20),
               child: PAMBottom(
-                title: "choosee customer type".tr.toCapitalize(),
+                title: "${"choose".tr} ${"regency".tr}".toCapitalize(),
                 isLoading: false,
                 borderRadius: BorderRadius.circular(10),
                 onTab: () async {

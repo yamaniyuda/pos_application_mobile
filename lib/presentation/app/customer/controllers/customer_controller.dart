@@ -208,6 +208,7 @@ class CustomerController extends GetxController {
   /// ```
   void customerDelete(String id) async {
     try {
+      PAMAlertWidget.showLoadingAlert(Get.context!);
       _dataCustomer.value.removeWhere((element) => element.id == id);
       await deleteDataUseCaseCustomer.call(id);
 
@@ -215,9 +216,12 @@ class CustomerController extends GetxController {
       _dataCustomer.value = [];
       _dataCustomer.value.addAll(currentData);
 
+      // remove dialog
+      Get.back();
+
       PAMSnackBarWidget.show(
         title: "success".tr.toCapitalize(),
-        message: "the customer has been removed successfully".tr.toCapitalize(),
+        message: "data deleted successfully".tr.toCapitalize(),
         type: PAMSnackBarWidgetType.success
       );
     } catch (e) {
@@ -228,6 +232,9 @@ class CustomerController extends GetxController {
           type: PAMSnackBarWidgetType.success
         );
       }
+
+      // remove dialog
+      Get.back();
     }
   }
 

@@ -46,7 +46,8 @@ class SupplierFormScreen extends GetView<SupplierController> {
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context);
-    final String typeFormTitle = (type == SupplierFormScreenType.store ? "store Supplier type" : "update Supplier type").tr.toCapitalize();
+    late String typeFormTitle = (type == SupplierFormScreenType.store ? "store" : "update").tr.toCapitalize();
+    typeFormTitle = "$typeFormTitle supplier".toCapitalize();
 
     return Scaffold(
       appBar: AppBar(
@@ -97,6 +98,7 @@ class SupplierFormScreen extends GetView<SupplierController> {
                     : "",
                   labelText: "phone number".tr.toCapitalize(),
                   hintText: "phone number".tr.toCapitalize(),
+                  keyboardType: TextInputType.phone,
                 ),
                 const SizedBox(height: 10),
 
@@ -106,8 +108,8 @@ class SupplierFormScreen extends GetView<SupplierController> {
                   initialValue: type == SupplierFormScreenType.update && Get.arguments != null
                     ? Get.arguments["data"].provinceId
                     : "",
-                  labelText: "provincy".tr.toCapitalize(),
-                  hintText: "provincy".tr.toCapitalize(),
+                  labelText: "province".tr.toCapitalize(),
+                  hintText: "province".tr.toCapitalize(),
                   screen: SearchProvincyScreen(),
                   onChanged: (String? value) {
                     provinceId.value = value!;

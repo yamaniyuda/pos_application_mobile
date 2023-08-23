@@ -37,7 +37,8 @@ class SizeFormScreen extends GetView<SizeController> {
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context);
-    final String typeFormTitle = (type == SizeFormScreenType.store ? "store Size" : "update Size").tr.toCapitalize();
+    late String typeFormTitle = (type == SizeFormScreenType.store ? "store" : "update").tr;
+    typeFormTitle = "$typeFormTitle ${"size".tr}".toCapitalize();
 
     return Scaffold(
       appBar: AppBar(
@@ -58,8 +59,8 @@ class SizeFormScreen extends GetView<SizeController> {
                   initialValue: type == SizeFormScreenType.update && Get.arguments != null
                     ? Get.arguments["data"].name
                     : "",
-                  labelText: "Size name".tr.toCapitalize(),
-                  hintText: "Size name".tr.toCapitalize(),
+                  labelText: "name".tr.toCapitalize(),
+                  hintText: "name".tr.toCapitalize(),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
                       return "Size is required".tr.toCapitalize();

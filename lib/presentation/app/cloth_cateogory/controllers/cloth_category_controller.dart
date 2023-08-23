@@ -208,12 +208,16 @@ class ClothCategoryController extends GetxController {
   /// ```
   void clothCategoryDelete(String id) async {
     try {
+      PAMAlertWidget.showLoadingAlert(Get.context!);
       _dataClothCategory.value.removeWhere((element) => element.id == id);
       await deleteDataUseCaseClothCategory.call(id);
 
       List<ClothCategoryEntity> currentData = _dataClothCategory.value;
       _dataClothCategory.value = [];
       _dataClothCategory.value.addAll(currentData);
+
+      // remove dialog
+      Get.back();
 
       PAMSnackBarWidget.show(
         title: "success".tr.toCapitalize(),
@@ -228,6 +232,9 @@ class ClothCategoryController extends GetxController {
           type: PAMSnackBarWidgetType.success
         );
       }
+
+      // remove dialog
+      Get.back();
     }
   }
 

@@ -15,7 +15,7 @@ class LocalizationController extends GetxController implements GetxService {
     loadCurrentLanguage();
   }
 
-  Locale _locale = Locale(LocalizationConstant.languages[1].languageCode, LocalizationConstant.languages[1].countryCode);
+  Locale _locale = Locale(LocalizationConstant.languages[0].languageCode, LocalizationConstant.languages[0].countryCode);
   Locale get locale => _locale;
 
   int _selectedIndex = 0;

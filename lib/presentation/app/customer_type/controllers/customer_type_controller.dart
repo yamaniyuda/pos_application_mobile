@@ -173,10 +173,10 @@ class CustomerTypeController extends GetxController {
       await storeDataUseCaseCustomerType.call(paylaod);
 
       // back from load screen
-      Get.back();
+      // Get.back();
 
       // back from form screen
-      Get.back(result: "after store");
+      // Get.back(result: "after store");
     } on DioException catch (e) {
       Get.back();
       PAMSnackBarWidget.show(
@@ -185,12 +185,12 @@ class CustomerTypeController extends GetxController {
         type: PAMSnackBarWidgetType.danger
       );
     } catch (e) {
-      Get.back();
-      PAMSnackBarWidget.show(
-        title: "failed".tr.toCapitalize(),
-        message: "failed to process data, please try again".tr.toCapitalize(),
-        type: PAMSnackBarWidgetType.danger
-      );
+      // Get.back();
+      // PAMSnackBarWidget.show(
+      //   title: "failed".tr.toCapitalize(),
+      //   message: "failed to process data, please try again".tr.toCapitalize(),
+      //   type: PAMSnackBarWidgetType.danger
+      // );
     }
   }
 
@@ -208,6 +208,7 @@ class CustomerTypeController extends GetxController {
   /// ```
   void customerTypeDelete(String id) async {
     try {
+      PAMAlertWidget.showLoadingAlert(Get.context!);
       _dataCustomerType.value.removeWhere((element) => element.id == id);
       await deleteDataUseCaseCustomerType.call(id);
 
@@ -215,9 +216,12 @@ class CustomerTypeController extends GetxController {
       _dataCustomerType.value = [];
       _dataCustomerType.value.addAll(currentData);
 
+      // remove dialog
+      Get.back();
+
       PAMSnackBarWidget.show(
         title: "success".tr.toCapitalize(),
-        message: "the CustomerType has been removed successfully".tr.toCapitalize(),
+        message: "data deleted successfully".tr.toCapitalize(),
         type: PAMSnackBarWidgetType.success
       );
     } catch (e) {
@@ -228,6 +232,9 @@ class CustomerTypeController extends GetxController {
           type: PAMSnackBarWidgetType.success
         );
       }
+
+      // remove dialog
+      Get.back();
     }
   }
 

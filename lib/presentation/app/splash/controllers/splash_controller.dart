@@ -12,7 +12,7 @@ class SplashController extends GetxController {
     if (authService.rememberMe) {
       Get.offAllNamed(Routes.main, arguments: { "screen": ChildMenuMain.homeScreen });
     } else {
-      Get.offAllNamed(Routes.onBoarding);
+      Get.offAllNamed(Routes.auth);
     }
   }
 }

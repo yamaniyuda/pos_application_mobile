@@ -196,6 +196,7 @@ class UserController extends GetxController {
   /// ```
   void userDelete(String id) async {
     try {
+      PAMAlertWidget.showLoadingAlert(Get.context!);
       _dataUser.value.removeWhere((element) => element.id == id);
       await deleteDataUseCaseUser.call(id);
 
@@ -203,9 +204,12 @@ class UserController extends GetxController {
       _dataUser.value = [];
       _dataUser.value.addAll(currentData);
 
+      // remove dialog
+      Get.back();
+
       PAMSnackBarWidget.show(
         title: "success".tr.toCapitalize(),
-        message: "the user has been removed successfully".tr.toCapitalize(),
+        message: "data deleted successfully".tr.toCapitalize(),
         type: PAMSnackBarWidgetType.success
       );
     } catch (e) {
@@ -216,6 +220,9 @@ class UserController extends GetxController {
           type: PAMSnackBarWidgetType.success
         );
       }
+
+      // remove  dialog
+      Get.back();
     }
   }
 

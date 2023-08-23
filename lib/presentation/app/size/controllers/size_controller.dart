@@ -208,6 +208,7 @@ class SizeController extends GetxController {
   /// ```
   void sizeDelete(String id) async {
     try {
+      PAMAlertWidget.showLoadingAlert(Get.context!);
       _dataSize.value.removeWhere((element) => element.id == id);
       await deleteDataUseCaseSize.call(id);
 
@@ -215,9 +216,12 @@ class SizeController extends GetxController {
       _dataSize.value = [];
       _dataSize.value.addAll(currentData);
 
+      // remove dialog
+      Get.back();
+
       PAMSnackBarWidget.show(
         title: "success".tr.toCapitalize(),
-        message: "the Size has been removed successfully".tr.toCapitalize(),
+        message: "data deleted successfully".tr.toCapitalize(),
         type: PAMSnackBarWidgetType.success
       );
     } catch (e) {
@@ -228,6 +232,9 @@ class SizeController extends GetxController {
           type: PAMSnackBarWidgetType.success
         );
       }
+
+      // remove dialog
+      Get.back();
     }
   }
 

@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
 import 'package:pos_application_mobile/domain/entities/entity.dart';
 
 class UserEntity extends Entity {

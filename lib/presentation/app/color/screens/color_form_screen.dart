@@ -59,8 +59,8 @@ class ColorFormScreen extends GetView<ColorController> {
                     initialValue: type == ColorFormScreenType.update
                       ? Get.arguments["name"]
                       : "",
-                    labelText: "color name".tr.toCapitalize(),
-                    hintText: "color name".tr.toCapitalize(),
+                    labelText: "name".tr.toCapitalize(),
+                    hintText: "name".tr.toCapitalize(),
                     onSaved: (String? value) =>
                     controller.setColorName = value!,
                   ),
@@ -69,8 +69,8 @@ class ColorFormScreen extends GetView<ColorController> {
                     initialValue: type == ColorFormScreenType.update
                       ? Get.arguments["description"]
                       : "",
-                    labelText: "color description".tr.toCapitalize(),
-                    hintText: "color description".tr.toCapitalize(),
+                    labelText: "description".tr.toCapitalize(),
+                    hintText: "description".tr.toCapitalize(),
                     maxLines: 5,
                     onSaved: (String? value) =>
                     controller.setColorDescription = value ?? "",

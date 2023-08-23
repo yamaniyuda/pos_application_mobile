@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable, prefer_final_fields
+
 part of 'home_screen.dart';
 
 /// this is widgets use for handling ui render

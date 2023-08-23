@@ -1,7 +1,6 @@
 import 'package:pos_application_mobile/data/data_source/remote_data_sources/remote_data_source.dart';
 import 'package:pos_application_mobile/data/dtos/cloth_categoty_dto.dart';
 import 'package:pos_application_mobile/data/payloads/cloth_category_payload.dart';
-import 'package:pos_application_mobile/data/payloads/customer_type_payload.dart';
 
 class ClothCategoryDataSource extends RemoteDataSource {
 

@@ -42,7 +42,7 @@ class SearchDistrictScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10)
               ),
               child: PAMFormTextFieldWidget(
-                hintText: "search customer type".tr.toCapitalize(),
+                hintText: "${"search".tr} ${"district".tr}".toCapitalize(),
                 decoration: const BoxDecoration(),
                 onChanged: controller.searchDataCustomer,
               ),
@@ -138,7 +138,7 @@ class SearchDistrictScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Provincy".tr.toCapitalize(),
+          "district".tr.toCapitalize(),
         ),
       ),
       body: SafeArea(
@@ -150,7 +150,7 @@ class SearchDistrictScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(20),
               child: PAMBottom(
-                title: "choosee customer type".tr.toCapitalize(),
+                title: "${"choose".tr} ${"district".tr}".toCapitalize(),
                 isLoading: false,
                 borderRadius: BorderRadius.circular(10),
                 onTab: () async {

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:pos_application_mobile/app/extensions/string_extention.dart';
-import 'package:pos_application_mobile/app/services/auth_service.dart';
 import 'package:pos_application_mobile/data/payloads/user_payload.dart';
 import 'package:pos_application_mobile/presentation/app/user/user.dart';
 import 'package:pos_application_mobile/presentation/widgets/pam_bottom/pam_bottom.dart';
@@ -41,8 +40,8 @@ class UserFormScreen extends GetView<UserController> {
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context);
-    final String typeFormTitle = (type == UserFormScreenType.store ? "store user" : "update user").tr.toCapitalize();
-    
+    late String typeFormTitle = (type == UserFormScreenType.store ? "store" : "update").tr.toCapitalize();
+    typeFormTitle = "$typeFormTitle ${"user".tr}".toCapitalize();
 
     return Scaffold(
       appBar: AppBar(
@@ -61,8 +60,14 @@ class UserFormScreen extends GetView<UserController> {
                   initialValue: type == UserFormScreenType.update
                     ? Get.arguments["data"].name
                     : "",
-                  labelText: "user name".tr.toCapitalize(),
-                  hintText: "user name".tr.toCapitalize(),
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return "${"name".tr} ${"required".tr}".toCapitalize();
+                    }
+                    return null;
+                  },
+                  labelText: "name".tr.toCapitalize(),
+                  hintText: "name".tr.toCapitalize(),
                 ),
                 const SizedBox(height: 10),
                 PAMFormTextFieldWidget(
@@ -70,8 +75,8 @@ class UserFormScreen extends GetView<UserController> {
                   initialValue: type == UserFormScreenType.update
                     ? Get.arguments["data"].email
                     : "",
-                  labelText: "user email".tr.toCapitalize(),
-                  hintText: "user email".tr.toCapitalize(),
+                  labelText: "email".tr.toCapitalize(),
+                  hintText: "email".tr.toCapitalize(),
                 ),
                 const SizedBox(height: 10),
                 
@@ -80,8 +85,8 @@ class UserFormScreen extends GetView<UserController> {
                   initialValue: type == UserFormScreenType.update
                     ? Get.arguments["data"].password
                     : "",
-                  labelText: "user password".tr.toCapitalize(),
-                  hintText: "user password".tr.toCapitalize(),
+                  labelText: "password".tr.toCapitalize(),
+                  hintText: "password".tr.toCapitalize(),
                 ),
                 
                 const SizedBox(height: 10),
@@ -154,7 +159,7 @@ class UserFormScreen extends GetView<UserController> {
                       _formKey.currentState!.save();
                       
                       final UserPaylaod paylaod = UserPaylaod(
-                        id: Get.arguments["data"].id,
+                        id: Get.arguments?["data"]?.id ?? "",
                         name: name.value, 
                         gender: gender.value, 
                         email: email.value, 

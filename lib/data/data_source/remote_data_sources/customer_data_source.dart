@@ -1,7 +1,6 @@
 import 'package:pos_application_mobile/data/data_source/remote_data_sources/remote_data_source.dart';
 import 'package:pos_application_mobile/data/dtos/customer_dto.dart';
 import 'package:pos_application_mobile/data/payloads/customer_payload.dart';
-import 'package:pos_application_mobile/domain/entities/customer_entity.dart';
 
 class CustomerDataSource extends RemoteDataSource {
 

@@ -37,7 +37,7 @@ class ClothCategoryScreen extends GetView<ClothCategoryController> {
                 borderRadius: BorderRadius.circular(10)
               ),
               child: PAMFormTextFieldWidget(
-                hintText: "search ClothCategory".tr.toCapitalize(),
+                hintText: "${"search".tr} ${"cloth category".tr}".toCapitalize(),
                 decoration: const BoxDecoration(),
                 onChanged: controller.searchdataClothCategory,
               ),
@@ -135,7 +135,7 @@ class ClothCategoryScreen extends GetView<ClothCategoryController> {
                   dense: true,
                   title: Text(controller.dataClothCategory[index].name!.toCapitalize()),
                   tileColor: Colors.white,
-                  subtitle: Text("${controller.dataClothCategory[index].description}".toCapitalize()),
+                  subtitle: Text((controller.dataClothCategory[index].description ?? "-").toCapitalize()),
                 ),
               ),
             );
@@ -169,7 +169,7 @@ class ClothCategoryScreen extends GetView<ClothCategoryController> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "ClothCategory".tr.toCapitalize(),
+          "cloth category".tr.toCapitalize(),
         ),
       ),
       body: SafeArea(

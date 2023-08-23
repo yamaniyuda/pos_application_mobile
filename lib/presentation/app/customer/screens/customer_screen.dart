@@ -37,7 +37,7 @@ class CustomerScreen extends GetView<CustomerController> {
                 borderRadius: BorderRadius.circular(10)
               ),
               child: PAMFormTextFieldWidget(
-                hintText: "search customer".tr.toCapitalize(),
+                hintText: "${"search".tr} ${"customer".tr}".toCapitalize(),
                 decoration: const BoxDecoration(),
                 onChanged: controller.searchDataCustomer,
               ),

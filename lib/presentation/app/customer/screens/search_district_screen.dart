@@ -8,13 +8,13 @@ import 'package:pos_application_mobile/presentation/widgets/pam_form/pam_form.da
 import 'package:pos_application_mobile/presentation/widgets/pam_list_scroll/pam_list_scroll.dart';
 
 class SearchDistrictScreen extends StatelessWidget {
-  final String provincyId;
+  final String regencyId;
   
   final SearchDistrictController controller = Get.put(SearchDistrictController());
   
   SearchDistrictScreen({
     super.key,
-    required this.provincyId
+    required this.regencyId
   });
 
   Widget _buildHeader() {
@@ -42,7 +42,7 @@ class SearchDistrictScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10)
               ),
               child: PAMFormTextFieldWidget(
-                hintText: "search customer type".tr.toCapitalize(),
+                hintText: "${"search".tr} ${"district".tr}".toCapitalize(),
                 decoration: const BoxDecoration(),
                 onChanged: controller.searchDataCustomer,
               ),
@@ -101,8 +101,6 @@ class SearchDistrictScreen extends StatelessWidget {
                       value: controller.districtDatas[index].id as String,
                       groupValue: controller.chooseValue,
                       onChanged: (String? value) {
-                        print("masuk klik");
-                        print(controller.districtDatas[index].name);
                         controller.changeRadioSelection(
                           value!,
                           controller.districtDatas[index].name!
@@ -130,9 +128,9 @@ class SearchDistrictScreen extends StatelessWidget {
     ScreenUtil.init(context);
 
     /// trigger handling update ui
-    controller.setDistrictId = provincyId;
+    controller.setDistrictId = regencyId;
     controller.fetchDataCustomer(queryParameters: {
-      "province_id": provincyId
+      "regency_id": regencyId
     },
       refresh: true
     );
@@ -140,7 +138,7 @@ class SearchDistrictScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Provincy".tr.toCapitalize(),
+          "district".tr.toCapitalize(),
         ),
       ),
       body: SafeArea(
@@ -152,7 +150,7 @@ class SearchDistrictScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(20),
               child: PAMBottom(
-                title: "choosee customer type".tr.toCapitalize(),
+                title: "${"choose".tr} ${"district".tr}".toCapitalize(),
                 isLoading: false,
                 borderRadius: BorderRadius.circular(10),
                 onTab: () async {

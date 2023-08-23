@@ -1,6 +1,7 @@
 import 'package:pos_application_mobile/domain/entities/entity.dart';
 import 'package:pos_application_mobile/domain/entities/individual_bar_entity.dart';
 
+// ignore: must_be_immutable
 class BarWeeklyEntity extends Entity {
   final double sunAmount;
   final double monAmount;

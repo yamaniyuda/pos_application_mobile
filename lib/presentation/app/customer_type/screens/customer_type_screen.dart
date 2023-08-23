@@ -37,7 +37,7 @@ class CustomerTypeScreen extends GetView<CustomerTypeController> {
                 borderRadius: BorderRadius.circular(10)
               ),
               child: PAMFormTextFieldWidget(
-                hintText: "search customer type".tr.toCapitalize(),
+                hintText: "${"search".tr} ${"customer type".tr}".toCapitalize(),
                 decoration: const BoxDecoration(),
                 onChanged: controller.searchDataCustomerType,
               ),
@@ -67,6 +67,7 @@ class CustomerTypeScreen extends GetView<CustomerTypeController> {
           child: CircularProgressIndicator(),
         ));
       }
+
       return Expanded(
         child: PAMListScroll(
           padding: const EdgeInsets.symmetric(vertical: 20),
@@ -137,7 +138,7 @@ class CustomerTypeScreen extends GetView<CustomerTypeController> {
                   dense: true,
                   title: Text(controller.dataCustomerType[index].name!.toCapitalize()),
                   tileColor: Colors.white,
-                  subtitle: Text("${controller.dataCustomerType[index].description}".toCapitalize()),
+                  subtitle: Text((controller.dataCustomerType[index].description ?? "-").toCapitalize()),
                 ),
               ),
             );
