@@ -173,10 +173,10 @@ class CustomerTypeController extends GetxController {
       await storeDataUseCaseCustomerType.call(paylaod);
 
       // back from load screen
-      // Get.back();
+      Get.back();
 
       // back from form screen
-      // Get.back(result: "after store");
+      Get.back(result: "after store");
     } on DioException catch (e) {
       Get.back();
       PAMSnackBarWidget.show(
@@ -185,12 +185,12 @@ class CustomerTypeController extends GetxController {
         type: PAMSnackBarWidgetType.danger
       );
     } catch (e) {
-      // Get.back();
-      // PAMSnackBarWidget.show(
-      //   title: "failed".tr.toCapitalize(),
-      //   message: "failed to process data, please try again".tr.toCapitalize(),
-      //   type: PAMSnackBarWidgetType.danger
-      // );
+      Get.back();
+      PAMSnackBarWidget.show(
+        title: "failed".tr.toCapitalize(),
+        message: "failed to process data, please try again".tr.toCapitalize(),
+        type: PAMSnackBarWidgetType.danger
+      );
     }
   }
 
@@ -243,9 +243,9 @@ class CustomerTypeController extends GetxController {
     try {
       PAMAlertWidget.showLoadingAlert(Get.context!);
       _dataCustomerType.value.removeWhere((element) => element.id == paylaod.id);
-      final CustomerTypeEntity data = await updateDataUseCaseCustomerType.call(paylaod);
+      await updateDataUseCaseCustomerType.call(paylaod);
+      await fetchDataCustomerType(refresh: true);
 
-      _dataCustomerType.add(data);
       // back from load screen
       Get.back();
 
@@ -255,7 +255,7 @@ class CustomerTypeController extends GetxController {
       Get.back();
       PAMSnackBarWidget.show(
         title: "failed".tr.toCapitalize(),
-        message: e.response!.data["message"],
+        message: e.response!.data["message"] ?? e.response!.data["erros"],
         type: PAMSnackBarWidgetType.danger
       );
     } catch (e) {

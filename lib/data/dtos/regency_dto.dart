@@ -11,9 +11,13 @@ class RegencyDTO implements DTO {
   @JsonKey(name: "name")
   late String? name;
 
+  @JsonKey(name: "province_id")
+  late String? provinceId;
+
   RegencyDTO({
     this.id,
-    this.name
+    this.name,
+    this.provinceId
   });
   
   factory RegencyDTO.fromJson(Map<String, dynamic> json) {

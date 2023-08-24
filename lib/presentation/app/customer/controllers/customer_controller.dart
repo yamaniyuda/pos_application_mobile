@@ -243,9 +243,8 @@ class CustomerController extends GetxController {
     try {
       PAMAlertWidget.showLoadingAlert(Get.context!);
       _dataCustomer.value.removeWhere((element) => element.id == paylaod.id);
-      final CustomerEntity data = await updateDataUseCaseCustomer.call(paylaod);
-
-      _dataCustomer.add(data);
+      await updateDataUseCaseCustomer.call(paylaod);
+      await fetchDataCustomer(refresh: true);
       // back from load screen
       Get.back();
 

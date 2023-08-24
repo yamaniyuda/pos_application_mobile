@@ -231,9 +231,9 @@ class UserController extends GetxController {
     try {
       PAMAlertWidget.showLoadingAlert(Get.context!);
       _dataUser.value.removeWhere((element) => element.id == paylaod.id);
-      final UserEntity data = await updateDataUseCaseUser.call(paylaod);
+      await updateDataUseCaseUser.call(paylaod);
+      await fetchDataUser(refresh: true);
 
-      _dataUser.add(data);
       // back from load screen
       Get.back();
 

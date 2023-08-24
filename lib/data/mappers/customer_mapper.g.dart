@@ -238,8 +238,13 @@ class $CustomerMapper implements AutoMapprInterface {
       name: model.name,
       phoneNumber: model.phoneNumber,
       provinceId: model.provinceId,
+      customerType: CustomerMapper.customerTypeDtoToEntity(model),
       regencyId: model.regencyId,
       villageId: model.villageId,
+      district: CustomerMapper.districtDtoToEntity(model),
+      province: CustomerMapper.provincyDtoToEntity(model),
+      regency: CustomerMapper.regencyDtoToEntity(model),
+      village: CustomerMapper.villageDtoToEntity(model),
     );
   }
 
@@ -262,6 +267,11 @@ class $CustomerMapper implements AutoMapprInterface {
       provinceId: model.provinceId,
       regencyId: model.regencyId,
       villageId: model.villageId,
+      district: CustomerMapper.districtEntityToDto(model),
+      province: CustomerMapper.provincyEntityToDto(model),
+      regency: CustomerMapper.regencyEntityToDto(model),
+      village: CustomerMapper.villageEntityToDto(model),
+      customerType: CustomerMapper.customerTypeEntityToDto(model),
     );
   }
 }

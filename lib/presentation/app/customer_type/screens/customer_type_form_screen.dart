@@ -53,8 +53,8 @@ class CustomerTypeFormScreen extends GetView<CustomerTypeController> {
               children: [
                 PAMFormTextFieldWidget(
                   onSaved: (newValue) => name.value = newValue!,
-                  initialValue: type == CustomerTypeFormScreenType.update
-                    ? Get.arguments["data"].name
+                  initialValue: type == CustomerTypeFormScreenType.update && Get.arguments != null
+                    ? Get.arguments["data"]?.name
                     : "",
                   labelText: "name".tr.toCapitalize(),
                   hintText: "name".tr.toCapitalize(),

@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_string_interpolations
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -5,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:pos_application_mobile/app/config/routes/app_screens.dart';
 import 'package:pos_application_mobile/app/extensions/string_extention.dart';
 import 'package:pos_application_mobile/data/payloads/customer_payload.dart';
+import 'package:pos_application_mobile/domain/entities/customer_entity.dart';
 import 'package:pos_application_mobile/presentation/app/customer/customer.dart';
 import 'package:pos_application_mobile/presentation/widgets/pam_form/pam_form.dart';
 import 'package:pos_application_mobile/presentation/widgets/pam_list_scroll/pam_list_scroll.dart';
@@ -96,18 +99,7 @@ class CustomerScreen extends GetView<CustomerController> {
                             Get.to(CustomerFormScreen(type: CustomerFormScreenType.update),
                               binding: CustomerBinding(),
                               arguments: {
-                                "data": CustomerPayload(
-                                  id: controller.dataCustomer[index].id ?? '',
-                                  name: controller.dataCustomer[index].name ?? '',
-                                  customerCategoryId: controller.dataCustomer[index].customerCategoryId ?? '',
-                                  address: controller.dataCustomer[index].address ?? '',
-                                  districtId: controller.dataCustomer[index].districtId ?? '',
-                                  email: controller.dataCustomer[index].email ?? '',
-                                  phoneNumber: controller.dataCustomer[index].phoneNumber ?? '',
-                                  provinceId: controller.dataCustomer[index].provinceId ?? '',
-                                  regencyId: controller.dataCustomer[index].regencyId ?? '',
-                                  villageId: controller.dataCustomer[index].villageId ?? ''
-                                )
+                                "data": controller.dataCustomer[index]
                               }
                             );
                           },
@@ -141,9 +133,11 @@ class CustomerScreen extends GetView<CustomerController> {
                     child: const Icon(Icons.manage_accounts, color: Colors.white),
                   ),
                   dense: true,
-                  title: Text(controller.dataCustomer[index].name!.toCapitalize()),
+                  title: Text(
+                    "${controller.dataCustomer[index].name!} ${controller.dataCustomer[index].customerType?.name != null ? "(${controller.dataCustomer[index].customerType!.name})" : ""}".toCapitalize()
+                  ),
                   tileColor: Colors.white,
-                  subtitle: Text("${controller.dataCustomer[index].email}".toCapitalize()),
+                  subtitle: Text("${controller.dataCustomer[index].email ?? "-"}".toCapitalize()),
                 ),
               ),
             );

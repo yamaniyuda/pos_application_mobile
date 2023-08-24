@@ -11,9 +11,13 @@ class VillageDTO implements DTO {
   @JsonKey(name: "name")
   late String? name;
 
+  @JsonKey(name: "district_id")
+  late String? districtId;
+
   VillageDTO({
     this.id,
-    this.name
+    this.name,
+    this.districtId
   });
   
   factory VillageDTO.fromJson(Map<String, dynamic> json) {

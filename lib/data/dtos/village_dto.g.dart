@@ -9,10 +9,12 @@ part of 'village_dto.dart';
 VillageDTO _$VillageDTOFromJson(Map<String, dynamic> json) => VillageDTO(
       id: json['id'] as String?,
       name: json['name'] as String?,
+      districtId: json['district_id'] as String?,
     );
 
 Map<String, dynamic> _$VillageDTOToJson(VillageDTO instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
+      'district_id': instance.districtId,
     };

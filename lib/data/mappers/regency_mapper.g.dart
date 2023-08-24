@@ -231,6 +231,7 @@ class $RegencyMapper implements AutoMapprInterface {
     return RegencyEntity(
       id: model.id,
       name: model.name,
+      provinceId: model.provinceId,
     );
   }
 
@@ -244,6 +245,7 @@ class $RegencyMapper implements AutoMapprInterface {
     return RegencyDTO(
       id: model.id,
       name: model.name,
+      provinceId: model.provinceId,
     );
   }
 }

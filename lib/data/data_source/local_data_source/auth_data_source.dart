@@ -24,8 +24,6 @@ class AuthDataSource extends LocalDataSource {
   }
 
   Future<bool> storeToken(String token) async {
-    print("================");
-    print(token);
     try {
       await storage.write(
         key: _keyAuthToken,
@@ -34,7 +32,6 @@ class AuthDataSource extends LocalDataSource {
         iOptions: getIosOptions()
       );
 
-      print("Masuk store token");
       return true;
     } catch (_) {
       return false;
@@ -61,8 +58,7 @@ class AuthDataSource extends LocalDataSource {
       aOptions: getAndroidOptions(),
       iOptions: getIosOptions()
     );
-
-    print("Bearer $data");
+    
     return "Bearer $data";
   }
 

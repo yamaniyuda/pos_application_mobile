@@ -231,6 +231,7 @@ class $VillageMapper implements AutoMapprInterface {
     return VillageEntity(
       id: model.id,
       name: model.name,
+      districtId: model.districtId,
     );
   }
 
@@ -244,6 +245,7 @@ class $VillageMapper implements AutoMapprInterface {
     return VillageDTO(
       id: model.id,
       name: model.name,
+      districtId: model.districtId,
     );
   }
 }

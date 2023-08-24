@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:pos_application_mobile/app/extensions/string_extention.dart';
 import 'package:pos_application_mobile/data/payloads/customer_payload.dart';
-import 'package:pos_application_mobile/data/payloads/customer_type_payload.dart';
 import 'package:pos_application_mobile/presentation/app/customer/controllers/customer_controller.dart';
 import 'package:pos_application_mobile/presentation/app/customer/screens/search_district_screen.dart';
 import 'package:pos_application_mobile/presentation/app/customer/screens/search_provincy_screen.dart';
@@ -23,7 +22,7 @@ enum CustomerFormScreenType { store, update }
 /// store and required when this widget has type updated.
 ///
 /// Parameters navigation:
-/// - `data`: A [CustomerTypePayload] object usually use for filled field form and widget
+/// - `data`: A [CustomerEntity] object usually use for filled field form and widget
 ///           type updated.
 ///
 /// Parameters:
@@ -52,6 +51,11 @@ class CustomerFormScreen extends GetView<CustomerController> {
     late String typeFormTitle = (type == CustomerFormScreenType.store ? "store" : "update").tr.toCapitalize();
     typeFormTitle = "$typeFormTitle ${"customer".tr}".toCapitalize();
 
+    // UI handling when type form is updated
+    provinceId.value = Get.arguments?["data"]?.province?.id ?? "";
+    regencyId.value = Get.arguments?["data"]?.regency?.id ?? "";
+    districtId.value = Get.arguments?["data"]?.district?.id ?? "";
+
     return Scaffold(
       appBar: AppBar(
         title: Text(typeFormTitle),
@@ -69,7 +73,7 @@ class CustomerFormScreen extends GetView<CustomerController> {
                 PAMFormTextFieldWidget(
                   onSaved: (newValue) => name.value = newValue!,
                   initialValue: type == CustomerFormScreenType.update && Get.arguments != null
-                    ? Get.arguments["data"].name
+                    ? Get.arguments["data"]?.name
                     : "",
                   labelText: "name".tr.toCapitalize(),
                   hintText: "name".tr.toCapitalize(),
@@ -86,7 +90,10 @@ class CustomerFormScreen extends GetView<CustomerController> {
                 PAMFormTextFieldWidget(
                   onSaved: (newValue) => customerType.value = newValue!,
                   initialValue: type == CustomerFormScreenType.update && Get.arguments != null
-                    ? Get.arguments["data"].customerCategoryId
+                    ? Get.arguments["data"]?.customerType?.name
+                    : "",
+                  hiddenValue: type == CustomerFormScreenType.update && Get.arguments != null
+                    ? Get.arguments["data"]?.customerType?.id
                     : "",
                   screen: SelectOptionCustomerTypeScreen(),
                   labelText: "customer type".tr.toCapitalize(),
@@ -98,7 +105,7 @@ class CustomerFormScreen extends GetView<CustomerController> {
                 PAMFormTextFieldWidget(
                   onSaved: (newValue) => email.value = newValue!,
                   initialValue: type == CustomerFormScreenType.update && Get.arguments != null
-                    ? Get.arguments["data"].email
+                    ? Get.arguments["data"]?.email
                     : "",
                   labelText: "email".tr.toCapitalize(),
                   hintText: "email".tr.toCapitalize(),
@@ -109,7 +116,7 @@ class CustomerFormScreen extends GetView<CustomerController> {
                 PAMFormTextFieldWidget(
                   onSaved: (newValue) => phoneNumber.value = newValue!,
                   initialValue: type == CustomerFormScreenType.update  && Get.arguments != null
-                    ? Get.arguments["data"].phoneNumber
+                    ? Get.arguments["data"]?.phoneNumber
                     : "",
                   labelText: "phone number".tr.toCapitalize(),
                   hintText: "phone number".tr.toCapitalize(),
@@ -121,7 +128,10 @@ class CustomerFormScreen extends GetView<CustomerController> {
                 PAMFormTextFieldWidget(
                   onSaved: (newValue) => provinceId.value = newValue!,
                   initialValue: type == CustomerFormScreenType.update && Get.arguments != null
-                    ? Get.arguments["data"].provinceId
+                    ? Get.arguments["data"]?.province?.name
+                    : "",
+                  hiddenValue: type == CustomerFormScreenType.update && Get.arguments != null
+                    ? Get.arguments["data"]?.province?.id
                     : "",
                   labelText: "province".tr.toCapitalize(),
                   hintText: "province".tr.toCapitalize(),
@@ -132,26 +142,36 @@ class CustomerFormScreen extends GetView<CustomerController> {
                 ),
                 const SizedBox(height: 10),
 
-                // regency
+                ///
+                /// Regency Field Form
+                ///
                 PAMFormTextFieldWidget(
                   onSaved: (newValue) => regencyId.value = newValue!,
                   initialValue: type == CustomerFormScreenType.update && Get.arguments != null
-                    ? Get.arguments["data"].regencyId
+                    ? Get.arguments["data"]?.regency?.name
+                    : "",
+                  hiddenValue: type == CustomerFormScreenType.update && Get.arguments != null
+                    ? Get.arguments["data"]?.regency?.id
                     : "",
                   labelText: "regency".tr.toCapitalize(),
                   hintText: "regency".tr.toCapitalize(),
-                  onChanged: (String? value) => regencyId.value = value!,
+                  onChanged: (String? value) => regencyId.value = value ?? "",
                   screen: Obx(() => SearchRegencyScreen(
-                    provincyId: provinceId.value,
+                    provincyId: provinceId.value ?? "",
                   ))
                 ),
                 const SizedBox(height: 10),
 
-                // district
+                ///
+                /// District Field Form
+                ///
                 PAMFormTextFieldWidget(
                   onSaved: (newValue) => districtId.value = newValue!,
                   initialValue: type == CustomerFormScreenType.update && Get.arguments != null
-                    ? Get.arguments["data"].districtId
+                    ? Get.arguments["data"]?.district?.name
+                    : "",
+                  hiddenValue: type == CustomerFormScreenType.update && Get.arguments != null
+                    ? Get.arguments["data"]?.district?.id
                     : "",
                   labelText: "district".tr.toCapitalize(),
                   hintText: "district".tr.toCapitalize(),
@@ -162,11 +182,16 @@ class CustomerFormScreen extends GetView<CustomerController> {
                 ),
                 const SizedBox(height: 10),
 
-                // village
+                ///
+                /// Village Field Form
+                ///
                 PAMFormTextFieldWidget(
                   onSaved: (newValue) => villageId.value = newValue!,
                   initialValue: type == CustomerFormScreenType.update && Get.arguments != null
-                    ? Get.arguments["data"].villageId
+                    ? Get.arguments["data"]?.village?.name
+                    : "",
+                  hiddenValue: type == CustomerFormScreenType.update && Get.arguments != null
+                    ? Get.arguments["data"]?.village?.id
                     : "",
                   labelText: "village".tr.toCapitalize(),
                   hintText: "village".tr.toCapitalize(),
@@ -180,7 +205,7 @@ class CustomerFormScreen extends GetView<CustomerController> {
                 PAMFormTextFieldWidget(
                   onSaved: (newValue) => address.value = newValue!,
                   initialValue: type == CustomerFormScreenType.update && Get.arguments != null
-                    ? Get.arguments["data"].address
+                    ? Get.arguments["data"]?.address
                     : "",
                   labelText: "address".tr.toCapitalize(),
                   hintText: "address".tr.toCapitalize(),

@@ -11,6 +11,7 @@ class PAMFormTextFieldWidget extends StatefulWidget {
   final int? maxLines;
   final Widget? suffixIcon;
   final Widget? icon;
+  final String? hiddenValue;
   final String? labelText;
   final bool obscureText;
   final Widget? screen;
@@ -28,6 +29,7 @@ class PAMFormTextFieldWidget extends StatefulWidget {
     this.keyboardType,
     this.initialValue,
     this.labelText,
+    this.hiddenValue,
     this.maxLines,
     this.suffixIcon,
     this.screen,
@@ -106,7 +108,7 @@ class _PAMFormTextFieldWidgetState extends State<PAMFormTextFieldWidget> {
     /// State optional screen form
     /// if widget screen exist hidden value  set to inital value
     setState(() {
-      _hiddenValue = widget.initialValue ?? "";
+      _hiddenValue = widget.hiddenValue ?? "";
     });
   }
 

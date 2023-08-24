@@ -243,9 +243,9 @@ class SizeController extends GetxController {
     try {
       PAMAlertWidget.showLoadingAlert(Get.context!);
       _dataSize.value.removeWhere((element) => element.id == paylaod.id);
-      final SizeEntity data = await updateDataUseCaseSize.call(paylaod);
+      await updateDataUseCaseSize.call(paylaod);
+      await fetchdataSize(refresh: true);
 
-      _dataSize.add(data);
       // back from load screen
       Get.back();
 

@@ -1,5 +1,10 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:pos_application_mobile/data/dtos/customer_type_dto.dart';
+import 'package:pos_application_mobile/data/dtos/district_dto.dart';
 import 'package:pos_application_mobile/data/dtos/dto.dart';
+import 'package:pos_application_mobile/data/dtos/provincy_dto.dart';
+import 'package:pos_application_mobile/data/dtos/regency_dto.dart';
+import 'package:pos_application_mobile/data/dtos/village_dto.dart';
 
 part 'customer_dto.g.dart';
 
@@ -35,6 +40,21 @@ class CustomerDTO implements DTO {
   @JsonKey(name: "village_id")
   late String? villageId;
 
+  @JsonKey(name: "customer_category")
+  late CustomerTypeDTO? customerType;
+
+  @JsonKey(name: "province")
+  late ProvincyDTO? province;
+
+  @JsonKey(name: "regency")
+  late RegencyDTO? regency;
+
+  @JsonKey(name: "district")
+  late DistrictDTO? district;
+
+  @JsonKey(name: "village")
+  late VillageDTO? village;
+
   @JsonKey(name: "created_at")
   late String? createdAt;
 
@@ -49,7 +69,12 @@ class CustomerDTO implements DTO {
     this.phoneNumber,
     this.provinceId,
     this.regencyId,
-    this.villageId
+    this.villageId,
+    this.district,
+    this.province,
+    this.regency,
+    this.village,
+    this.customerType
   });
 
   factory CustomerDTO.fromJson(Map<String, dynamic> json) {

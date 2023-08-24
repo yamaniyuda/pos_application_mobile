@@ -243,9 +243,9 @@ class SupplierController extends GetxController {
     try {
       PAMAlertWidget.showLoadingAlert(Get.context!);
       _dataSupplier.value.removeWhere((element) => element.id == paylaod.id);
-      final SupplierEntity data = await updateDataUseCaseSupplier.call(paylaod);
-
-      _dataSupplier.add(data);
+      await updateDataUseCaseSupplier.call(paylaod);
+      await fetchDataSupplier(refresh: true);
+      
       // back from load screen
       Get.back();
 

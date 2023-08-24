@@ -49,6 +49,10 @@ class SupplierFormScreen extends GetView<SupplierController> {
     late String typeFormTitle = (type == SupplierFormScreenType.store ? "store" : "update").tr.toCapitalize();
     typeFormTitle = "$typeFormTitle supplier".toCapitalize();
 
+    provinceId.value = Get.arguments?["data"]?.province?.id ?? provinceId.value ?? "";
+    regencyId.value = Get.arguments?["data"]?.regency?.id ?? regencyId.value ?? "";
+    districtId.value = Get.arguments?["data"]?.district?.id ?? districtId.value ?? "";
+
     return Scaffold(
       appBar: AppBar(
         title: Text(typeFormTitle),
@@ -106,7 +110,10 @@ class SupplierFormScreen extends GetView<SupplierController> {
                 PAMFormTextFieldWidget(
                   onSaved: (newValue) => provinceId.value = newValue!,
                   initialValue: type == SupplierFormScreenType.update && Get.arguments != null
-                    ? Get.arguments["data"].provinceId
+                    ? Get.arguments["data"].province?.name
+                    : "",
+                  hiddenValue: type == SupplierFormScreenType.update && Get.arguments != null
+                    ? Get.arguments["data"].province?.id
                     : "",
                   labelText: "province".tr.toCapitalize(),
                   hintText: "province".tr.toCapitalize(),
@@ -121,7 +128,10 @@ class SupplierFormScreen extends GetView<SupplierController> {
                 PAMFormTextFieldWidget(
                   onSaved: (newValue) => regencyId.value = newValue!,
                   initialValue: type == SupplierFormScreenType.update && Get.arguments != null
-                    ? Get.arguments["data"].regencyId
+                    ? Get.arguments["data"].regency?.name
+                    : "",
+                  hiddenValue: type == SupplierFormScreenType.update && Get.arguments != null
+                    ? Get.arguments["data"].regency?.id
                     : "",
                   labelText: "regency".tr.toCapitalize(),
                   hintText: "regency".tr.toCapitalize(),
@@ -136,7 +146,10 @@ class SupplierFormScreen extends GetView<SupplierController> {
                 PAMFormTextFieldWidget(
                   onSaved: (newValue) => districtId.value = newValue!,
                   initialValue: type == SupplierFormScreenType.update && Get.arguments != null
-                    ? Get.arguments["data"].districtId
+                    ? Get.arguments["data"].district?.name
+                    : "",
+                  hiddenValue: type == SupplierFormScreenType.update && Get.arguments != null
+                    ? Get.arguments["data"].district?.id
                     : "",
                   labelText: "district".tr.toCapitalize(),
                   hintText: "district".tr.toCapitalize(),
@@ -151,7 +164,10 @@ class SupplierFormScreen extends GetView<SupplierController> {
                 PAMFormTextFieldWidget(
                   onSaved: (newValue) => villageId.value = newValue!,
                   initialValue: type == SupplierFormScreenType.update && Get.arguments != null
-                    ? Get.arguments["data"].villageId
+                    ? Get.arguments["data"].village?.name
+                    : "",
+                  hiddenValue: type == SupplierFormScreenType.update && Get.arguments != null
+                    ? Get.arguments["data"].village?.id
                     : "",
                   labelText: "village".tr.toCapitalize(),
                   hintText: "village".tr.toCapitalize(),

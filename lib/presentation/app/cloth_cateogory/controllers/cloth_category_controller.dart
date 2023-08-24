@@ -243,9 +243,9 @@ class ClothCategoryController extends GetxController {
     try {
       PAMAlertWidget.showLoadingAlert(Get.context!);
       _dataClothCategory.value.removeWhere((element) => element.id == paylaod.id);
-      final ClothCategoryEntity data = await updateDataUseCaseClothCategory.call(paylaod);
+      await updateDataUseCaseClothCategory.call(paylaod);
+      await fetchdataClothCategory(refresh: true);
 
-      _dataClothCategory.add(data);
       // back from load screen
       Get.back();
 

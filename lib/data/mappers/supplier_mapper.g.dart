@@ -239,6 +239,10 @@ class $SupplierMapper implements AutoMapprInterface {
       districtId: model.districtId,
       villageId: model.villageId,
       createdAt: model.createdAt,
+      district: SupplierMapper.districtDtoToEntity(model),
+      province: SupplierMapper.provincyDtoToEntity(model),
+      regency: SupplierMapper.regencyDtoToEntity(model),
+      village: SupplierMapper.villageDtoToEntity(model),
     );
   }
 
@@ -260,6 +264,10 @@ class $SupplierMapper implements AutoMapprInterface {
       villageId: model.villageId,
       address: model.address,
       createdAt: model.createdAt,
+      district: SupplierMapper.districtEntityToDto(model),
+      province: SupplierMapper.provincyEntityToDto(model),
+      regency: SupplierMapper.regencyEntityToDto(model),
+      village: SupplierMapper.villageEntityToDto(model),
     );
   }
 }

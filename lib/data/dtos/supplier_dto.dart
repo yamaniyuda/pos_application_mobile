@@ -1,5 +1,9 @@
+import 'package:pos_application_mobile/data/dtos/district_dto.dart';
 import 'package:pos_application_mobile/data/dtos/dto.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:pos_application_mobile/data/dtos/provincy_dto.dart';
+import 'package:pos_application_mobile/data/dtos/regency_dto.dart';
+import 'package:pos_application_mobile/data/dtos/village_dto.dart';
 
 part 'supplier_dto.g.dart';
 
@@ -29,6 +33,18 @@ class SupplierDTO implements DTO {
   @JsonKey(name: "village_id")
   late String? villageId;
 
+  @JsonKey(name: "province")
+  late ProvincyDTO? province;
+
+  @JsonKey(name: "regency")
+  late RegencyDTO? regency;
+
+  @JsonKey(name: "district")
+  late DistrictDTO? district;
+
+  @JsonKey(name: "village")
+  late VillageDTO? village;
+
   @JsonKey(name: "address")
   late String? address;
 
@@ -45,7 +61,11 @@ class SupplierDTO implements DTO {
     this.districtId,
     this.villageId,
     this.address,
-    this.createdAt
+    this.createdAt,
+    this.district,
+    this.province,
+    this.regency,
+    this.village
   });
 
   factory SupplierDTO.fromJson(Map<String, dynamic> json) {

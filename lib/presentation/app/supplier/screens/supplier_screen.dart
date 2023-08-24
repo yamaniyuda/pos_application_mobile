@@ -67,17 +67,7 @@ class SupplierScreen extends GetView<SupplierController> {
             Get.to(SupplierFormScreen(type: SupplierFormScreenType.update),
               binding: SupplierBinding(),
               arguments: {
-                "data": SupplierPayload(
-                  id: controller.dataSupplier[index].id ?? '',
-                  name: controller.dataSupplier[index].name ?? '',
-                  address: controller.dataSupplier[index].address ?? '',
-                  districtId: controller.dataSupplier[index].districtId ?? '',
-                  email: controller.dataSupplier[index].email ?? '',
-                  phoneNumber: controller.dataSupplier[index].phoneNumber ?? '',
-                  provinceId: controller.dataSupplier[index].provinceId ?? '',
-                  regencyId: controller.dataSupplier[index].regencyId ?? '',
-                  villageId: controller.dataSupplier[index].villageId ?? ''
-                )
+                "data": controller.dataSupplier[index]
               }
             );
           },
