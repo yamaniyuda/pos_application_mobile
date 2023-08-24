@@ -39,7 +39,7 @@ class ClothCategoryFormScreen extends GetView<ClothCategoryController> {
   Widget build(BuildContext context) {
     ScreenUtil.init(context);
     late String typeFormTitle = (type == ClothCategoryFormScreenType.store ? "store" : "update").tr;
-    typeFormTitle = "$typeFormTitle ${"size".tr}".toCapitalize();
+    typeFormTitle = "$typeFormTitle ${"cloth category".tr}".toCapitalize();
 
     return Scaffold(
       appBar: AppBar(
@@ -64,7 +64,7 @@ class ClothCategoryFormScreen extends GetView<ClothCategoryController> {
                   hintText: "name".tr.toCapitalize(),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
-                      return "${"size".tr} ${"required".tr}".toCapitalize();
+                      return "${"cloth category".tr} ${"required".tr}".toCapitalize();
                     }
                     return null;
                   },
