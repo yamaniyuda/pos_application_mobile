@@ -11,10 +11,11 @@ class PAMLogo extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Image.asset(
-            "assets/images/Icon.png",
-            fit: BoxFit.contain
+            "assets/images/logo.png",
+            fit: BoxFit.contain,
+            width: 80,
         ),
-        const SizedBox(width: 20),
+        const SizedBox(width: 5),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

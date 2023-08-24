@@ -49,9 +49,9 @@ class SupplierFormScreen extends GetView<SupplierController> {
     late String typeFormTitle = (type == SupplierFormScreenType.store ? "store" : "update").tr.toCapitalize();
     typeFormTitle = "$typeFormTitle supplier".toCapitalize();
 
-    provinceId.value = Get.arguments?["data"]?.province?.id ?? provinceId.value ?? "";
-    regencyId.value = Get.arguments?["data"]?.regency?.id ?? regencyId.value ?? "";
-    districtId.value = Get.arguments?["data"]?.district?.id ?? districtId.value ?? "";
+    provinceId.value = provinceId.value != "" ? provinceId.value : Get.arguments?["data"]?.province?.id ?? "";
+    regencyId.value = regencyId.value != "" ? regencyId.value : Get.arguments?["data"]?.regency?.id ?? "";
+    districtId.value = districtId.value != "" ? districtId.value : Get.arguments?["data"]?.district?.id ?? "";
 
     return Scaffold(
       appBar: AppBar(
@@ -70,7 +70,7 @@ class SupplierFormScreen extends GetView<SupplierController> {
                 PAMFormTextFieldWidget(
                   onSaved: (newValue) => name.value = newValue!,
                   initialValue: type == SupplierFormScreenType.update && Get.arguments != null
-                    ? Get.arguments["data"].name
+                    ? Get.arguments["data"]?.name
                     : "",
                   labelText: "name".tr.toCapitalize(),
                   hintText: "name".tr.toCapitalize(),
@@ -87,7 +87,7 @@ class SupplierFormScreen extends GetView<SupplierController> {
                 PAMFormTextFieldWidget(
                   onSaved: (newValue) => email.value = newValue!,
                   initialValue: type == SupplierFormScreenType.update && Get.arguments != null
-                    ? Get.arguments["data"].email
+                    ? Get.arguments["data"]?.email
                     : "",
                   labelText: "email".tr.toCapitalize(),
                   hintText: "email".tr.toCapitalize(),
@@ -98,7 +98,7 @@ class SupplierFormScreen extends GetView<SupplierController> {
                 PAMFormTextFieldWidget(
                   onSaved: (newValue) => phoneNumber.value = newValue!,
                   initialValue: type == SupplierFormScreenType.update && Get.arguments != null
-                    ? Get.arguments["data"].phoneNumber
+                    ? Get.arguments["data"]?.phoneNumber
                     : "",
                   labelText: "phone number".tr.toCapitalize(),
                   hintText: "phone number".tr.toCapitalize(),
@@ -110,10 +110,10 @@ class SupplierFormScreen extends GetView<SupplierController> {
                 PAMFormTextFieldWidget(
                   onSaved: (newValue) => provinceId.value = newValue!,
                   initialValue: type == SupplierFormScreenType.update && Get.arguments != null
-                    ? Get.arguments["data"].province?.name
+                    ? Get.arguments["data"]?.province?.name
                     : "",
                   hiddenValue: type == SupplierFormScreenType.update && Get.arguments != null
-                    ? Get.arguments["data"].province?.id
+                    ? Get.arguments["data"]?.province?.id
                     : "",
                   labelText: "province".tr.toCapitalize(),
                   hintText: "province".tr.toCapitalize(),
@@ -128,10 +128,10 @@ class SupplierFormScreen extends GetView<SupplierController> {
                 PAMFormTextFieldWidget(
                   onSaved: (newValue) => regencyId.value = newValue!,
                   initialValue: type == SupplierFormScreenType.update && Get.arguments != null
-                    ? Get.arguments["data"].regency?.name
+                    ? Get.arguments["data"]?.regency?.name
                     : "",
                   hiddenValue: type == SupplierFormScreenType.update && Get.arguments != null
-                    ? Get.arguments["data"].regency?.id
+                    ? Get.arguments["data"]?.regency?.id
                     : "",
                   labelText: "regency".tr.toCapitalize(),
                   hintText: "regency".tr.toCapitalize(),
@@ -146,10 +146,10 @@ class SupplierFormScreen extends GetView<SupplierController> {
                 PAMFormTextFieldWidget(
                   onSaved: (newValue) => districtId.value = newValue!,
                   initialValue: type == SupplierFormScreenType.update && Get.arguments != null
-                    ? Get.arguments["data"].district?.name
+                    ? Get.arguments["data"]?.district?.name
                     : "",
                   hiddenValue: type == SupplierFormScreenType.update && Get.arguments != null
-                    ? Get.arguments["data"].district?.id
+                    ? Get.arguments["data"]?.district?.id
                     : "",
                   labelText: "district".tr.toCapitalize(),
                   hintText: "district".tr.toCapitalize(),
@@ -164,10 +164,10 @@ class SupplierFormScreen extends GetView<SupplierController> {
                 PAMFormTextFieldWidget(
                   onSaved: (newValue) => villageId.value = newValue!,
                   initialValue: type == SupplierFormScreenType.update && Get.arguments != null
-                    ? Get.arguments["data"].village?.name
+                    ? Get.arguments["data"]?.village?.name
                     : "",
                   hiddenValue: type == SupplierFormScreenType.update && Get.arguments != null
-                    ? Get.arguments["data"].village?.id
+                    ? Get.arguments["data"]?.village?.id
                     : "",
                   labelText: "village".tr.toCapitalize(),
                   hintText: "village".tr.toCapitalize(),
@@ -181,7 +181,7 @@ class SupplierFormScreen extends GetView<SupplierController> {
                 PAMFormTextFieldWidget(
                   onSaved: (newValue) => address.value = newValue!,
                   initialValue: type == SupplierFormScreenType.update && Get.arguments != null
-                    ? Get.arguments["data"].address
+                    ? Get.arguments["data"]?.address
                     : "",
                   labelText: "address".tr.toCapitalize(),
                   hintText: "address".tr.toCapitalize(),

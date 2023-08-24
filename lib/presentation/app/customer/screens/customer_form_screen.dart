@@ -52,9 +52,9 @@ class CustomerFormScreen extends GetView<CustomerController> {
     typeFormTitle = "$typeFormTitle ${"customer".tr}".toCapitalize();
 
     // UI handling when type form is updated
-    provinceId.value = Get.arguments?["data"]?.province?.id ?? "";
-    regencyId.value = Get.arguments?["data"]?.regency?.id ?? "";
-    districtId.value = Get.arguments?["data"]?.district?.id ?? "";
+    provinceId.value = provinceId.value != "" ? provinceId.value : Get.arguments?["data"]?.province?.id ?? "";
+    regencyId.value = regencyId.value != "" ? regencyId.value : Get.arguments?["data"]?.regency?.id ?? "";
+    districtId.value = districtId.value != "" ? districtId.value : Get.arguments?["data"]?.district?.id ?? "";
 
     return Scaffold(
       appBar: AppBar(
@@ -124,7 +124,9 @@ class CustomerFormScreen extends GetView<CustomerController> {
                 ),
                 const SizedBox(height: 10),
 
-                // provincy
+                ///
+                /// Province form field
+                ///
                 PAMFormTextFieldWidget(
                   onSaved: (newValue) => provinceId.value = newValue!,
                   initialValue: type == CustomerFormScreenType.update && Get.arguments != null
@@ -157,7 +159,7 @@ class CustomerFormScreen extends GetView<CustomerController> {
                   hintText: "regency".tr.toCapitalize(),
                   onChanged: (String? value) => regencyId.value = value ?? "",
                   screen: Obx(() => SearchRegencyScreen(
-                    provincyId: provinceId.value ?? "",
+                    provincyId: provinceId.value,
                   ))
                 ),
                 const SizedBox(height: 10),
