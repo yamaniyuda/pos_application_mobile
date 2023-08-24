@@ -31,7 +31,7 @@ class SizeFormScreen extends GetView<SizeController> {
 
   /// form state field
   final Rx<String> name = "".obs;
-  final Rx<String> slug = "".obs;
+  // final Rx<String> slug = "".obs;
   final Rx<String> description = "".obs;
 
   @override
@@ -70,16 +70,16 @@ class SizeFormScreen extends GetView<SizeController> {
                 ),
                 const SizedBox(height: 10),
 
-                /// slug field
-                PAMFormTextFieldWidget(
-                  onSaved: (newValue) => slug.value = newValue!,
-                  initialValue: type == SizeFormScreenType.update && Get.arguments != null
-                    ? Get.arguments["data"].slug
-                    : "",
-                  labelText: "slug".tr.toCapitalize(),
-                  hintText: "slug".tr.toCapitalize(),
-                ),
-                const SizedBox(height: 10),
+                // /// slug field
+                // PAMFormTextFieldWidget(
+                //   onSaved: (newValue) => slug.value = newValue!,
+                //   initialValue: type == SizeFormScreenType.update && Get.arguments != null
+                //     ? Get.arguments["data"].slug
+                //     : "",
+                //   labelText: "slug".tr.toCapitalize(),
+                //   hintText: "slug".tr.toCapitalize(),
+                // ),
+                // const SizedBox(height: 10),
 
                 /// description field
                 PAMFormTextFieldWidget(
@@ -105,7 +105,7 @@ class SizeFormScreen extends GetView<SizeController> {
                       final SizePayload paylaod = SizePayload(
                         id: Get.arguments?["data"].id ?? "",
                         name: name.value,
-                        slug: slug.value,
+                        // slug: slug.value,
                         description: description.value
                       );
 
