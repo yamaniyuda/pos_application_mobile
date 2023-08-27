@@ -58,7 +58,7 @@ class SizeController extends GetxController {
   @override
   void onInit() {
     fetchdataSize();
-    _showSupperAccess.value = [AuthService.OWNER, AuthService.MANAGER].contains(
+    _showSupperAccess.value = [AuthService.OWNER].contains(
       authService.userEntity?.role
     );
     
@@ -194,6 +194,7 @@ class SizeController extends GetxController {
     }
   }
 
+
   /// Delete data Size handling
   /// 
   /// The `SizeDelete` will delete data from API and will remove
@@ -216,8 +217,12 @@ class SizeController extends GetxController {
       _dataSize.value = [];
       _dataSize.value.addAll(currentData);
 
+      if (Get.isSnackbarOpen) {
+        Get.closeAllSnackbars();
+      }
       // remove dialog
-      Get.back();
+      Get.back(closeOverlays: true);
+
 
       PAMSnackBarWidget.show(
         title: "success".tr.toCapitalize(),

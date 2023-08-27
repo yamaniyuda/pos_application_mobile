@@ -77,7 +77,9 @@ class ClothCategoryScreen extends GetView<ClothCategoryController> {
             return Container(
               clipBehavior: Clip.hardEdge,
               margin: EdgeInsets.symmetric(horizontal: 20.sp, vertical: 5),
-              decoration: const BoxDecoration(),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10)
+              ),
               child: Slidable(
                 key: Key("${controller.dataClothCategory[index]}"),
                 closeOnScroll: false,
@@ -121,21 +123,28 @@ class ClothCategoryScreen extends GetView<ClothCategoryController> {
                       ],
                     )
                   : null,
-                child: ListTile(
-                  leading: Container(
-                    alignment: Alignment.center,
-                    height: 50,
-                    width: 50,
-                    decoration: BoxDecoration(
-                      color: Colors.black54,
-                      borderRadius: BorderRadius.circular(10)
+                child: Card(
+                  margin: EdgeInsets.zero,
+                  child: ListTile(
+                    contentPadding: const EdgeInsets.symmetric(
+                      vertical: 5,
+                      horizontal: 14
                     ),
-                    child: const Icon(Icons.loyalty, color: Colors.white),
+                    leading: Container(
+                      alignment: Alignment.center,
+                      height: 50,
+                      width: 50,
+                      decoration: BoxDecoration(
+                        color: Colors.black54,
+                        borderRadius: BorderRadius.circular(10)
+                      ),
+                      child: const Icon(Icons.loyalty, color: Colors.white),
+                    ),
+                    dense: true,
+                    title: Text(controller.dataClothCategory[index].name!.toCapitalize()),
+                    tileColor: Colors.white,
+                    subtitle: Text((controller.dataClothCategory[index].description ?? "-").toCapitalize()),
                   ),
-                  dense: true,
-                  title: Text(controller.dataClothCategory[index].name!.toCapitalize()),
-                  tileColor: Colors.white,
-                  subtitle: Text((controller.dataClothCategory[index].description ?? "-").toCapitalize()),
                 ),
               ),
             );

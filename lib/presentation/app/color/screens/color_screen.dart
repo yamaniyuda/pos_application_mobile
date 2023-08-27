@@ -109,16 +109,26 @@ class ColorScreen extends GetView<ColorController> {
           itemCount: controller.dataColors.length,
           scrollToRefresh: controller.currentPage == controller.totalPage ? null : controller.fetchDataColor,
           itemBuilder: (context, index) {
-            Color colorLeading = Color(
-              int.parse("#${controller.dataColors[index].codeHexa ?? 'ffffff'}".substring(1, 7), radix: 16) + 0xFF000000
-            );
+            Color colorLeading;
+            try {
+              colorLeading = Color(
+                int.parse("#${controller.dataColors[index].codeHexa ?? 'ffffff'}".substring(1, 7), radix: 16) + 0xFF000000
+              );
+            } catch (_) {
+              colorLeading = Color(
+                int.parse("#ffffff'".substring(1, 7), radix: 16) + 0xFF000000
+              );
+            }
+            
             double luminance = colorLeading.computeLuminance();
             Color textColor = luminance > 0.5 ? Colors.black : Colors.white;
 
             return Container(
               clipBehavior: Clip.hardEdge,
               margin: EdgeInsets.symmetric(horizontal: 20.sp, vertical: 5),
-              decoration: const BoxDecoration(),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10)
+              ),
               child: Slidable(
                 key: Key("${controller.dataColors[index]}"),
                 closeOnScroll: false,
@@ -134,21 +144,28 @@ class ColorScreen extends GetView<ColorController> {
                   : null,
 
                   
-                child: ListTile(
-                  leading: Container(
-                    alignment: Alignment.center,
-                    height: 50,
-                    width: 50,
-                    decoration: BoxDecoration(
-                      color: colorLeading,
-                      borderRadius: BorderRadius.circular(10)
+                child: Card(
+                  margin: EdgeInsets.zero,
+                  child: ListTile(
+                    contentPadding: const EdgeInsets.symmetric(
+                      vertical: 5,
+                      horizontal: 14
                     ),
-                    child: Icon(Icons.color_lens, color: textColor),
+                    leading: Container(
+                      alignment: Alignment.center,
+                      height: 50,
+                      width: 50,
+                      decoration: BoxDecoration(
+                        color: colorLeading,
+                        borderRadius: BorderRadius.circular(10)
+                      ),
+                      child: Icon(Icons.color_lens, color: textColor),
+                    ),
+                    dense: true,
+                    title: Text(controller.dataColors[index].name!.toCapitalize()),
+                    tileColor: Colors.white,
+                    subtitle: Text((controller.dataColors[index].description ?? "-").toCapitalize()),
                   ),
-                  dense: true,
-                  title: Text(controller.dataColors[index].name!.toCapitalize()),
-                  tileColor: Colors.white,
-                  subtitle: Text("${controller.dataColors[index].description}".toCapitalize()),
                 ),
               ),
             );
@@ -159,7 +176,6 @@ class ColorScreen extends GetView<ColorController> {
   }
 
   Widget _buildButtonAdd() {
-    print(controller.authService.userEntity?.role);
     if (controller.showSuperAccess) {
       return FloatingActionButton(
         onPressed: () async {

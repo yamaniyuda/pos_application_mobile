@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:get/get.dart';
 import 'package:pos_application_mobile/app/extensions/string_extention.dart';
@@ -20,23 +21,26 @@ enum ColorFormScreenType {
 /// - `codeHexa`: The code hexadecimal for representation of color.
 class ColorFormScreen extends GetView<ColorController> {
   final ColorFormScreenType type;
-
+  
   ColorFormScreen({
     super.key,
     this.type = ColorFormScreenType.store
   });
 
   final _formKey = GlobalKey<FormState>();
+  final _colorPickerController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     late String titleAppBar;
 
     if (type == ColorFormScreenType.store) {
-      titleAppBar = "add color".tr.toCapitalize();
+      titleAppBar = "store".tr;
     } else {
-      titleAppBar = "update color".tr.toCapitalize();
+      titleAppBar = "update".tr;
     }
+
+    titleAppBar = "$titleAppBar ${"color".tr}".toCapitalize();
 
     return Scaffold(
       appBar: AppBar(
@@ -54,7 +58,31 @@ class ColorFormScreen extends GetView<ColorController> {
                       ? Get.arguments["codeHexa"] as Color
                       : controller.colorPicker,
                     onColorChanged: controller.setColorPicker,
+                    hexInputController: _colorPickerController,
+                    displayThumbColor: true,
+                    enableAlpha: true,
+                    labelTypes: [],
                   ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 40,
+                    ),
+                    child: TextFormField(
+                      controller: _colorPickerController,
+                      maxLength: 9,
+                      inputFormatters: [
+                        UpperCaseTextFormatter(),
+                        FilteringTextInputFormatter.allow(RegExp(kValidHexPattern))
+                      ],
+                      validator: (value) {
+                        if (value!.length < 8) {
+                          return "kode hex harus 8 karakter";
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 20),
                   PAMFormTextFieldWidget(
                     initialValue: type == ColorFormScreenType.update
                       ? Get.arguments["name"]

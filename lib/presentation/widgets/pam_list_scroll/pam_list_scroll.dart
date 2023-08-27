@@ -52,6 +52,12 @@ class _PAMListScrollState<T> extends State<PAMListScroll<T>> {
   }
 
   @override
+  void dispose() {
+    _controller.removeListener(() { });
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: widget.onRefresh,

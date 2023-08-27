@@ -204,8 +204,13 @@ class UserController extends GetxController {
       _dataUser.value = [];
       _dataUser.value.addAll(currentData);
 
+      // handling stack overlay
+      if (Get.isOverlaysOpen) {
+        Get.closeAllSnackbars();
+      }
+
       // remove dialog
-      Get.back();
+      Get.back(closeOverlays: true);
 
       PAMSnackBarWidget.show(
         title: "success".tr.toCapitalize(),
@@ -227,6 +232,16 @@ class UserController extends GetxController {
   }
 
   /// Update data user handling
+  /// 
+  /// The `userUpdate` will update data from remote API.
+  /// 
+  /// Parameters:
+  /// - `payload`: A UserPayload for payload req
+  /// 
+  /// Usage example:
+  /// ```dart
+  /// userUpdate(UserPayload(/*...*/))
+  /// ```
   void userUpdate(UserPaylaod paylaod) async {
     try {
       PAMAlertWidget.showLoadingAlert(Get.context!);

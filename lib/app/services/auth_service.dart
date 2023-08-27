@@ -168,12 +168,14 @@ class AuthService extends GetxService {
 
       Get.offAllNamed(Routes.main, arguments: { "screen": ChildMenuMain.homeScreen });
     }  on DioException catch (e) {
+      Get.back();
       PAMSnackBarWidget.show(
         title: "failed".tr.toCapitalize(),
         message: e.response!.data["message"],
         type: PAMSnackBarWidgetType.danger
       );
     } catch (e) {
+      Get.back();
       PAMSnackBarWidget.show(
         title: "Login Failed".tr,
         message: "Login failed, please try again".tr,

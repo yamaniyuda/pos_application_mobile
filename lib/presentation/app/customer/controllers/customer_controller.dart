@@ -216,8 +216,12 @@ class CustomerController extends GetxController {
       _dataCustomer.value = [];
       _dataCustomer.value.addAll(currentData);
 
+      if (Get.isSnackbarOpen) {
+        Get.closeAllSnackbars();
+      }
+
       // remove dialog
-      Get.back();
+      Get.back(closeOverlays: true);
 
       PAMSnackBarWidget.show(
         title: "success".tr.toCapitalize(),

@@ -210,8 +210,12 @@ class ColorController extends GetxController {
       _dataColors.value = [];
       _dataColors.value.addAll(currentData);
 
+      if (Get.isSnackbarOpen) {
+        Get.closeAllSnackbars();
+      }
+
       // remove dialog
-      Get.back();
+      Get.back(closeOverlays: true);
 
       PAMSnackBarWidget.show(
         title: "success".tr.toCapitalize(),

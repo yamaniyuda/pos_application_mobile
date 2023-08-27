@@ -77,7 +77,9 @@ class UserScreen extends GetView<UserController> {
             return Container(
               clipBehavior: Clip.hardEdge,
               margin: EdgeInsets.symmetric(horizontal: 20.sp, vertical: 5),
-              decoration: const BoxDecoration(),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10)
+              ),
               child: Slidable(
                 key: Key("${controller.dataUser[index]}"),
                 closeOnScroll: false,
@@ -122,23 +124,29 @@ class UserScreen extends GetView<UserController> {
                     )
                   ],
                 ),
-                child: ListTile(
-                  leading: Container(
-                    alignment: Alignment.center,
-                    height: 50,
-                    width: 50,
-                    decoration: BoxDecoration(
-                      color: Colors.black54,
-                      borderRadius: BorderRadius.circular(10)
+                child: Card(
+                  margin: EdgeInsets.zero,
+                  child: ListTile(
+                    contentPadding: const EdgeInsets.symmetric(
+                      vertical: 5,
+                      horizontal: 14
                     ),
-                    child: const Icon(Icons.switch_account_rounded, color: Colors.white),
+                    dense: true,
+                    title: Text(controller.dataUser[index].name!.toCapitalize()),
+                    tileColor: Colors.white,
+                    subtitle: Text("${controller.dataUser[index].role}".toCapitalize()),
+                    leading: Container(
+                      alignment: Alignment.center,
+                      height: 50,
+                      width: 50,
+                      decoration: BoxDecoration(
+                        color: Colors.black54,
+                        borderRadius: BorderRadius.circular(10)
+                      ),
+                      child: const Icon(Icons.person_add_alt_1_rounded, color: Colors.white),
+                    ),
                   ),
-                  trailing: const Icon(Icons.density_medium_rounded),
-                  dense: true,
-                  title: Text(controller.dataUser[index].name!.toCapitalize()),
-                  tileColor: Colors.white,
-                  subtitle: Text("${controller.dataUser[index].role}".toCapitalize()),
-                ),
+                )
               ),
             );
           },

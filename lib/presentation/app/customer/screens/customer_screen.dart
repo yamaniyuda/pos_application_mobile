@@ -4,10 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:pos_application_mobile/app/config/routes/app_screens.dart';
 import 'package:pos_application_mobile/app/extensions/string_extention.dart';
-import 'package:pos_application_mobile/data/payloads/customer_payload.dart';
-import 'package:pos_application_mobile/domain/entities/customer_entity.dart';
 import 'package:pos_application_mobile/presentation/app/customer/customer.dart';
 import 'package:pos_application_mobile/presentation/widgets/pam_form/pam_form.dart';
 import 'package:pos_application_mobile/presentation/widgets/pam_list_scroll/pam_list_scroll.dart';
@@ -80,7 +79,9 @@ class CustomerScreen extends GetView<CustomerController> {
             return Container(
               clipBehavior: Clip.hardEdge,
               margin: EdgeInsets.symmetric(horizontal: 20.sp, vertical: 5),
-              decoration: const BoxDecoration(),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10)
+              ),
               child: Slidable(
                 key: Key("${controller.dataCustomer[index]}"),
                 closeOnScroll: false,
@@ -92,8 +93,10 @@ class CustomerScreen extends GetView<CustomerController> {
                       dragDismissible: false,
                       openThreshold: .1,
                       children: [
-
-                        // update action
+                        
+                        /// =============
+                        /// Update action
+                        /// =============
                         SlidableAction(
                           onPressed: (context) {
                             Get.to(CustomerFormScreen(type: CustomerFormScreenType.update),
@@ -108,7 +111,9 @@ class CustomerScreen extends GetView<CustomerController> {
                           icon: Icons.edit,
                         ),
 
-                        // delete action
+                        /// =============
+                        /// delete action
+                        /// =============
                         SlidableAction(
                           onPressed: (context) {
                             controller.customerDelete(controller.dataCustomer[index].id!);
@@ -121,23 +126,184 @@ class CustomerScreen extends GetView<CustomerController> {
                     )
                   : null,
 
-                child: ListTile(
-                  leading: Container(
-                    alignment: Alignment.center,
-                    height: 50,
-                    width: 50,
-                    decoration: BoxDecoration(
-                      color: Colors.black54,
-                      borderRadius: BorderRadius.circular(10)
+                child: Card(
+                  margin: EdgeInsets.zero,
+                  child: ListTile(
+                    trailing: const Icon(Icons.density_medium_rounded),
+                    contentPadding: const EdgeInsets.symmetric(
+                      vertical: 5,
+                      horizontal: 14
                     ),
-                    child: const Icon(Icons.manage_accounts, color: Colors.white),
+                    leading: Container(
+                      alignment: Alignment.center,
+                      height: 50,
+                      width: 50,
+                      decoration: BoxDecoration(
+                        color: Colors.black54,
+                        borderRadius: BorderRadius.circular(10)
+                      ),
+                      child: const Icon(Icons.lock_person_sharp, color: Colors.white),
+                    ),
+                    dense: true,
+                    title: Text(
+                      "${controller.dataCustomer[index].name!} ${controller.dataCustomer[index].customerType?.name != null ? "(${controller.dataCustomer[index].customerType!.name})" : ""}".toCapitalize()
+                    ),
+                    tileColor: Colors.white,
+                    subtitle: Text("${controller.dataCustomer[index].email ?? "-"}".toCapitalize()),
+                    onTap: () {
+                      Get.bottomSheet(
+                        SizedBox(
+                          height: Get.height * .7,
+                          child: Stack(
+                            alignment: Alignment.topCenter,
+                            children: [
+                              Positioned(
+                                top: 50,
+                                child: Container(
+                                  width: Get.width,
+                                  height: 500,
+                                  padding: const EdgeInsets.all(50),
+                                  decoration:  const BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(20),
+                                      topRight: Radius.circular(20)
+                                    )
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      const SizedBox(height: 20),
+                                      Text(
+                                        controller.dataCustomer[index].name! +
+                                        (controller.dataCustomer[index]
+                                                        .customerType?.name !=
+                                                    null
+                                                ? " (${controller.dataCustomer[index].customerType?.name})"
+                                                : "")
+                                            .toCapitalize(),
+                                        textAlign: TextAlign.center,
+                                        style: GoogleFonts.lato(
+                                          fontSize: 20,
+                                        ),
+                                      ),
+                                      Text(
+                                        "${controller.dataCustomer[index].email ?? "-"}",
+                                        style: GoogleFonts.lato(
+                                          color: Colors.black54.withOpacity(0.5)
+                                        ),
+                                      ),
+                                      Text(
+                                        controller.dataCustomer[index].phoneNumber!.toCapitalize(),
+                                        style: GoogleFonts.lato(
+                                          color: Colors.black54.withOpacity(0.5)
+                                        ),
+                                      ),
+                                      const SizedBox(height: 30),
+
+
+                                      /// =====================
+                                      /// Province show section
+                                      /// =====================
+                                      SizedBox(
+                                        width: double.infinity,
+                                        child: Row(
+                                          children: [
+                                            Text("province".tr.toCapitalize()),
+                                            const Spacer(),
+                                            Text(controller.dataCustomer[index].province?.name ?? "-")
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(height: 20),
+
+
+                                      /// ====================
+                                      /// Regency show section
+                                      /// ====================
+                                      SizedBox(
+                                        width: double.infinity,
+                                        child: Row(
+                                          children: [
+                                            Text("regency".tr.toCapitalize()),
+                                            const Spacer(),
+                                            Text(controller.dataCustomer[index].regency?.name ?? "-")
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(height: 20),
+
+
+                                      /// =====================
+                                      /// District show section
+                                      /// =====================
+                                      SizedBox(
+                                        width: double.infinity,
+                                        child: Row(
+                                          children: [
+                                            Text("district".tr.toCapitalize()),
+                                            const Spacer(),
+                                            Text(controller.dataCustomer[index].district?.name ?? "-")
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(height: 20),
+
+
+                                      /// ====================
+                                      /// Village show section
+                                      /// ====================
+                                      SizedBox(
+                                        width: double.infinity,
+                                        child: Row(
+                                          children: [
+                                            Text("village".tr.toCapitalize()),
+                                            const Spacer(),
+                                            Text(controller.dataCustomer[index].village?.name ?? "-")
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(height: 20),
+
+
+                                      /// ====================
+                                      /// Address show section
+                                      /// ====================
+                                      SizedBox(
+                                        width: double.infinity,
+                                        child: Row(
+                                          children: [
+                                            Text("address".tr.toCapitalize()),
+                                            const Spacer(),
+                                            Text(controller.dataCustomer[index].address ?? "-")
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  height: 100,
+                                  width: 100,
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xff272829),
+                                    borderRadius: BorderRadius.circular(10)
+                                  ),
+                                  child: const Icon(
+                                    Icons.lock_person_sharp, 
+                                    color: Colors.white,
+                                    size: 50,
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        )
+                      );
+                    },
                   ),
-                  dense: true,
-                  title: Text(
-                    "${controller.dataCustomer[index].name!} ${controller.dataCustomer[index].customerType?.name != null ? "(${controller.dataCustomer[index].customerType!.name})" : ""}".toCapitalize()
-                  ),
-                  tileColor: Colors.white,
-                  subtitle: Text("${controller.dataCustomer[index].email ?? "-"}".toCapitalize()),
                 ),
               ),
             );

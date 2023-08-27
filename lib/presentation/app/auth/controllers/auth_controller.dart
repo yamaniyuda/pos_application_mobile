@@ -4,6 +4,7 @@ import 'package:pos_application_mobile/app/services/auth_service.dart';
 import 'package:pos_application_mobile/app/utils/system_utils.dart';
 import 'package:pos_application_mobile/data/payloads/sign_in_payload.dart';
 import 'package:pos_application_mobile/domain/use_cases/auth/sign_in_use_case.dart';
+import 'package:pos_application_mobile/presentation/widgets/pam_alert/pam_alert.dart';
 
 class AuthController extends GetxController with GetSingleTickerProviderStateMixin {
   final signInUseCase = Get.find<SignInUseCase>();
@@ -19,17 +20,16 @@ class AuthController extends GetxController with GetSingleTickerProviderStateMix
   @override
   void onInit() {
     super.onInit();
-    SystemUtils.changeStatusAndBottomBarColor(
-      Get.context!,
-      statusBarColor: Colors.white,
-      statusBarIconBrightness: Brightness.dark,
-      systemNavigationBarColor: Colors.white,
-      systemNavigationBarIconBrightness: Brightness.dark
-    );
+    SystemUtils.changeStatusAndBottomBarColor(Get.context!,
+        statusBarColor: Colors.white,
+        statusBarIconBrightness: Brightness.dark,
+        systemNavigationBarColor: Colors.white,
+        systemNavigationBarIconBrightness: Brightness.dark);
     tabController = TabController(length: 1, vsync: this);
   }
 
   Future<void> signIn(SignInPayload payload) async {
+    PAMAlertWidget.showLoadingAlert(Get.context!);
     await authService.signIn(payload, rememberMe: rememberMe.value);
   }
 }
