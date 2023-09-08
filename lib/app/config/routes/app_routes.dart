@@ -27,6 +27,10 @@ abstract class Routes {
   static const clothCategoryForm = _Paths.clothCategoryForm;
   static const supplier = _Paths.supplier;
   static const supplierForm = _Paths.supplierForm;
+  static const clothPriceType = _Paths.clothPriceType;
+  static const clothPriceTypeForm = _Paths.clothPriceTypeForm;
+  static const productForm = _Paths.productForm;
+  static const productDetail = _Paths.productDetail;
 }
 
 abstract class _Paths {
@@ -54,4 +58,8 @@ abstract class _Paths {
   static const String clothCategoryForm = '/cloth-category-form';
   static const String supplier = '/supplier';
   static const String supplierForm = '/supplier-form';
+  static const String clothPriceType = '/cloth-price-type';
+  static const String clothPriceTypeForm = '/cloth-price-type-form';
+  static const String productForm = '/product-form';
+  static const String productDetail = '/product-detail/:id';
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -10,7 +9,6 @@ import 'package:pos_application_mobile/app/utils/system_utils.dart';
 import 'package:pos_application_mobile/presentation/app/home/controllers/home_controller.dart';
 import 'package:pos_application_mobile/presentation/app/home/widgets/bar_chart_widget.dart';
 import 'package:pos_application_mobile/presentation/widgets/pam_badge/pam_badge.dart';
-import 'package:pos_application_mobile/presentation/widgets/pam_bottom/pam_bottom_icon.dart';
 
 part 'header_home.g.dart';
 part 'feature_home.g.dart';
@@ -150,15 +148,22 @@ class HomeScreen extends GetView<HomeController> {
       SliverToBoxAdapter(
         child: Container(
           color: Theme.of(context).primaryColor,
-          height: 40,
+          height: 100,
         ),
       ),
       SliverToBoxAdapter(
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 20),
-          color: Theme.of(context).primaryColor,
           width: double.infinity,
           height: Get.height * 0.22,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Theme.of(context).primaryColor,
+                const Color(0xffd43f8d)
+              ]
+            )
+          ),
           child: Column(
             children: [
               Row(
@@ -199,12 +204,29 @@ class HomeScreen extends GetView<HomeController> {
     ScreenUtil.init(context);
 
     return Scaffold(
-      backgroundColor: Theme.of(context).primaryColor,
-      body: SizedBox(
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Theme.of(context).primaryColor,
+              const Color(0xffd43f8d)
+            ]
+          )
+        ),
         height: double.infinity,
         width: double.infinity,
         child: Stack(
+
           children: [
+            Positioned(
+              top: -10,
+              child: Container(
+                width: Get.width,
+                height: Get.statusBarHeight,
+                color: Colors.red,
+                child: Text("tes"),
+              ),
+            ),
             CustomScrollView(
               controller: controller.scrollController,
               slivers: [

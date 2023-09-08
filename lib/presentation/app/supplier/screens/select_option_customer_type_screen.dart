@@ -52,8 +52,6 @@ class SelectOptionCustomerTypeScreen extends StatelessWidget {
                               value: controller.customerTypeDatas[index].id as String,
                               groupValue: controller.chooseValue,
                               onChanged: (String? value) {
-                                print("masuk klik");
-                                print(controller.customerTypeDatas[index].name);
                                 controller.changeRadioSelection(
                                   value!,
                                   controller.customerTypeDatas[index].name!

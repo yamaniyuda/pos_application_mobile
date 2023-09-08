@@ -25,12 +25,19 @@ class _HeaderHome extends StatelessWidget {
         child: Obx(() {
           return AnimatedContainer(
             duration: const Duration(milliseconds: 200),
-            height: 50,
+            height: 120,
             padding: const EdgeInsets.symmetric(
                 vertical: 10,
                 horizontal: 10
             ),
-            color: Theme.of(context).primaryColor,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Theme.of(context).primaryColor,
+                  Color(0xffd43f8d)
+                ]
+              )
+            ),
             child: SafeArea(
               child: Row(
                 children: [

@@ -71,5 +71,6 @@
   "district": "kecamatan",
   "village": "kelurahan",
   "description": "deskripsi",
-  "choose": "pilih"
+  "choose": "pilih",
+  "cloth price type": "tipe harga pakaian"
 }

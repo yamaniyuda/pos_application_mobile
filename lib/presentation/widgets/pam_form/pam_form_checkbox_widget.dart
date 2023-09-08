@@ -34,30 +34,9 @@ class PAMFormCheckboxWidget extends FormField<List<String>> {
             }
           }
         )).toList(),
-
-        // children: options.map((value) => Row(
-        //   mainAxisAlignment: MainAxisAlignment.start,
-        //   mainAxisSize: MainAxisSize.min,
-        //   children: [
-        //     Checkbox(
-        //       value: field.value!.contains(value),
-        //       onChanged: (checked) {
-        //         if (checked != null) {
-        //           List<String> newValue = List.from(field.value!);
-        //           if (checked) {
-        //             newValue.add(value);
-        //           } else {
-        //             newValue.remove(value);
-        //           }
-        //
-        //           field.didChange(newValue);
-        //         }
-        //       }
-        //     ),
-        //     Text(value.toCapitalize())
-        //   ],
-        // )).toList(),
       );
     }
   );
+
+  // factory PAMFormCheckboxWidget.customer();
 }

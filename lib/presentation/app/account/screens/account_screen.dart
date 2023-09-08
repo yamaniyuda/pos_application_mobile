@@ -113,6 +113,7 @@ class AccountScreen extends GetView<AccountController> {
       { "title": "color".tr, "screenRouter": Routes.color, "icon": const Icon(Icons.color_lens, color: Colors.white,), "color": Theme.of(Get.context!).primaryColor },
       { "title": "size".tr, "screenRouter": Routes.size, "icon": const Icon(Icons.photo_size_select_large, color: Colors.white,), "color": Theme.of(Get.context!).primaryColor },
       { "title": "cloth category".tr, "screenRouter": Routes.clothCategory, "icon": const Icon(Icons.loyalty, color: Colors.white,), "color": Theme.of(Get.context!).primaryColor },
+      { "title": "cloth price type".tr, "screenRouter": Routes.clothPriceType, "icon": const Icon(Icons.discount_rounded, color: Colors.white,), "color": Theme.of(Get.context!).primaryColor },
     ];
 
     final List<Map<String, dynamic>> menuSetting = [

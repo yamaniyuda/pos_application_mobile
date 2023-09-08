@@ -2,22 +2,21 @@ import 'package:get/get.dart';
 import 'package:pos_application_mobile/app/config/routes/middlewares/auth_guard_middleware.dart';
 import 'package:pos_application_mobile/presentation/app/account/account.dart';
 import 'package:pos_application_mobile/presentation/app/cloth_cateogory/cloth_category.dart';
+import 'package:pos_application_mobile/presentation/app/cloth_price_type/cloth_price_type.dart';
 import 'package:pos_application_mobile/presentation/app/color/color.dart';
 import 'package:pos_application_mobile/presentation/app/customer/customer.dart';
 import 'package:pos_application_mobile/presentation/app/customer_type/customer_type.dart';
-import 'package:pos_application_mobile/presentation/app/home/controllers/home_binding.dart';
+import 'package:pos_application_mobile/presentation/app/home/home.dart';
 import 'package:pos_application_mobile/presentation/app/main/main.dart';
-import 'package:pos_application_mobile/presentation/app/product/controllers/product_binding.dart';
-import 'package:pos_application_mobile/presentation/app/product/screens/product_screen.dart';
+import 'package:pos_application_mobile/presentation/app/product/controllers/product_detail_controller.dart';
+import 'package:pos_application_mobile/presentation/app/product/product.dart';
+import 'package:pos_application_mobile/presentation/app/product/screens/product_detail_screen.dart';
 import 'package:pos_application_mobile/presentation/app/report/report.dart';
 import 'package:pos_application_mobile/presentation/app/size/size.dart';
-import 'package:pos_application_mobile/presentation/app/splash/controllers/splash_binding.dart';
 import 'package:pos_application_mobile/presentation/app/auth/auth.dart';
-import 'package:pos_application_mobile/presentation/app/home/home.dart';
 import 'package:pos_application_mobile/presentation/app/on_boarding/on_boarding.dart';
 import 'package:pos_application_mobile/presentation/app/splash/splash.dart';
-import 'package:pos_application_mobile/presentation/app/stock/controllers/stock_binding.dart';
-import 'package:pos_application_mobile/presentation/app/stock/screens/stock_screen.dart';
+import 'package:pos_application_mobile/presentation/app/stock/stock.dart';
 import 'package:pos_application_mobile/presentation/app/supplier/supplier.dart';
 import 'package:pos_application_mobile/presentation/app/user/user.dart';
 
@@ -78,7 +77,7 @@ class AppScreens {
 
     GetPage(
       name: _Paths.product,
-      page: () => const ProductScreen(),
+      page: () => ProductScreen(),
       binding: ProductBinding()
     ),
 
@@ -169,6 +168,33 @@ class AppScreens {
       name: _Paths.supplierForm,
       page: () => SupplierFormScreen(),
       binding: SupplierBinding()
+    ),
+
+    GetPage(
+      name: _Paths.clothPriceType,
+      page: () => const ClothPriceTypeScreen(),
+      binding: ClothPriceTypeBinding()
+    ),
+    GetPage(
+      name: _Paths.clothPriceTypeForm,
+      page: () => ClothPriceTypeFormScreen(),
+      binding: ClothPriceTypeBinding()
+    ),
+    
+    GetPage(
+      name: _Paths.productForm,
+      page: () => ProductFormScreen(),
+      binding: BindingsBuilder(() {
+        Get.put(ProductFormController());
+      })
+    ),
+
+    GetPage(
+      name: _Paths.productDetail,
+      page: () => ProductDetailScreen(),
+      binding: BindingsBuilder(() {
+        Get.put(ProductDetailController());
+      })
     )
   ];
 }

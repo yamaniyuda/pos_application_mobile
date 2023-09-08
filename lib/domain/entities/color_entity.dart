@@ -1,5 +1,6 @@
 import 'package:pos_application_mobile/domain/entities/entity.dart';
 
+
 class ColorEntity extends Entity {
   final String? id;
   final int? isActive;

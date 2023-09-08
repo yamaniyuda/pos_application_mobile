@@ -19,6 +19,7 @@ class PAMFormTextFieldWidget extends StatefulWidget {
   final String? initialValue;
   final ValueChanged<String>? onChanged;
   final PAMFormTextFieldWidgetType type;
+  final InputDecoration? inputDecoration;
   final BoxDecoration? decoration;
   final void Function(String?)? onSaved;
   final void Function()? onTabSuffixIcon;
@@ -38,6 +39,7 @@ class PAMFormTextFieldWidget extends StatefulWidget {
     this.padding,
     this.onChanged,
     this.decoration,
+    this.inputDecoration,
     this.onTabSuffixIcon,
     this.icon,
     this.validator,
@@ -135,7 +137,7 @@ class _PAMFormTextFieldWidgetState extends State<PAMFormTextFieldWidget> {
           obscureText: widget.type == PAMFormTextFieldWidgetType.password && !_showPassword 
             ? true : false,
           onTap: onTapHandler,
-          decoration: _inputFormStyle.copyWith(
+          decoration: widget.inputDecoration ?? _inputFormStyle.copyWith(
             suffixIcon: widget.type == PAMFormTextFieldWidgetType.password 
               ? IconButton(
                   hoverColor: Colors.transparent,

@@ -19,8 +19,8 @@ class AccountController extends GetxController {
   void onClose() {
     SystemUtils.changeStatusAndBottomBarColor(
       Get.context!,
-      statusBarColor: Theme.of(Get.context!).primaryColor,
-      statusBarIconBrightness: Brightness.light
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.dark
     );
     super.onClose();
   }

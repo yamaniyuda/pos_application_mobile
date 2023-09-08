@@ -17,12 +17,7 @@ class CustomerTypeDTO implements DTO {
   @JsonKey(name: "created_at")
   late String? createdAt;
 
-  CustomerTypeDTO({
-    this.createdAt,
-    this.description,
-    this.id,
-    this.name
-  });
+  CustomerTypeDTO({this.createdAt, this.description, this.id, this.name});
 
   factory CustomerTypeDTO.fromJson(Map<String, dynamic> json) {
     return _$CustomerTypeDTOFromJson(json);

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pos_application_mobile/app/extensions/string_extention.dart';
-import 'package:pos_application_mobile/app/utils/system_utils.dart';
 import 'package:pos_application_mobile/presentation/app/booking/booking.dart';
 import 'package:pos_application_mobile/presentation/app/home/home.dart';
 import 'package:pos_application_mobile/presentation/app/main/controllers/main_controller.dart';
@@ -14,23 +13,18 @@ class MainScreen extends GetView<MainController> {
 
   @override
   Widget build(BuildContext context) {
-    SystemUtils.changeStatusAndBottomBarColor(context,
-      statusBarColor: Colors.green
-    );
 
     return Obx(() {
       return Scaffold(
-        body: SafeArea(
-          child: IndexedStack(
-            index: controller.currentIndex,
-            children: const [
-              HomeScreen(),
-              PurchaseScreen(),
-              BookingScreen(),
-              ProductScreen(),
-              StockScreen(),
-            ],
-          )
+        body: IndexedStack(
+          index: controller.currentIndex,
+          children: [
+            const HomeScreen(),
+            const PurchaseScreen(),
+            const BookingScreen(),
+            ProductScreen(),
+            const StockScreen(),
+          ],
         ),
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: controller.currentIndex,

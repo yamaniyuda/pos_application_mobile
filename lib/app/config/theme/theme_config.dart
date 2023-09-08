@@ -11,6 +11,7 @@ class ThemeConfig {
       backgroundColor: Colors.white,
       titleTextStyle: GoogleFonts.lato(
         fontSize: 16,
+        fontWeight: FontWeight.bold,
         color: const Color(0xff111111),
       ),
       centerTitle: true,
