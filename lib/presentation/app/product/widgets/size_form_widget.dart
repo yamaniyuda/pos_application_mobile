@@ -1,16 +1,18 @@
+// ignore_for_file: invalid_use_of_protected_member
+
 part of 'color_form_widget.dart';
 
 class SizeFormWidget extends StatelessWidget {
-  const SizeFormWidget({
+  SizeFormWidget({
     super.key,
-    required this.controller,
     required this.index,
     required this.indexSize
   });
 
-  final ProductFormController controller;
   final int index;
   final int indexSize;
+
+  final controller = Get.find<ProductFormController>();
 
   @override
   Widget build(BuildContext context) {
@@ -53,11 +55,34 @@ class SizeFormWidget extends StatelessWidget {
             floatingLabelBehavior: FloatingLabelBehavior.always,
             fillColor: Colors.black.withOpacity(.05)
           ),
-          onChanged: (value) => controller.clothSizePayloads[index][indexSize].stock = int.parse(value),
-          initialValue: (controller.clothSizePayloads[index][indexSize].stock).toString(),
+          onChanged: (value) {
+            print(index);
+            print(indexSize);
+            controller.updateStockValue(index, indexSize, int.parse(value), controller.clothSizePayloads[index][indexSize].sizeId);
+          },
+          // initialValue: (controller.clothSizePayloads[index][indexSize].stock).toString(),
           onSaved: (newValue) {
-            controller.clothSizePayloads[index][indexSize].stock = int.parse(newValue!);
+            print("===========open===========");
+            print(index);
+            print(indexSize);
+            // controller.clothSizePayloads.value[index][indexSize].stock = int.parse(newValue!);
+            
+            controller.updateStockValue(index, indexSize, int.parse(newValue!), controller.clothSizePayloads[index][indexSize].sizeId);
+
             controller.clothSizePayloads[index][indexSize].sizeId = controller.clothSizePayloads[index][indexSize].sizeId;
+            print(controller.clothSizePayloads[index][indexSize].stock);
+            // controller.clothSizePayloads[index].removeAt(indexSize);
+            
+            // controller.clothSizePayloads[index].add(
+            //   ClothSizePayload(
+            //     clothPrice: [], 
+            //     sizeId: controller.clothSizePayloads[index][indexSize].sizeId,
+            //     stock: int.parse(newValue!)
+            //   )
+            // );
+            // controller.clothSizePayloads[index].removeAt(indexSize);
+            print("===========${index}=========");
+            print("===========end==========");
           },
           inputFormatters: [
             FilteringTextInputFormatter.deny(
@@ -81,7 +106,7 @@ class SizeFormWidget extends StatelessWidget {
                 fillColor: Colors.black.withOpacity(.05)
               ),
               onChanged: (value) => controller.clothPricePayloads[index][indexSize][d.key].price = int.parse(value ?? "0"),
-              initialValue: (controller.clothPricePayloads[index][indexSize][d.key].price ?? 0).toString(),
+              // initialValue: (controller.clothPricePayloads[index][indexSize][d.key].price ?? 0).toString(),
               onSaved: (newValue) {
                 final price = int.parse(newValue!.isEmpty ? '0' : newValue);
                 controller.clothPricePayloads[index][indexSize][d.key].price = price;

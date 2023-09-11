@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pos_application_mobile/app/extensions/string_extention.dart';
 import 'package:pos_application_mobile/app/utils/system_utils.dart';
+import 'package:pos_application_mobile/data/payloads/cloth_size_payload.dart';
 import 'package:pos_application_mobile/presentation/app/product/controllers/product_form_controller.dart';
 
 part 'size_form_widget.dart';
@@ -83,7 +84,6 @@ class ColorFormWidget extends StatelessWidget {
                   
                   ...controller.sizeChoose.asMap().entries.map<Widget>((element) {
                     return SizeFormWidget(
-                      controller: controller, 
                       index: index,
                       indexSize: element.key
                     );

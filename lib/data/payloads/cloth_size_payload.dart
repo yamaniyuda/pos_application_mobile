@@ -7,9 +7,13 @@ class ClothSizePayload extends Payload {
   late int stock;
   late List<ClothPricePayload> clothPrice = [];
 
+  /// Random String used for handling data duplicate.
+  late String? randomString;
+
   ClothSizePayload({
     this.name = '',
     this.sizeId = '',
+    this.randomString,
     this.stock = 0,
     required this.clothPrice
   });

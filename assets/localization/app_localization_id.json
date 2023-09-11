@@ -72,5 +72,8 @@
   "village": "kelurahan",
   "description": "deskripsi",
   "choose": "pilih",
-  "cloth price type": "tipe harga pakaian"
+  "cloth price type": "tipe harga pakaian",
+  "product": "produk",
+  "add": "tambah",
+  "image": "gambar"
 }

@@ -56,6 +56,16 @@ class ProductFormScreen extends GetView<ProductFormController> {
     return controller.updateClothAddNewSize;
   }
 
+  String _getTitle() {
+    if (type == ProductFormScreenType.store) {
+      return "${"store".tr} ${"product".tr}".toCapitalize();
+    } else if (type == ProductFormScreenType.addClothColor) {
+      return  "${"store".tr} ${"color".tr}".toCapitalize();
+    } else {
+      return "${"store".tr} ${"size".tr}".toCapitalize();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context);
@@ -79,7 +89,7 @@ class ProductFormScreen extends GetView<ProductFormController> {
           slivers: [
             /// app bar sliver.
             SliverAppBar(
-              title: Text("${"store".tr} ${"product".tr}".toCapitalize()),
+              title: Text(_getTitle()),
               expandedHeight: getExpandedHeight().toDouble(),
               pinned: true,
               elevation: 2,
@@ -177,10 +187,22 @@ class ProductFormScreen extends GetView<ProductFormController> {
                 padding: const EdgeInsets.all(10),
                 child: PAMBottom(
                   borderRadius: BorderRadius.circular(10),
-                  title: "${"store".tr} ${"product".tr}".toCapitalize(),
+                  title: _getTitle(),
                   onTab: () {
+                    print("===============test before validate================");
+                      print(controller.clothSizePayloads[0][0].stock);
+                      print(controller.clothSizePayloads[1][0].stock);
+                      print("==============end test before validate=============\n\n");
                     if (_formKey.currentState!.validate()) {
+                      print("===============test================");
+                      print(controller.clothSizePayloads[0][0].stock);
+                      print(controller.clothSizePayloads[1][0].stock);
+                      print("==============end test=============");
                       _formKey.currentState!.save();
+                      print("===============test save================");
+                      print(controller.clothSizePayloads[0][0].stock);
+                      print(controller.clothSizePayloads[1][0].stock);
+                      print("==============end test save=============");
 
                       /// Do action to remote data source.
                       getActionMethod()();

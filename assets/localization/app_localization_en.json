@@ -72,5 +72,8 @@
   "village": "village",
   "description": "description",
   "choose": "choose",
-  "cloth price type": "cloth price type"
+  "cloth price type": "cloth price type",
+  "product": "product",
+  "add": "add",
+  "image": "image"
 }

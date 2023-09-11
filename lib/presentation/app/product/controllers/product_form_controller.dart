@@ -1,8 +1,11 @@
 // ignore_for_file: invalid_use_of_protected_member, prefer_final_fields3, library_prefixes
+
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pos_application_mobile/app/extensions/string_extention.dart';
+import 'package:pos_application_mobile/app/utils/system_utils.dart';
 import 'package:pos_application_mobile/data/payloads/cloth_color_payload.dart';
 import 'package:pos_application_mobile/data/payloads/cloth_payload.dart';
 import 'package:pos_application_mobile/data/payloads/cloth_price_payload.dart';
@@ -61,7 +64,7 @@ class ProductFormController extends GetxController {
   final RxList<ColorEntity> colorChoose = <ColorEntity>[].obs;
 
   /// cloth size payload for looping by choose color.
-  final RxList<RxList<ClothSizePayload>> clothSizePayloads = [<ClothSizePayload>[].obs].obs;
+  final RxList<List<ClothSizePayload>> clothSizePayloads = [<ClothSizePayload>[]].obs;
 
   /// The `sizeChoose` is used to handle size choose.
   final RxList<SizeEntity> sizeChoose = <SizeEntity>[].obs;
@@ -85,7 +88,6 @@ class ProductFormController extends GetxController {
 
     /// end loading
     _isLoading.value = false;
-
     super.onInit();
   }
 
@@ -160,11 +162,13 @@ class ProductFormController extends GetxController {
   void _wrapingPayload() {
     _payload.value = ClothPayload(clothCategoryId: clothCategoryId.value, clothColor: []);
 
+
     /// build cloth price type inside to cloth size.
     payload.clothColor.addAll(
       clothColorPayloads.value.asMap().entries.map(
         (i) {
           i.value.clothSize.clear();
+          clothSizePayloads[i.key].removeWhere((element) => element.randomString != null);
           i.value.clothSize.addAll(
             clothSizePayloads[i.key].asMap().entries.map(
               (j) {
@@ -172,6 +176,7 @@ class ProductFormController extends GetxController {
                 j.value.clothPrice.addAll(
                   clothPricePayloads[i.key][j.key]
                 );
+                print(j);
                 return j.value;
               }
             )
@@ -180,6 +185,11 @@ class ProductFormController extends GetxController {
         }
       )
     );
+  }
+
+  void updateStockValue(int index, int indexSize, int stock, String sizeId) {
+    clothSizePayloads[index][indexSize].randomString = SystemUtils.generateRandomString(16);
+    clothSizePayloads[index].add(ClothSizePayload(clothPrice: [], sizeId: sizeId, stock: stock));
   }
 
 
@@ -219,8 +229,8 @@ class ProductFormController extends GetxController {
 
   Future<void> updateClothAddNewColor() async {
     try {
-      _wrapingPayload();
 
+      _wrapingPayload();
       PAMAlertWidget.showLoadingAlert(Get.context!);
       await addClothColorUseCase.call(
         clothAdd.AddClothColorParams(
@@ -229,7 +239,7 @@ class ProductFormController extends GetxController {
         )
       );
 
-      // back from load screen.
+      // back from load screen.2
       Get.back();
 
       /// back from screen.

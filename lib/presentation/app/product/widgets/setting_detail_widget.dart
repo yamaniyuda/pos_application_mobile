@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pos_application_mobile/presentation/app/product/widgets/image_upload_widget.dart';
 
 class SettingDetailWidget extends StatelessWidget {
   const SettingDetailWidget({super.key});
@@ -8,7 +9,7 @@ class SettingDetailWidget extends StatelessWidget {
     return Container(
       child: Column(
         children: [
-          
+          ImageUploadWidget()
         ],
       ),
     );

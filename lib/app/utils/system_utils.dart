@@ -1,5 +1,7 @@
 // ignore_for_file: curly_braces_in_flow_control_structures
 
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -40,7 +42,12 @@ class SystemUtils {
       systemNavigationBarIconBrightness: systemNavigationBarIconBrightness,
     ));
   }
-  
+
+  static String generateRandomString(int len) {
+    var r = Random();
+    return String.fromCharCodes(
+        List.generate(len, (index) => r.nextInt(33) + 89));
+  }
 
   /// Validator Message.
   ///

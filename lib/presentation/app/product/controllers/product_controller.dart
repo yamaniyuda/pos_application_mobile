@@ -147,8 +147,6 @@ class ProductController extends GetxController with GetSingleTickerProviderState
     List<ClothEntity> data = await fetchDataUseCase.call(buildQueryParameters);
 
     // Update state with fetched data
-
-    print(data);
     _data.value.addAll(data);
     _isLoading.value = false;
 

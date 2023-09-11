@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pos_application_mobile/app/extensions/string_extention.dart';
+import 'package:pos_application_mobile/app/utils/system_utils.dart';
 
 /// PAMBottomSheet Widget
 ///
@@ -47,6 +48,12 @@ class PAMBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return IconButton(
       onPressed: () {
+        SystemUtils.changeStatusAndBottomBarColor(
+          context,
+          statusBarColor: Colors.white.withOpacity(.004),
+          statusBarIconBrightness:  Brightness.light
+        );
+
         Get.bottomSheet(
           Container(
             padding: const EdgeInsets.all(20),
@@ -71,7 +78,10 @@ class PAMBottomSheet extends StatelessWidget {
               ],
             ),
           ),
-        );
+        )
+        .then((value) {
+          SystemUtils.changeStatusAndBottomBarColor(context);
+        });
       },
       icon: buttom,
     );

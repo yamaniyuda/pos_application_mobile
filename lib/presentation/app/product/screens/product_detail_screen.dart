@@ -11,7 +11,6 @@ import 'package:pos_application_mobile/app/utils/system_utils.dart';
 import 'package:pos_application_mobile/domain/entities/cloth_color_entity.dart';
 import 'package:pos_application_mobile/presentation/app/product/controllers/product_detail_controller.dart';
 import 'package:pos_application_mobile/presentation/app/product/product.dart';
-import 'package:pos_application_mobile/presentation/app/product/widgets/image_upload_widget.dart';
 import 'package:pos_application_mobile/presentation/app/product/widgets/setting_detail_widget.dart';
 import 'package:pos_application_mobile/presentation/widgets/pam_bottom/pam_bottom_sheet.dart';
 
@@ -102,14 +101,14 @@ class ProductDetailScreen extends GetView<ProductDetailController> {
       return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          title: Text(controller.dataDetail.clothCategory!.name!),
+          title: Text(controller.dataDetail.clothCategory!.name!.toCapitalize()),
 
         ),
         body: SafeArea(
           child: DefaultTabController(
             length: controller.dataDetail.clothColors!.length,
             child: NestedScrollView(
-              controller: controller.scrollController,
+              // controller: controller.scrollController,
               physics: const BouncingScrollPhysics(),
               headerSliverBuilder: (context, innerBoxIsScrolled) {
                 return [
@@ -176,7 +175,7 @@ class ProductDetailScreen extends GetView<ProductDetailController> {
             ),
             onPressed: () => _addClothSizeHandler(clothColor),
             child: SizedBox(
-              width: 110,
+              width: 130,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -212,7 +211,7 @@ class ProductDetailScreen extends GetView<ProductDetailController> {
           Table(
             columnWidths: {
               0: const FlexColumnWidth(16),
-              1: const FlexColumnWidth(6)
+              1: const FlexColumnWidth(7)
             },
             children: [
               TableRow(
@@ -311,6 +310,50 @@ class ProductDetailScreen extends GetView<ProductDetailController> {
   }
 
 
+  /// Body Content Items Caraouser.
+  /// The `_bodyContentItemsCaraouser` will do handling image for banner.
+  /// if [controller.imageData] is empety this function will return dammy data
+  /// sum 3, and when data exist in [controller.imageData] will show data exist
+  /// with dummy image for error handling when image 404 when in fetch from
+  /// remote storage.
+  List<Widget> _bodyContentItemsCaraouser() {
+    if (controller.imageData.isEmpty) {
+      return [1, 2, 3].map((e) {
+        return Builder(
+          builder: (context) {
+            return SizedBox(
+              width: Get.width,
+              child: Image.asset(
+                "assets/images/img_placeholder.png",
+                fit: BoxFit.cover,
+              ),
+            );
+          },
+        );
+      }).toList();
+    }
+
+    return controller.imageData.map((e) {
+      return Image.network(
+        e.image!,
+        errorBuilder: (context, error, stackTrace) {
+          return Image.asset(
+            "assets/images/img_placeholder.png",
+            fit: BoxFit.cover,
+          );
+        },
+      );
+    }).toList();
+  }
+
+  Widget _bodyListImageBottomBanner() {
+    return Obx(() => ListView(
+      scrollDirection: Axis.horizontal,
+      children: _bodyContentItemsCaraouser(),
+    ));
+  }
+
+
   /// Renders the main body content with product information.
   ///
   /// This method builds the UI for product information, including name,
@@ -323,27 +366,18 @@ class ProductDetailScreen extends GetView<ProductDetailController> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        CarouselSlider(
-          options: CarouselOptions(height: 250.0),
-          items: [1, 2, 3].map((e) {
-            return Builder(
-              builder: (context) {
-                return SizedBox(
-                  width: Get.width,
-                  child: Image.asset(
-                    "assets/images/img_placeholder.png",
-                    fit: BoxFit.cover,
-                  ),
-                );
-              },
-            );
-          }).toList(),
-        ),
-        Container(
-          height: 70,
-          child: ImageUploadWidget(
-            
+        Obx(() => Container(
+          color: Colors.black54,
+          child: CarouselSlider(
+            options: CarouselOptions(
+              viewportFraction: 1
+            ),
+            items: _bodyContentItemsCaraouser(),
           ),
+        )),
+        SizedBox(
+          height: 70,
+          child: _bodyListImageBottomBanner(),
         ),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
@@ -369,7 +403,7 @@ class ProductDetailScreen extends GetView<ProductDetailController> {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Text(
-            "${controller.dataDetail.clothCategory!.name!}.",
+            controller.dataDetail.clothCategory!.name!.toCapitalize(),
             style: GoogleFonts.lato(
                 fontSize: 22.sp,
                 fontWeight: FontWeight.bold,
