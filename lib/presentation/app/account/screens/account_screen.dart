@@ -118,7 +118,7 @@ class AccountScreen extends GetView<AccountController> {
 
     final List<Map<String, dynamic>> menuSetting = [
       // { "title": "address".tr, "screenRouter": "" , "icon": const Icon(Icons.location_on, color: Colors.white), "color": const Color(0xFF2CADE9) },
-      // { "title": "language".tr, "screenRouter": Routes.language, "icon": const Icon(Icons.language, color: Colors.white), "color": Theme.of(Get.context!).primaryColor },
+      { "title": "language".tr, "screenRouter": Routes.language, "icon": const Icon(Icons.language, color: Colors.white), "color": Theme.of(Get.context!).primaryColor },
       { "title": "password".tr, "screenRouter": "", "icon": const Icon(Icons.password, color: Colors.white), "color": Theme.of(Get.context!).primaryColor },
       { "title": "logout".tr, "screenRouter": "" , "icon": const Icon(Icons.logout, color: Colors.white), "color":const Color(0xFFE50A0A), "isLogout": true },
     ];

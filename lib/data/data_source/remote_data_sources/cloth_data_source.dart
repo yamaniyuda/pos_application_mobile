@@ -1,6 +1,7 @@
 // ignore_for_file: unused_local_variable
 
 import 'package:pos_application_mobile/data/data_source/remote_data_sources/remote_data_source.dart';
+import 'package:pos_application_mobile/data/dtos/cloth_color_dto.dart';
 import 'package:pos_application_mobile/data/dtos/cloth_dto.dart';
 import 'package:pos_application_mobile/data/payloads/cloth_color_payload.dart';
 import 'package:pos_application_mobile/data/payloads/cloth_payload.dart';
@@ -202,5 +203,35 @@ class ClothDataSource extends RemoteDataSource {
       converter: (data) => null,
       payload: payload.toJson(["color_id", "sku"])
     );
+  }
+
+
+  /// Asynchronously fetches cloth data by SKU (Stock Keeping Unit) from a remote API.
+  ///
+  /// This function sends a GET request to the specified API endpoint with the
+  /// provided SKU and waits for the response. It then converts the response
+  /// data into a [ClothDTO] object using the provided JSON converter function.
+  ///
+  /// Parameters:
+  /// - `sku` (String): The Stock Keeping Unit (SKU) for the cloth to be fetched.
+  ///
+  /// Returns:
+  /// - A [Future] that resolves to a [ClothDTO] object containing cloth information.
+  ///
+  /// Throws:
+  /// - Throws an error if the GET request fails or if the JSON conversion fails.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// final ClothDTO clothData = await fetchDataBySku("ABC123");
+  /// print(clothData.name); // Print the name of the cloth.
+  /// ```
+  Future<ClothColorDTO> fetchDataBySku(String sku) async {
+    final ClothColorDTO response = await dioClient.getRequest(
+      "api/cloth-colors/sku/$sku", 
+      queryParameters: { "find_by_sku": 1 },
+      converter: (response) => ClothColorDTO.fromJson(response),
+    );
+    return response;
   }
 }

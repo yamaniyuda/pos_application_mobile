@@ -12,6 +12,9 @@ import 'package:pos_application_mobile/presentation/app/product/controllers/prod
 import 'package:pos_application_mobile/presentation/app/product/product.dart';
 import 'package:pos_application_mobile/presentation/app/product/screens/product_detail_screen.dart';
 import 'package:pos_application_mobile/presentation/app/report/report.dart';
+import 'package:pos_application_mobile/presentation/app/sale/controllers/sale_form_controller.dart';
+import 'package:pos_application_mobile/presentation/app/sale/sale.dart';
+import 'package:pos_application_mobile/presentation/app/sale/screens/sale_form_screen.dart';
 import 'package:pos_application_mobile/presentation/app/size/size.dart';
 import 'package:pos_application_mobile/presentation/app/auth/auth.dart';
 import 'package:pos_application_mobile/presentation/app/on_boarding/on_boarding.dart';
@@ -33,7 +36,7 @@ class AppScreens {
   static List<GetPage> screens = [
     GetPage(
       name: _Paths.splash,
-      page: () => SplashScreen(),
+      page: () => const SplashScreen(),
       binding: SplashBinding()
     ),
 
@@ -191,10 +194,25 @@ class AppScreens {
 
     GetPage(
       name: _Paths.productDetail,
-      page: () => ProductDetailScreen(),
+      page: () => const ProductDetailScreen(),
       binding: BindingsBuilder(() {
         Get.put(ProductDetailController());
       })
+    ),
+
+
+    GetPage(
+      name: _Paths.sale,
+      page: () => const SaleScreen(),
+      binding: SaleBinding()
+    ),
+    GetPage(
+      name: _Paths.saleForm,
+      page: () => const SaleFormScreen(),
+      binding: BindingsBuilder(() {
+        Get.put(SaleFormController());
+      })
     )
+
   ];
 }

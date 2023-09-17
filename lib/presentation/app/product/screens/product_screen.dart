@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:pos_application_mobile/app/config/routes/app_screens.dart';
 import 'package:pos_application_mobile/app/extensions/string_extention.dart';
 import 'package:pos_application_mobile/presentation/app/product/controllers/product_controller.dart';
@@ -13,6 +12,7 @@ class ProductScreen extends StatelessWidget {
   final controller = Get.find<ProductController>();
   ProductScreen({super.key});
 
+  
   Widget _buildHeader() {
     return Container(
       width: double.infinity,
@@ -60,6 +60,7 @@ class ProductScreen extends StatelessWidget {
     );
   }
 
+  
   Widget _buildListCustomerType() {
     return Obx(() {
       if (controller.isLoading && controller.data.isEmpty) {
@@ -82,6 +83,7 @@ class ProductScreen extends StatelessWidget {
       );
     });
   }
+
 
   @override
   Widget build(BuildContext context) {

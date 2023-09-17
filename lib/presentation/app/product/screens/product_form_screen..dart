@@ -189,21 +189,8 @@ class ProductFormScreen extends GetView<ProductFormController> {
                   borderRadius: BorderRadius.circular(10),
                   title: _getTitle(),
                   onTab: () {
-                    print("===============test before validate================");
-                      print(controller.clothSizePayloads[0][0].stock);
-                      print(controller.clothSizePayloads[1][0].stock);
-                      print("==============end test before validate=============\n\n");
                     if (_formKey.currentState!.validate()) {
-                      print("===============test================");
-                      print(controller.clothSizePayloads[0][0].stock);
-                      print(controller.clothSizePayloads[1][0].stock);
-                      print("==============end test=============");
                       _formKey.currentState!.save();
-                      print("===============test save================");
-                      print(controller.clothSizePayloads[0][0].stock);
-                      print(controller.clothSizePayloads[1][0].stock);
-                      print("==============end test save=============");
-
                       /// Do action to remote data source.
                       getActionMethod()();
                     }

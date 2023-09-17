@@ -1,11 +1,10 @@
-// ignore_for_file: invalid_use_of_protected_member, prefer_final_fields3, library_prefixes
+// ignore_for_file: invalid_use_of_protected_member, prefer_final_fields3, library_prefixes, prefer_final_fields
 
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pos_application_mobile/app/extensions/string_extention.dart';
-import 'package:pos_application_mobile/app/utils/system_utils.dart';
 import 'package:pos_application_mobile/data/payloads/cloth_color_payload.dart';
 import 'package:pos_application_mobile/data/payloads/cloth_payload.dart';
 import 'package:pos_application_mobile/data/payloads/cloth_price_payload.dart';
@@ -64,7 +63,8 @@ class ProductFormController extends GetxController {
   final RxList<ColorEntity> colorChoose = <ColorEntity>[].obs;
 
   /// cloth size payload for looping by choose color.
-  final RxList<List<ClothSizePayload>> clothSizePayloads = [<ClothSizePayload>[]].obs;
+  /// The map will and must string integerest to represent
+  final RxMap<String, ClothSizePayload> clothSizePayloads = <String, ClothSizePayload>{}.obs;
 
   /// The `sizeChoose` is used to handle size choose.
   final RxList<SizeEntity> sizeChoose = <SizeEntity>[].obs;
@@ -73,7 +73,7 @@ class ProductFormController extends GetxController {
   late RxString clothCategoryId = "".obs;
 
   /// Cloth price paylod for wrapping data price that will use in the payload later.
-  final RxList<RxList<RxList<ClothPricePayload>>> clothPricePayloads = RxList<RxList<RxList<ClothPricePayload>>>.empty(growable: true);
+  final RxMap<String, ClothPricePayload> clothPricePayloads = <String, ClothPricePayload>{}.obs;
 
   late dynamic arguments;
 
@@ -155,48 +155,78 @@ class ProductFormController extends GetxController {
 
   /// Wraping Payload.
   /// 
-  /// The `_wrapingPayload` is function for build [clothColorPayload], [clothSizePayload], 
-  /// and [clothPricePayload] to one payload.
+  /// The `_wrapingPayload` function constructs a unified [ClothPayload] object by combining 
+  /// [clothColorPayload], [clothSizePayload], and [clothPricePayload]. This function optimally 
+  /// iterates over these payloads and organizes them into a single payload structure.
   /// 
+  /// This function performs the following steps:
+  /// 1. Initializes the `_payload` value with a [ClothPayload] object containing the cloth category ID and an empty cloth color list.
+  /// 2. Calculates the counts for colors, sizes, and prices based on the lengths of their respective payloads.
+  /// 3. Iterates through color payloads, size payloads, and price payloads, combining them into the final payload structure.
   /// 
+  /// This optimized version of `_wrapingPayload` reduces redundancy and minimizes the number of iterations, making the code more efficient and readable.
   void _wrapingPayload() {
     _payload.value = ClothPayload(clothCategoryId: clothCategoryId.value, clothColor: []);
 
+    final int colorCount = clothColorPayloads.length;
+    final int sizeCount = clothSizePayloads.length ~/ colorCount;
+    final int priceCount = clothPricePayloads.length ~/ (colorCount * sizeCount);
 
-    /// build cloth price type inside to cloth size.
-    payload.clothColor.addAll(
-      clothColorPayloads.value.asMap().entries.map(
-        (i) {
-          i.value.clothSize.clear();
-          clothSizePayloads[i.key].removeWhere((element) => element.randomString != null);
-          i.value.clothSize.addAll(
-            clothSizePayloads[i.key].asMap().entries.map(
-              (j) {
-                j.value.clothPrice.clear();
-                j.value.clothPrice.addAll(
-                  clothPricePayloads[i.key][j.key]
-                );
-                print(j);
-                return j.value;
-              }
-            )
-          );
-          return i.value;
+    for (var i = 0; i < colorCount; i++) {
+      final ClothColorPayload colorPayload = clothColorPayloads[i];
+      for (var j = 0; j < sizeCount; j++) {
+        final ClothSizePayload sizePayload = clothSizePayloads["$i$j"]!;
+        for (var k = 0; k < priceCount; k++) {
+          sizePayload.clothPrice.add(clothPricePayloads["$i$j$k"]!);
         }
-      )
-    );
+        colorPayload.clothSize.add(sizePayload);
+      }
+      _payload.value.clothColor.add(colorPayload);
+    }
   }
 
+
+  /// Update Stock Value.
+  /// 
+  /// The `updateStockValue` function is responsible for updating the stock value for a specific size of a cloth in the [clothSizePayloads].
+  /// 
+  /// Params:
+  /// - `index`: The index of the cloth color.
+  /// - `indexSize`: The index of the cloth size within the color.
+  /// - `stock`: The new stock value to be assigned.
+  /// - `sizeId`: The unique identifier for the size.
+  /// 
+  /// This function performs the following steps:
+  /// 1. Retrieves the cloth size payload from [clothSizePayloads] using a composite key constructed from `index` and `indexSize`.
+  /// 2. Updates the stock value of the retrieved cloth size payload with the provided `stock` value.
+  /// 
+  /// Example usage:
+  /// ```dart
+  /// // Update stock value for cloth color at index 1, size index 2, with stock quantity 50.
+  /// updateStockValue(1, 2, 50, "size123");
+  /// ```
   void updateStockValue(int index, int indexSize, int stock, String sizeId) {
-    clothSizePayloads[index][indexSize].randomString = SystemUtils.generateRandomString(16);
-    clothSizePayloads[index].add(ClothSizePayload(clothPrice: [], sizeId: sizeId, stock: stock));
+    clothSizePayloads["$index$indexSize"]?.stock = stock;
   }
 
 
-  /// Store Cloth
-  ///
-  /// The `storeCloth` will handle the creating of data to
-  /// remote api.
+  /// Store Cloth.
+  /// 
+  /// The `storeCloth` function handles the creation and storage of cloth data to
+  /// a remote API.
+  /// 
+  /// This function performs the following steps:
+  /// 1. Wraps the payload data.
+  /// 2. Displays a loading alert using `PAMAlertWidget`.
+  /// 3. Calls the `storeClothUseCase` to store the cloth data by passing the [payload].
+  /// 4. Navigates back from the loading screen.
+  /// 5. Navigates back from the current screen with a result of "after store" after successful data storage.
+  /// 6. Handles DioException if it occurs, displaying a danger-themed snack bar with the error message.
+  /// 7. Handles any other exceptions, displaying a danger-themed snack bar with a generic error message, but only if the exception is not a DioException.
+  /// 
+  /// Throws:
+  /// - DioException: If a network request using Dio fails.
+  /// - Other exceptions: If any other exceptions occur during the execution, and they are not of type DioException.
   Future<void> storeCloth() async {
     try {
       _wrapingPayload();
@@ -227,9 +257,26 @@ class ProductFormController extends GetxController {
     } 
   }
 
+
+ /// Update Cloth Add New Color.
+  /// 
+  /// The `updateClothAddNewColor` function is used for handling the storage of new 
+  /// cloth data to a remote storage with a unique [id] for credential verification.
+  /// 
+  /// This function performs the following steps:
+  /// 1. Wraps the payload data.
+  /// 2. Displays a loading alert using `PAMAlertWidget`.
+  /// 3. Calls the `addClothColorUseCase` to add a new cloth color, passing the [id] and [payload].
+  /// 4. Navigates back from the loading screen.
+  /// 5. Navigates back from the current screen with a result of "after store" after successful data storage.
+  /// 6. Handles DioException if it occurs, displaying a danger-themed snack bar with the error message.
+  /// 7. Handles any other exceptions, displaying a danger-themed snack bar with a generic error message.
+  /// 
+  /// Throws:
+  /// - DioException: If a network request using Dio fails.
+  /// - Other exceptions: If any other exceptions occur during the execution.
   Future<void> updateClothAddNewColor() async {
     try {
-
       _wrapingPayload();
       PAMAlertWidget.showLoadingAlert(Get.context!);
       await addClothColorUseCase.call(
@@ -261,6 +308,16 @@ class ProductFormController extends GetxController {
     } 
   }
 
+
+  /// Update Cloth Add New Size.
+  /// 
+  /// The `updateClothAddNewSize` will handling for update data cloth to
+  /// remote data source. And will show notification [Snackbar] after finish
+  /// do post data to remote API or failed data processing.
+  /// 
+  /// ```dart
+  /// await updateClothAddNewSize();
+  /// ```
   Future<void> updateClothAddNewSize() async {
     try {
       _wrapingPayload();
@@ -330,6 +387,11 @@ class ProductFormController extends GetxController {
     final copySizeChoose = List<SizeEntity>.from(
       sizeChoose.asMap().entries.map((e) => sizeChoose[e.key])
     );
+    
+    _payload.value.clothColor.clear();
+    _payload.value.clothColor.addAll(clothColorPayload);
+
+    // generate cloth size after update color.
     updateClothSize(copySizeChoose);
   }
 
@@ -340,21 +402,17 @@ class ProductFormController extends GetxController {
   /// This function will generate empety data in [clothPricePayloads] which will be
   /// used for form when saved state.
   void updateClothPriceType() {
-    final RxList<RxList<RxList<ClothPricePayload>>> generate = RxList<RxList<RxList<ClothPricePayload>>>.generate(
-      clothColorPayloads.length,
-      (i) => RxList<RxList<ClothPricePayload>>.generate(
-        clothSizePayloads[i].length,
-        (j) => RxList<ClothPricePayload>.generate(
-          _dataClothPriceTypes.value.length,
-          (k) => ClothPricePayload(
+    clothPricePayloads.clear();
+    for (var i = 0; i < clothColorPayloads.length; i++) {
+      for (var j = 0; j < sizeChoose.length; j++) {
+        for (var k = 0; k < _dataClothPriceTypes.value.length; k++) {
+          clothPricePayloads["$i$j$k"] = ClothPricePayload(
             clothPriceTypeId: _dataClothPriceTypes.value[k].id!,
             price: 0,
-          ),
-        ),
-      ),
-    );
-
-    clothPricePayloads.value = generate;
+          );
+        }
+      }
+    }
   }
 
 
@@ -370,18 +428,19 @@ class ProductFormController extends GetxController {
   /// ])
   /// ```
   void updateClothSize(List<SizeEntity> sizeEntities) {
-    List<ClothSizePayload> payloads = List.from(sizeEntities
-        .map((e) => ClothSizePayload(clothPrice: [], name: e.name!, sizeId: e.id!)));
-
-    // cloth size choose handling
     sizeChoose.value.clear();
     sizeChoose.value.addAll([...sizeEntities]);
-
-    // payload handling
     clothSizePayloads.clear();
-    clothSizePayloads.addAll(List.generate(clothColorPayloads.length, (index) {
-      return payloads.obs;
-    }));
+
+    for (var i = 0; i < clothColorPayloads.length; i++) {
+      for (var j = 0; j < sizeChoose.length; j++) {
+        clothSizePayloads["$i$j"] = ClothSizePayload(
+          clothPrice: [], 
+          name: sizeChoose[j].name!, 
+          sizeId: sizeChoose[j].id!
+        );
+      }
+    }
 
     // generate cloth price each size.
     updateClothPriceType();

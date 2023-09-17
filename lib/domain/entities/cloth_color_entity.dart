@@ -48,7 +48,7 @@ class ClothColorEntity extends Entity {
   }
   
   @override
-  List<Object?> get props => throw UnimplementedError();
+  List<Object?> get props => [id, createdAt, createdBy, updatedBy, sku, pathPhoto, color, clothSizes];
 
  
 }

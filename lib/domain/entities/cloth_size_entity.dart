@@ -11,6 +11,7 @@ class ClothSizeEntity extends Entity {
   final String? createdAt;
   final SizeEntity? size;
   final List<ClothSizePriceEntity>? clothSizePrices;
+  final ClothSizePriceEntity? price;
 
   ClothSizeEntity({
     this.clothSizePrices,
@@ -19,6 +20,7 @@ class ClothSizeEntity extends Entity {
     this.id,
     this.size,
     this.stock,
+    this.price,
     this.updatedBy
   });
   
@@ -30,6 +32,7 @@ class ClothSizeEntity extends Entity {
     int? stock,
     String? createdAt,
     SizeEntity? size,
+    ClothSizePriceEntity? price,
     List<ClothSizePriceEntity>? clothSizePrices
   }) {
     return ClothSizeEntity(
@@ -38,6 +41,7 @@ class ClothSizeEntity extends Entity {
       createdAt: createdAt ?? this.createdAt,
       clothSizePrices: clothSizePrices ?? this.clothSizePrices,
       size: size ?? this.size,
+      price: price ?? this.price,
       stock: stock ?? this.stock,
       updatedBy: updatedBy ?? this.updatedBy
     );

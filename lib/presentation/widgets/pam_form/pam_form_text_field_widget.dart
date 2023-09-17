@@ -165,8 +165,9 @@ class _PAMFormTextFieldWidgetState extends State<PAMFormTextFieldWidget> {
         "value": _controller.text
       });
 
-      if (result is Map<String, String>) {
+      if (result is Map) {
         _controller.text = result["label"]!;
+
         setState(() {
           _hiddenValue = result["value"]!;
 

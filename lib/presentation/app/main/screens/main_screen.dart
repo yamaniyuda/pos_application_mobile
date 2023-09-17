@@ -5,7 +5,7 @@ import 'package:pos_application_mobile/presentation/app/booking/booking.dart';
 import 'package:pos_application_mobile/presentation/app/home/home.dart';
 import 'package:pos_application_mobile/presentation/app/main/controllers/main_controller.dart';
 import 'package:pos_application_mobile/presentation/app/product/product.dart';
-import 'package:pos_application_mobile/presentation/app/purchase/purchase.dart';
+import 'package:pos_application_mobile/presentation/app/sale/screens/sale_screen.dart';
 import 'package:pos_application_mobile/presentation/app/stock/screens/stock_screen.dart';
 
 class MainScreen extends GetView<MainController> {
@@ -20,7 +20,7 @@ class MainScreen extends GetView<MainController> {
           index: controller.currentIndex,
           children: [
             const HomeScreen(),
-            const PurchaseScreen(),
+            const SaleScreen(),
             const BookingScreen(),
             ProductScreen(),
             const StockScreen(),
@@ -40,7 +40,7 @@ class MainScreen extends GetView<MainController> {
             ),
             BottomNavigationBarItem(
               icon: const Icon(Icons.sell),
-              label: "purchase".tr.toCapitalize()
+              label: "sale".tr.toCapitalize()
             ),
             BottomNavigationBarItem(
               icon: const Icon(Icons.receipt_long),

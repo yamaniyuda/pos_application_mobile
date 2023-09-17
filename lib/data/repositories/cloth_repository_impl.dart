@@ -1,9 +1,12 @@
 
 import 'package:pos_application_mobile/data/data_source/remote_data_sources/cloth_data_source.dart';
+import 'package:pos_application_mobile/data/dtos/cloth_color_dto.dart';
 import 'package:pos_application_mobile/data/dtos/cloth_dto.dart';
+import 'package:pos_application_mobile/data/mappers/cloth_color_mapper.dart';
 import 'package:pos_application_mobile/data/mappers/cloth_mapper.dart';
 import 'package:pos_application_mobile/data/payloads/cloth_color_payload.dart';
 import 'package:pos_application_mobile/data/payloads/cloth_payload.dart';
+import 'package:pos_application_mobile/domain/entities/cloth_color_entity.dart';
 import 'package:pos_application_mobile/domain/entities/cloth_entity.dart';
 import 'package:pos_application_mobile/domain/repositories/cloth_repository.dart';
 
@@ -13,6 +16,8 @@ class ClothRepositoryImpl extends ClothRepository {
       mapper: ClothMapper(),
       dataSource: ClothDataSource()
     );
+
+  final mapperCloth = ClothColorMapper();
 
   @override
   Future<List<ClothEntity>> fetchData(Map<String, dynamic>? queryParameters) async {
@@ -58,5 +63,13 @@ class ClothRepositoryImpl extends ClothRepository {
   @override
   Future<void> addClothSize(String id, String colorId, ClothColorPayload payload) async {
     await dataSource.addClothSize(id, colorId, payload);
+  }
+  
+  @override
+  Future<ClothColorEntity> fetchDataBySku(String sku) async {
+    final ClothColorDTO dataDTO = await dataSource.fetchDataBySku(sku);
+    final ClothColorEntity dataEntity = mapperCloth.convert<ClothColorDTO, ClothColorEntity>(dataDTO);
+
+    return dataEntity;
   }
 }

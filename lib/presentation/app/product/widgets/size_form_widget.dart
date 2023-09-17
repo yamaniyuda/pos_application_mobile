@@ -23,7 +23,7 @@ class SizeFormWidget extends StatelessWidget {
         Container(
           alignment: Alignment.centerLeft,
           child: Text(
-            "${"size".tr} ${controller.clothSizePayloads[index][indexSize].name}".toCapitalize(),
+            "${"size".tr} ${controller.clothSizePayloads["$index$indexSize"]?.name}".toCapitalize(),
             textAlign: TextAlign.start,
             style: GoogleFonts.lato(
               fontSize: 16
@@ -55,35 +55,8 @@ class SizeFormWidget extends StatelessWidget {
             floatingLabelBehavior: FloatingLabelBehavior.always,
             fillColor: Colors.black.withOpacity(.05)
           ),
-          onChanged: (value) {
-            print(index);
-            print(indexSize);
-            controller.updateStockValue(index, indexSize, int.parse(value), controller.clothSizePayloads[index][indexSize].sizeId);
-          },
-          // initialValue: (controller.clothSizePayloads[index][indexSize].stock).toString(),
-          onSaved: (newValue) {
-            print("===========open===========");
-            print(index);
-            print(indexSize);
-            // controller.clothSizePayloads.value[index][indexSize].stock = int.parse(newValue!);
-            
-            controller.updateStockValue(index, indexSize, int.parse(newValue!), controller.clothSizePayloads[index][indexSize].sizeId);
-
-            controller.clothSizePayloads[index][indexSize].sizeId = controller.clothSizePayloads[index][indexSize].sizeId;
-            print(controller.clothSizePayloads[index][indexSize].stock);
-            // controller.clothSizePayloads[index].removeAt(indexSize);
-            
-            // controller.clothSizePayloads[index].add(
-            //   ClothSizePayload(
-            //     clothPrice: [], 
-            //     sizeId: controller.clothSizePayloads[index][indexSize].sizeId,
-            //     stock: int.parse(newValue!)
-            //   )
-            // );
-            // controller.clothSizePayloads[index].removeAt(indexSize);
-            print("===========${index}=========");
-            print("===========end==========");
-          },
+          onChanged: stockChangeHandler,
+          onSaved: stockSaveHandler,
           inputFormatters: [
             FilteringTextInputFormatter.deny(
               RegExp(r'^0+'),
@@ -105,11 +78,10 @@ class SizeFormWidget extends StatelessWidget {
                 floatingLabelBehavior: FloatingLabelBehavior.always,
                 fillColor: Colors.black.withOpacity(.05)
               ),
-              onChanged: (value) => controller.clothPricePayloads[index][indexSize][d.key].price = int.parse(value ?? "0"),
-              // initialValue: (controller.clothPricePayloads[index][indexSize][d.key].price ?? 0).toString(),
+              onChanged: (value) => controller.clothPricePayloads["$index$indexSize${d.key}"]!.price = int.parse(value),
               onSaved: (newValue) {
                 final price = int.parse(newValue!.isEmpty ? '0' : newValue);
-                controller.clothPricePayloads[index][indexSize][d.key].price = price;
+                controller.clothPricePayloads["$index$indexSize${d.key}"]!.price = price;
               },
               inputFormatters: [
                 FilteringTextInputFormatter.deny(
@@ -121,6 +93,30 @@ class SizeFormWidget extends StatelessWidget {
           ),
         ).toList(),
       ],
+    );
+  }
+
+
+  /// Stock Save Handler.
+  /// 
+  /// The `stockSaveHandler` function used for handling save value
+  /// in stock controller.
+  void stockSaveHandler(newValue) {
+    controller.updateStockValue(index, indexSize, int.parse(newValue!), controller.clothSizePayloads["$index$indexSize"]!.sizeId);
+    controller.clothSizePayloads["$index$indexSize"]!.sizeId = controller.clothSizePayloads["$index$indexSize"]!.sizeId;
+  }
+
+
+  /// Stock Change Handler.
+  /// 
+  /// The `stockChangeHandler` function used for handling change value
+  /// in stock controller.
+  void stockChangeHandler(value) {
+    controller.updateStockValue(
+      index, 
+      indexSize, 
+      int.parse(value), 
+      controller.clothSizePayloads["$index$indexSize"]!.sizeId
     );
   }
 }

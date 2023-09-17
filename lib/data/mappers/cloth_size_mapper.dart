@@ -14,13 +14,15 @@ part 'cloth_size_mapper.g.dart';
   MapType<ClothSizeDTO, ClothSizeEntity>(
     fields: [
       Field('clothSizePrices', custom: ClothSizeMapper.listClothSizePriceDtoToEntity),
-      Field('size', custom: ClothSizeMapper.sizeDtoToEntity)
+      Field('size', custom: ClothSizeMapper.sizeDtoToEntity),
+      Field('price', custom: ClothSizeMapper.closthSizePriceDtoToEndity)
     ]
   ),
   MapType<ClothSizeEntity, ClothSizeDTO>(
     fields: [
       Field('clothSizePrices', custom: ClothSizeMapper.listClothSizePriceEntityToDto),
-      Field('size', custom: ClothSizeMapper.sizeEntityToDto)
+      Field('size', custom: ClothSizeMapper.sizeEntityToDto),
+      Field('price', custom:  ClothSizeMapper.clothSizePriceEntityToDto)
     ]
   )
 ])
@@ -44,5 +46,13 @@ class ClothSizeMapper extends $ClothSizeMapper {
   }
   static SizeDTO? sizeEntityToDto(ClothSizeEntity entity) {
     return SizeMapper().tryConvert<SizeEntity, SizeDTO>(entity.size);
+  }
+
+  static ClothSizePriceEntity? closthSizePriceDtoToEndity(ClothSizeDTO dto) {
+    return ClothSizePriceMapper().tryConvert<ClothSizePriceDTO, ClothSizePriceEntity>(dto.price);
+  }
+
+  static ClothSizePriceDTO? clothSizePriceEntityToDto(ClothSizeEntity entity) {
+    return ClothSizePriceMapper().tryConvert<ClothSizePriceEntity, ClothSizePriceDTO>(entity.price);
   }
 }

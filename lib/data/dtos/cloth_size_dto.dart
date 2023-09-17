@@ -28,12 +28,16 @@ class ClothSizeDTO implements DTO {
   @JsonKey(name: "cloth_size_prices")
   late List<ClothSizePriceDTO>? clothSizePrices;
 
+  @JsonKey(name: "price")
+  late ClothSizePriceDTO? price;
+
   ClothSizeDTO({
     this.clothSizePrices,
     this.createdAt,
     this.createdBy,
     this.id,
     this.size,
+    this.price,
     this.stock,
     this.updatedBy
   });

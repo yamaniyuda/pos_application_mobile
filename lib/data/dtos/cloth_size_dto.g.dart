@@ -16,6 +16,9 @@ ClothSizeDTO _$ClothSizeDTOFromJson(Map<String, dynamic> json) => ClothSizeDTO(
       size: json['size'] == null
           ? null
           : SizeDTO.fromJson(json['size'] as Map<String, dynamic>),
+      price: json['price'] == null
+          ? null
+          : ClothSizePriceDTO.fromJson(json['price'] as Map<String, dynamic>),
       stock: json['stock'] as int?,
       updatedBy: json['updated_by'] as String?,
     );
@@ -29,4 +32,5 @@ Map<String, dynamic> _$ClothSizeDTOToJson(ClothSizeDTO instance) =>
       'created_at': instance.createdAt,
       'size': instance.size,
       'cloth_size_prices': instance.clothSizePrices,
+      'price': instance.price,
     };
