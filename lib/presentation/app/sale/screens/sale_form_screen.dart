@@ -76,8 +76,10 @@ class SaleFormScreen extends GetView<SaleFormController> {
                 /// Add New Cloth
                 SliverToBoxAdapter(
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      SizedBox(
+                      Container(
+                        margin: const EdgeInsets.only(right: 20),
                         width: Get.width * .4,
                         child: PAMBottom(
                           onTab: () => controller.addClothColorPayload(),
@@ -86,6 +88,31 @@ class SaleFormScreen extends GetView<SaleFormController> {
                         ),
                       )
                     ],
+                  )
+                ),
+
+
+                /// ===============
+                /// Submit Button
+                /// ===============
+                SliverFillRemaining(
+                  hasScrollBody: false,
+                  child: Container(
+                    padding: const EdgeInsets.only(
+                      top: 60,
+                      left: 20,
+                      right: 20,
+                      bottom: 20
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        PAMBottom(
+                          borderRadius: BorderRadius.circular(10),
+                          title: "submit".tr.toCapitalize(),
+                        ),
+                      ]
+                    )
                   )
                 )
               ],

@@ -66,8 +66,8 @@ class ClothRepositoryImpl extends ClothRepository {
   }
   
   @override
-  Future<ClothColorEntity> fetchDataBySku(String sku) async {
-    final ClothColorDTO dataDTO = await dataSource.fetchDataBySku(sku);
+  Future<ClothColorEntity> fetchDataBySku(String sku, String customerCategoryId) async {
+    final ClothColorDTO dataDTO = await dataSource.fetchDataBySku(sku, customerCategoryId);
     final ClothColorEntity dataEntity = mapperCloth.convert<ClothColorDTO, ClothColorEntity>(dataDTO);
 
     return dataEntity;

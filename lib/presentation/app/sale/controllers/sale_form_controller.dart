@@ -48,6 +48,12 @@ class SaleFormController extends GetxController {
   List<ClothColorEntity> get clothColorPayload => _clothColorPayload;
 
 
+  /// The `_amountPaymentMethod` usage for place for storing amount data input for
+  /// field amount down payment.
+  final RxString _amountPaymentMethod = "".obs;
+  String get amountPaymentMethod => _amountPaymentMethod.value;
+
+
   /// The `_orderDetails` usage for place for stroing data input from cloth
   final RxMap<String, dynamic> _orderDetails = <String, dynamic>{}.obs;
   Map<String, dynamic> get orderDetails => _orderDetails.value;
@@ -61,6 +67,7 @@ class SaleFormController extends GetxController {
   @override
   void onInit() {
     _fetchBySkuUseCase = FetchBySkuUseCase();
+    addClothColorPayload();
     super.onInit();
   }
 
@@ -78,7 +85,12 @@ class SaleFormController extends GetxController {
     if (_debounce?.isActive ?? false) _debounce?.cancel();
     _debounce = Timer(const Duration(seconds: 1), () async {
       try {
-        ClothColorEntity respone = await _fetchBySkuUseCase.call(sku);
+        ClothColorEntity respone = await _fetchBySkuUseCase.call(
+          FetchBySkuUseCaseParams(
+            sku: sku,
+            customerCategoryId: _customerTypePayload.value["value"]
+          )
+        );
         _clothColorPayload[index] = respone;
         _clothColorPayload.refresh();
         addOrderDetails(index);
@@ -91,6 +103,11 @@ class SaleFormController extends GetxController {
     isLoadingClothSearch.value = false;
 
     return result;
+  }
+
+
+  void changeAmountDownPaymentHandler(String value) {
+    _amountPaymentMethod.value = value;
   }
 
 
@@ -109,9 +126,60 @@ class SaleFormController extends GetxController {
 
 
 
-  void deleteClothColorPayload(int indexSku, int indexDetail) {
+  void deleteClothColorPayload(int indexSku) {
+    if (indexSku < 0 || indexSku >= _clothColorPayload.length) {
+      return; // Index is out of bounds, handle error or return early.
+    }
+
+    // Remove the clothColorPayload at the specified index
     _clothColorPayload.removeAt(indexSku);
-    
+
+    List<ClothColorEntity> clothColorBackUp = [];
+    clothColorBackUp = List.from(clothColorPayload);
+    _clothColorPayload.removeRange(0, _clothColorPayload.length);
+
+    // Remove associated _orderDetails entries
+    List<String> keysToRemove = _orderDetails.keys
+        .where((key) => key.startsWith('$indexSku'))
+        .toList();
+
+    for (String key in keysToRemove) {
+      _orderDetails.remove(key);
+    }
+
+    // Shift the remaining keys to match the updated indices
+    List<String> updatedKeys = [];
+    for (String key in _orderDetails.keys) {
+      List<String> parts = key.split('');
+      int oldIndexSku = int.parse(parts[0]);
+      int newIndexSku = oldIndexSku > indexSku ? oldIndexSku - 1 : oldIndexSku;
+      String newIndex = newIndexSku.toString() + parts[1];
+      updatedKeys.add(newIndex);
+    }
+
+    late int newKeyMapOrderDetail = 0;
+
+    // Update the keys in _orderDetails
+    Map<String, dynamic> updatedOrderDetails = Map.fromEntries(
+      _orderDetails.entries.map((entry) {
+        final newMap = MapEntry(updatedKeys[newKeyMapOrderDetail], entry.value);
+        newKeyMapOrderDetail += 1;
+        return newMap;
+      }),
+    );
+    _orderDetails.clear();
+    _orderDetails.addAll(updatedOrderDetails);
+
+    // Ensure that the _clothColorPayload and _orderDetails are refreshed
+    addClothColorPayloadAddHandler(clothColorBackUp);
+    _orderDetails.refresh();
+  }
+
+
+  Future<void> addClothColorPayloadAddHandler(List<ClothColorEntity> clothColorBackUp) async {
+    await Future.delayed(const Duration(milliseconds: 100));
+    _clothColorPayload.addAll(clothColorBackUp);
+    _clothColorPayload.refresh();
   }
 
 
@@ -122,6 +190,19 @@ class SaleFormController extends GetxController {
   void addClothColorPayload() {
     _clothColorPayload.add(
       ClothColorEntity()
+    );
+  }
+
+
+  OrderPayload orderPayloadBuilder() {
+    return OrderPayload(
+      paymentMethod: _paymentMethod.value, 
+      amountDownPayment: _amountPaymentMethod.value, 
+      customerCategory: _customerTypePayload.value["label"], 
+      customerId: _customerPayloadId.value, 
+      orderDetails: List.from(
+        _orderDetails.entries.map((e) => e.value)
+      )
     );
   }
 
@@ -181,6 +262,7 @@ class SaleFormController extends GetxController {
   void changePaymentMethod(String value) {
     _paymentMethod.value = value;
   }
+
 
   /// Is Show Input Choose Customer.
   /// 

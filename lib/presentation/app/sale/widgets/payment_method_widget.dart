@@ -36,6 +36,7 @@ class PaymentMethodWidget extends GetView {
             return Container(
               margin: const EdgeInsets.only(top: 10),
               child: PAMFormTextFieldWidget(
+                onChanged: (value) => controller.changeAmountDownPaymentHandler(value),
                 decoration: const BoxDecoration(),
                 inputDecoration: InputDecoration(
                   contentPadding: const EdgeInsets.all(10),

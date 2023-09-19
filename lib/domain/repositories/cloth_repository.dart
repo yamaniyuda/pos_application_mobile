@@ -22,5 +22,5 @@ abstract class ClothRepository extends Repository {
   Future<ClothEntity>  updateData(String id, ClothPayload payload);
   Future<void> addClothColor(String id, ClothPayload payload);
   Future<void> addClothSize(String id, String colorId, ClothColorPayload payload);
-  Future<ClothColorEntity> fetchDataBySku(String sku);
+  Future<ClothColorEntity> fetchDataBySku(String sku, String customerCategoryId);
 } 

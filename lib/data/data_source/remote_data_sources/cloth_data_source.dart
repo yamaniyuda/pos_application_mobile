@@ -226,10 +226,10 @@ class ClothDataSource extends RemoteDataSource {
   /// final ClothDTO clothData = await fetchDataBySku("ABC123");
   /// print(clothData.name); // Print the name of the cloth.
   /// ```
-  Future<ClothColorDTO> fetchDataBySku(String sku) async {
+  Future<ClothColorDTO> fetchDataBySku(String sku, String customerCategoryId) async {
     final ClothColorDTO response = await dioClient.getRequest(
       "api/cloth-colors/sku/$sku", 
-      queryParameters: { "find_by_sku": 1 },
+      queryParameters: { "find_by_sku": 1 , "customer_category_id": customerCategoryId},
       converter: (response) => ClothColorDTO.fromJson(response),
     );
     return response;
