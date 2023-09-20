@@ -72,12 +72,6 @@ class ColorFormWidget extends StatelessWidget {
                     initialValue: controller.clothColorPayloads[index].sku,
                     validator: (value) => SystemUtils.validatorMessage(value, "sku required"),
                     onSaved: (String? value) => controller.clothColorPayloads[index].sku = value!,
-                    inputFormatters: [
-                      FilteringTextInputFormatter.deny(
-                        RegExp(r'^0+'),
-                      ),
-                    ],
-                    keyboardType: TextInputType.number,
                   ),
                   if (showSku) const SizedBox(height: 10),
                   

@@ -62,6 +62,7 @@ class _PAMListScrollState<T> extends State<PAMListScroll<T>> {
     return RefreshIndicator(
       onRefresh: widget.onRefresh,
       child: ListView.builder(
+        physics: const AlwaysScrollableScrollPhysics(),
         controller: _controller,
         padding: widget.padding,
         itemCount: widget.scrollToRefresh != null ? widget.itemCount + 1 : widget.itemCount,

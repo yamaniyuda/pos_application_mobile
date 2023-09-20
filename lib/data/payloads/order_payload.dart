@@ -1,4 +1,5 @@
 class OrderPayload {
+  late String? id;
   late String paymentMethod;
   late String? amountDownPayment;
   late String customerCategory;
@@ -6,6 +7,7 @@ class OrderPayload {
   late List<OrderDetailPayload> orderDetails;
 
   OrderPayload({
+    this.id,
     required this.paymentMethod,
     required this.amountDownPayment,
     required this.customerCategory,

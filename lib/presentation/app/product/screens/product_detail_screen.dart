@@ -357,7 +357,7 @@ class ProductDetailScreen extends GetView<ProductDetailController> {
   /// Renders the main body content with product information.
   ///
   /// This method builds the UI for product information, including name,
-  /// createdBy, and creation date.
+  /// createdBy, and creation date. 
   ///
   /// [context]: The BuildContext for the current widget tree.
   Widget _bodyContent(BuildContext context) {
@@ -384,7 +384,7 @@ class ProductDetailScreen extends GetView<ProductDetailController> {
           child: Row(
             children: [
               Text(
-                controller.dataDetail.createdBy!.name!,
+                "${"created by".tr} ${controller.dataDetail.createdBy!.name!}".tr.toCapitalize(),
                 style: GoogleFonts.lato(
                   fontWeight: FontWeight.w900,
                   color: Theme.of(context).primaryColor,

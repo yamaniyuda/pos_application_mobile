@@ -137,7 +137,7 @@ class ProductFormController extends GetxController {
               name: e.name!,
               clothSize: [],
               colorId: e.id!,
-              sku: '0',
+              sku: '',
               color: e.codeHexa ?? 'ffffff')));
       return result as List<TARGET>;
     }

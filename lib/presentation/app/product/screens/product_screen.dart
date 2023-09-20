@@ -38,7 +38,7 @@ class ProductScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10)
               ),
               child: PAMFormTextFieldWidget(
-                hintText: "${"search".tr} ${"customer type".tr}".toCapitalize(),
+                hintText: "${"search".tr} ${"product".tr}".toCapitalize(),
                 decoration: const BoxDecoration(),
                 // onChanged: controller.searchdata,
               ),
@@ -111,8 +111,11 @@ class ProductScreen extends StatelessWidget {
         )
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Get.toNamed(Routes.productForm);
+        onPressed: ()  async {
+          final result = Get.toNamed(Routes.productForm);
+          if (result is String) {
+            controller.fetchData(refresh: true);
+          }
         },
         backgroundColor: Theme.of(Get.context!).primaryColor,
         child: const Icon(Icons.add),

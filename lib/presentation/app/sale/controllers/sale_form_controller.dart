@@ -6,14 +6,16 @@ import 'package:get/get.dart';
 import 'package:pos_application_mobile/data/payloads/order_payload.dart';
 import 'package:pos_application_mobile/domain/entities/cloth_color_entity.dart';
 import 'package:pos_application_mobile/domain/use_cases/cloth/cloth.dart';
+import 'package:pos_application_mobile/domain/use_cases/order/order.dart' as Order;
 
 class SaleFormController extends GetxController {
   /// Data customer type which not show input customer name.
   static const List<String> customerTypeWithoutName = ['shopee', 'tiktok'];
   static const List<String> paymentMethodOptions = ["cash", "down payment"];
   
-
+  /// Use case will to be usaged
   late FetchBySkuUseCase _fetchBySkuUseCase;
+  late Order.StoreDataUseCase _orderStoreDataUseCase;
 
 
   /// The `isLoading` state usage for handling UI loading indicator, and will
@@ -125,6 +127,23 @@ class SaleFormController extends GetxController {
   }
 
 
+  /// Store Sale.
+  /// 
+  /// The `storeSale` usage for do store data `payload` to remote API.
+  /// and will show `SnackBar` for representation process is success
+  /// or failed
+  /// 
+  /// ```dart
+  /// await storeSale()
+  /// ```
+  Future<void> storeSale() async {
+    try {
+      OrderPayload orderPayload = _orderPayloadBuilder();
+    } catch (e) {
+
+    }
+  }
+
 
   void deleteClothColorPayload(int indexSku) {
     if (indexSku < 0 || indexSku >= _clothColorPayload.length) {
@@ -194,7 +213,11 @@ class SaleFormController extends GetxController {
   }
 
 
-  OrderPayload orderPayloadBuilder() {
+  /// Wrap Payload.
+  /// 
+  /// The `_wrapsPayload` usage for build payload will to be usage for params in
+  /// payload storeing data.
+  OrderPayload _orderPayloadBuilder() {
     return OrderPayload(
       paymentMethod: _paymentMethod.value, 
       amountDownPayment: _amountPaymentMethod.value, 
