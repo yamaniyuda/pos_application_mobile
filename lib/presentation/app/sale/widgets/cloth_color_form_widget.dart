@@ -1,16 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/intl.dart';
 import 'package:pos_application_mobile/app/extensions/string_extention.dart';
-import 'package:pos_application_mobile/domain/entities/cloth_size_entity.dart';
+import 'package:pos_application_mobile/presentation/app/sale/controllers/cloth_controller.dart';
 import 'package:pos_application_mobile/presentation/app/sale/controllers/sale_form_controller.dart';
-import 'package:pos_application_mobile/presentation/widgets/pam_form/pam_form.dart';
+import 'package:pos_application_mobile/presentation/app/sale/screens/cloth_screen.dart';
 
 class ClothColorFormWidget extends StatelessWidget {
   ClothColorFormWidget({super.key});
 
   final controller = Get.find<SaleFormController>();
+
+  void _addClothItemHandler() {
+    Get.to(
+      () => const ClothScreen(),
+      binding: BindingsBuilder(() { 
+        Get.put(ClothController(), permanent: true);
+      })
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,9 +56,9 @@ class ClothColorFormWidget extends StatelessWidget {
                       const Spacer(),
 
                       IconButton(
-                        onPressed: () => controller.deleteClothColorPayload(index), 
+                        onPressed: _addClothItemHandler, 
                         alignment: Alignment.center,
-                        icon: const Icon(Icons.delete, color: Colors.white)
+                        icon: const Icon(Icons.add, color: Colors.white)
                       )
                     ],
                   )
@@ -62,135 +70,20 @@ class ClothColorFormWidget extends StatelessWidget {
                 /// ==================
                 Container(
                   color: Colors.white,
+                  width: double.infinity,
+                  height: 200,
                   padding: const EdgeInsets.only(
                     left: 20,
                     right: 20,
                     bottom: 20
                   ),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const SizedBox(height: 20),
-                      PAMFormTextFieldWidget(
-                        decoration: const BoxDecoration(),
-                        inputDecoration: InputDecoration(
-                            contentPadding: const EdgeInsets.all(10),
-                            isDense: true,
-                            border: const OutlineInputBorder(),
-                            filled: true,
-                            labelText: "SKU",
-                            alignLabelWithHint: false,
-                            floatingLabelBehavior: FloatingLabelBehavior.always,
-                            fillColor: Colors.black.withOpacity(.05)
-                          ),
-                        initialValue: controller.clothColorPayload[index].sku,
-                        onChanged: (value) => controller.searchClothColorBySku(value, index),
-                        // onSaved: (p0) => controller.customerTypePayload = p0!,
-                      ),
-                      const SizedBox(height: 10),
-                      const Divider(
-                        thickness: 2,
-                        color: Colors.black54,
-                      ),
-                      Container(
-                        width: 100,
-                        height: 3,
-                        margin: const EdgeInsets.only(bottom: 10),
-                        alignment: Alignment.centerRight,
-                        child: const Divider(
-                          thickness: 2,
-                          color: Colors.black54,
-                        ),
-                      ),
-
-                      Obx(() {
-                        if (controller.clothColorPayload[index].clothSizes != null) {
-                          final List<ClothSizeEntity> clothSize = controller.clothColorPayload[index].clothSizes!;
-
-                          return Column(
-                            children: clothSize.asMap().entries.map<Widget>((e) {
-                              return Container(
-                                margin: const EdgeInsets.symmetric(vertical: 10),
-                                child: Column(
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Container(
-                                          width: 50,
-                                          height: 50,
-                                          alignment: Alignment.center,
-                                          decoration: BoxDecoration(
-                                            color: Colors.black54.withOpacity(.3),
-                                            borderRadius: BorderRadius.circular(10)
-                                          ),
-                                          child: Text(e.value.size!.name!),
-                                        ),
-                                        const SizedBox(width: 20),
-                                        Expanded(
-                                          child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.end,
-                                            children: [
-                                              SizedBox(
-                                                child: Row(
-                                                  children: [
-                                                    SizedBox(
-                                                      width: 50,
-                                                      child: Text("stock".tr.toCapitalize()),
-                                                    ),
-                                                    const Text(":"),
-                                                    const SizedBox(width: 5),
-                                                    Text(e.value.stock.toString())
-                                                  ],
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                child: Row(
-                                                  children: [
-                                                    SizedBox(
-                                                      width: 50,
-                                                      child: Text("price".tr.toCapitalize()),
-                                                    ),
-                                                    const Text(":"),
-                                                    const SizedBox(width: 5),
-                                                    Text(
-                                                      NumberFormat.simpleCurrency(locale: "id-ID").format(e.value.price!.price)
-                                                    )
-                                                  ],
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                    
-                                    const SizedBox(height: 10),
-                                    PAMFormTextFieldWidget(
-                                      decoration: const BoxDecoration(),
-                                      onChanged: (value) => controller.changeQuantity(
-                                        int.parse(value), index, e.key
-                                      ),
-                                      initialValue: controller.orderDetails["$index${e.key}"].qyt.toString(),
-                                      inputDecoration: InputDecoration(
-                                        contentPadding: const EdgeInsets.all(10),
-                                        isDense: true,
-                                        border: const OutlineInputBorder(),
-                                        filled: true,
-                                        labelText: "quantity".tr.toCapitalize(),
-                                        alignLabelWithHint: false,
-                                        floatingLabelBehavior: FloatingLabelBehavior.always,
-                                        fillColor: Colors.black.withOpacity(.05)
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            }).toList(),
-                          );
-                        }
-
-                        return Container();
-                      })
+                      const Icon(Icons.shopping_cart_checkout_sharp, size: 70),
+                      Text("add cloth items".tr.toCapitalize())
                     ],
                   ),
                 ),

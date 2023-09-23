@@ -6,7 +6,7 @@ import 'package:pos_application_mobile/app/extensions/string_extention.dart';
 import 'package:pos_application_mobile/app/utils/system_utils.dart';
 import 'package:pos_application_mobile/presentation/app/sale/controllers/sale_form_controller.dart';
 import 'package:pos_application_mobile/presentation/app/sale/widgets/customer_choose_widget.dart';
-import 'package:pos_application_mobile/presentation/app/sale/widgets/payment_method_widget.dart';
+import 'package:pos_application_mobile/presentation/app/sale/widgets/sale_total_widget.dart';
 import 'package:pos_application_mobile/presentation/widgets/pam_bottom/pam_bottom.dart';
 
 import '../widgets/cloth_color_form_widget.dart';
@@ -57,64 +57,55 @@ class SaleFormScreen extends GetView<SaleFormController> {
                           /// ======================
                           CustomerChooseWidget(),
 
-                          const SizedBox(height: 10),
-
-                          /// =============================
-                          /// Sale payment method handling.
-                          /// =============================
-                          PaymentMethodWidget(),
-
-
                         ],
                       )
                     ),
                   ),
                 ),
 
+
+                /// =======================
+                /// Detail cloth choosing.
+                /// =======================   
                 ClothColorFormWidget(),
 
-                /// Add New Cloth
-                SliverToBoxAdapter(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(right: 20),
-                        width: Get.width * .4,
-                        child: PAMBottom(
-                          onTab: () => controller.addClothColorPayload(),
-                          borderRadius: BorderRadius.circular(10),
-                          title: "${"add".tr} ${"cloth".tr}".toCapitalize(),
-                        ),
-                      )
-                    ],
-                  )
-                ),
-
-
-                /// ===============
-                /// Submit Button
-                /// ===============
                 SliverFillRemaining(
                   hasScrollBody: false,
-                  child: Container(
-                    padding: const EdgeInsets.only(
-                      top: 60,
-                      left: 20,
-                      right: 20,
-                      bottom: 20
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        PAMBottom(
-                          borderRadius: BorderRadius.circular(10),
-                          title: "submit".tr.toCapitalize(),
+                  child: Column(
+                    verticalDirection: VerticalDirection.up,
+                    children: [
+
+                      /// ===============
+                      /// Submit Button
+                      /// ===============
+                      Container(
+                        color: Colors.white,
+                        padding: const EdgeInsets.only(
+                          top: 20,
+                          left: 20,
+                          right: 20,
+                          bottom: 20
                         ),
-                      ]
-                    )
-                  )
-                )
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            PAMBottom(
+                              borderRadius: BorderRadius.circular(10),
+                              title: "submit".tr.toCapitalize(),
+                            ),
+                          ]
+                        )
+                      ),
+
+
+                      /// ===============
+                      /// Details price
+                      /// ===============
+                      const SaleTotalWidget(),
+
+                    ],
+                  ),
+                ),
               ],
             ),
           ),

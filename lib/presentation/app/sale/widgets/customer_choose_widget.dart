@@ -53,11 +53,6 @@ class CustomerChooseWidget extends StatelessWidget {
             ),
           );
         }),
-
-        const Divider(
-          color: Colors.black54,
-          height: 40,
-        )
       ],
     );
   } 

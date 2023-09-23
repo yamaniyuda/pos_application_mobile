@@ -7,6 +7,7 @@ import 'package:pos_application_mobile/data/payloads/order_payload.dart';
 import 'package:pos_application_mobile/domain/entities/cloth_color_entity.dart';
 import 'package:pos_application_mobile/domain/use_cases/cloth/cloth.dart';
 import 'package:pos_application_mobile/domain/use_cases/order/order.dart' as Order;
+import 'package:pos_application_mobile/presentation/app/sale/controllers/cloth_controller.dart';
 
 class SaleFormController extends GetxController {
   /// Data customer type which not show input customer name.
@@ -74,9 +75,20 @@ class SaleFormController extends GetxController {
   }
 
   @override
+  void onClose() {
+    _disposeAllDepedencyForm();
+    super.onClose();
+  }
+
+  @override
   void dispose() {
     _debounce?.cancel();
     super.dispose();
+  }
+
+
+  void _disposeAllDepedencyForm() {
+    Get.delete<ClothController>(force: true);
   }
   
 
@@ -142,56 +154,6 @@ class SaleFormController extends GetxController {
     } catch (e) {
 
     }
-  }
-
-
-  void deleteClothColorPayload(int indexSku) {
-    if (indexSku < 0 || indexSku >= _clothColorPayload.length) {
-      return; // Index is out of bounds, handle error or return early.
-    }
-
-    // Remove the clothColorPayload at the specified index
-    _clothColorPayload.removeAt(indexSku);
-
-    List<ClothColorEntity> clothColorBackUp = [];
-    clothColorBackUp = List.from(clothColorPayload);
-    _clothColorPayload.removeRange(0, _clothColorPayload.length);
-
-    // Remove associated _orderDetails entries
-    List<String> keysToRemove = _orderDetails.keys
-        .where((key) => key.startsWith('$indexSku'))
-        .toList();
-
-    for (String key in keysToRemove) {
-      _orderDetails.remove(key);
-    }
-
-    // Shift the remaining keys to match the updated indices
-    List<String> updatedKeys = [];
-    for (String key in _orderDetails.keys) {
-      List<String> parts = key.split('');
-      int oldIndexSku = int.parse(parts[0]);
-      int newIndexSku = oldIndexSku > indexSku ? oldIndexSku - 1 : oldIndexSku;
-      String newIndex = newIndexSku.toString() + parts[1];
-      updatedKeys.add(newIndex);
-    }
-
-    late int newKeyMapOrderDetail = 0;
-
-    // Update the keys in _orderDetails
-    Map<String, dynamic> updatedOrderDetails = Map.fromEntries(
-      _orderDetails.entries.map((entry) {
-        final newMap = MapEntry(updatedKeys[newKeyMapOrderDetail], entry.value);
-        newKeyMapOrderDetail += 1;
-        return newMap;
-      }),
-    );
-    _orderDetails.clear();
-    _orderDetails.addAll(updatedOrderDetails);
-
-    // Ensure that the _clothColorPayload and _orderDetails are refreshed
-    addClothColorPayloadAddHandler(clothColorBackUp);
-    _orderDetails.refresh();
   }
 
 
@@ -261,16 +223,11 @@ class SaleFormController extends GetxController {
   /// The `getHeightAppBar` will return height after calculate
   /// showing input addtional or not.
   double getHeightAppBar() {
-    late int height = 220;
+    late int height = 120;
 
     if (isShowInputChooseCustomer(customerTypePayload["label"] ?? "")) {
       height += 50;
     }
-
-    if (isShowInputTotalPayment(_paymentMethod.value)) {
-      height += 50;
-    }
-
     return height.toDouble();
   }
 
