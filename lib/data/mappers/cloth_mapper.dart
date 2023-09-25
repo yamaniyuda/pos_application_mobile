@@ -32,11 +32,13 @@ part 'cloth_mapper.g.dart';
 ])
 class ClothMapper extends $ClothMapper {
   static CreatedByEntity? createdByDtoToEntity(ClothDTO dto) {
+    if (dto.createdBy is String) return null;
     return CreatedByMapper()
         .tryConvert<CreatedByDTO, CreatedByEntity>(dto.createdBy);
   }
 
   static CreatedByDTO? createdByEntityToDto(ClothEntity entity) {
+    if (entity.createdBy is String) return null;
     return CreatedByMapper()
         .tryConvert<CreatedByEntity, CreatedByDTO>(entity.createdBy);
   }

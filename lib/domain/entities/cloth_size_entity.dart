@@ -7,7 +7,7 @@ class ClothSizeEntity extends Entity {
   final String? id;
   final String? createdBy;
   final String? updatedBy;
-  final int? stock;
+  int? stock;
   final String? createdAt;
   final SizeEntity? size;
   final List<ClothSizePriceEntity>? clothSizePrices;
@@ -50,5 +50,7 @@ class ClothSizeEntity extends Entity {
   @override
   List<Object?> get props => [id, createdBy, updatedBy, stock, createdAt, clothSizePrices];
   
- 
+  set setStock(int stock) {
+    this.stock = stock;
+  }
 }

@@ -2,13 +2,18 @@ import 'package:get/get.dart';
 import 'package:pos_application_mobile/domain/entities/cloth_entity.dart';
 import 'dart:async';
 import 'package:pos_application_mobile/domain/use_cases/cloth/cloth.dart' as ClothUseCase;
+import 'package:pos_application_mobile/presentation/app/sale/model/cloth_form_payload.dart';
 
 class ClothController extends GetxController {
   late ClothUseCase.FetchDataUseCase _fetchDataUseCase;
 
   /// List of fetched data.
-  final RxList<ClothEntity> _data = <ClothEntity>[].obs;
-  List<ClothEntity> get data => _data;
+  final RxList<ClothFormPayload> _data = <ClothFormPayload>[].obs;
+  List<ClothFormPayload> get data => _data;
+
+  /// Detail of fetch data cloth.
+  late final Rx<ClothEntity>? _dataDetail;
+  ClothEntity? get dataDetail => _dataDetail?.value;
 
   /// Loading indicator state.
   final Rx<bool> _isLoading = false.obs;
@@ -19,28 +24,87 @@ class ClothController extends GetxController {
   int get currentPage => _currentPage.value;
 
   ///  total pagination state
-  final Rx<int> _totalPage =  0.obs;
+  final Rx<int> _totalPage = 0.obs;
   int get totalPage => _totalPage.value;
 
-
-  /// Timer for handle debonce search 
+  /// Timer for handle debonce search
   Timer? _debonce;
 
   @override
   void onInit() {
     _fetchDataUseCase = ClothUseCase.FetchDataUseCase();
+    fetchData();
     super.onInit();
   }
 
+  void updateItems(
+      {required ClothFormPayload payload,
+      required String clothColorId,
+      required String clothSizeId,
+      required String clothSizePriceId,
+      required int qyt,
+      bool reset = false}) {
+      payload.updateItems(
+          clothColorId: clothColorId,
+          clothSizeId: clothSizeId,
+          clothSizePriceId: clothSizePriceId,
+          qty: qyt,
+          reset: reset);
 
-  /// do clear data 
-  void clearData() {
-    _totalPage.value = 0;
-    _currentPage.value = 1;
-    _data.value = [];
+    update();
+  }
+  
+  
+  Map<String, Map<String, dynamic>> getAllItems() {
+    final Map<String, Map<String, dynamic>> itemAll = {};
+
+    for (var element in _data) { 
+      if (element.items.isNotEmpty) {
+        itemAll.addAll(element.items);
+      }
+    }
+    return itemAll;
   }
 
-  
+  /// Clear Data
+  ///
+  /// The `clearData` usage for handling data clear when screen
+  /// on reload for refresh screen.
+  void clearData(List<ClothEntity> clothEntities) {
+    _totalPage.value = 0;
+    _currentPage.value = 1;
+
+    if (clothEntities.isNotEmpty) {
+      Map dataItems = _getItemsChoose();
+      _updateData(clothEntities);
+    }
+  }
+
+
+  /// Retrieves a nested map of items based on certain criteria.
+  ///
+  /// This function iterates through a data source, extracts items that meet
+  /// specific criteria, and returns a nested map containing these items.
+  ///
+  /// Returns:
+  ///   A map with the type `Map<String, Map<String, int>>` representing the
+  ///   selected items.
+  Map<String, Map<String, int>> _getItemsChoose() {
+    Iterable dataItemsIterable =
+        _data.expand<Map<String, dynamic>>((element) sync* {
+      if (element.items.isNotEmpty) {
+        yield {element.clothEntity.id!: element.items};
+      }
+    });
+
+    Map<String, Map<String, int>> dataItemsMap = Map.fromIterable(
+      dataItemsIterable,
+    );
+
+    return dataItemsMap;
+  }
+
+
   /// Fetches data from a remote data source.
   ///
   /// The `fetchData` function is responsible for fetching data from a remote
@@ -55,10 +119,8 @@ class ClothController extends GetxController {
   ///
   /// Throws an exception if an error occurs during data fetching.
   ///
-  Future<void> fetchData({bool refresh = false, Map<String, dynamic>? queryParameters}) async {
-    // Clear data if refreshing
-    if (refresh) clearData();
-
+  Future<void> fetchData(
+      {bool refresh = false, Map<String, dynamic>? queryParameters}) async {
     // Check if we have reached the total number of pages
     if (_currentPage.value == _totalPage.value) return;
 
@@ -66,6 +128,7 @@ class ClothController extends GetxController {
     Map<String, dynamic> buildQueryParameters = {
       "order": "name",
       "ascending": 1,
+      "use_detail_cloth": 1,
       "page": _currentPage.value,
     };
 
@@ -77,14 +140,20 @@ class ClothController extends GetxController {
       };
     }
 
-    // Set loading state  
+    // Set loading state
     _isLoading.value = true;
 
     // Fetch data using the  data use case
     List<ClothEntity> data = await _fetchDataUseCase.call(buildQueryParameters);
 
-    // Update state with fetched data
-    _data.addAll(data);
+    if (refresh) {
+      // Clear data if refreshing
+      clearData(data);
+    } else {
+      // Update state with fetched data
+      _updateData(data);
+    }
+
     _isLoading.value = false;
 
     // Increment current page if data is fetched successfully
@@ -96,11 +165,27 @@ class ClothController extends GetxController {
     }
   }
 
+
+  /// Updates the `_data` list with new [ClothEntity] objects.
+  ///
+  /// This function takes a list of [ClothEntity] objects and adds them to the
+  /// `_data` list. Each [ClothEntity] is encapsulated in a [ClothFormPayload]
+  /// instance with an empty `items` map.
+  ///
+  /// Parameters:
+  ///   - clothEntity: A list of [ClothEntity] objects to be added to the `_data` list.
+  void _updateData(List<ClothEntity> clothEntity) {
+    for (var element in clothEntity) {
+      _data.add(ClothFormPayload(items: {}, clothEntity: element));
+    }
+  }
+
+
   /// Search data ustomer handler
-  /// 
+  ///
   /// This function do to handling search by input value and
   /// debonce for 500 milisecond
-  /// 
+  ///
   /// Usage example:
   /// ```dart
   /// TextFormField(onChanged: searchData)
@@ -108,12 +193,7 @@ class ClothController extends GetxController {
   void searchData(String value) {
     if (_debonce?.isActive ?? false) _debonce!.cancel();
     _debonce = Timer(const Duration(milliseconds: 800), () {
-      fetchData(
-        refresh: true,
-        queryParameters: {
-          "name": value
-        }
-      );
+      fetchData(refresh: true, queryParameters: {"name": value});
     });
   }
 }

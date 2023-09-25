@@ -6,7 +6,7 @@ import 'package:pos_application_mobile/domain/repositories/repository.dart';
 
 abstract class ClothCategoryRepository extends Repository {
   final ClothCategoryDataSource dataSource;
-  final $ClothCategoryMapper mapper;
+  final ClothCategoryMapper mapper;
 
   ClothCategoryRepository({
     required this.dataSource,

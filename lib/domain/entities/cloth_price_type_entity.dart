@@ -1,11 +1,11 @@
-import 'package:pos_application_mobile/domain/entities/created_by_entity.dart';
+// import 'package:pos_application_mobile/domain/entities/created_by_entity.dart';
 import 'package:pos_application_mobile/domain/entities/entity.dart';
 
 class ClothPriceTypeEntity extends Entity {
   final String? id;
   final String? name;
   final String? description;
-  final CreatedByEntity? createdBy;
+  final String? createdBy;
 
   ClothPriceTypeEntity({
     this.id,
@@ -19,7 +19,7 @@ class ClothPriceTypeEntity extends Entity {
     String? id,
     String? name,
     String? description,
-    CreatedByEntity? createdBy
+    String? createdBy
   }) {
     return ClothPriceTypeEntity(
       id: id ?? this.id,

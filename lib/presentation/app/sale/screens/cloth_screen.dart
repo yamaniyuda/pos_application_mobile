@@ -8,8 +8,9 @@ import 'package:pos_application_mobile/presentation/widgets/pam_form/pam_form.da
 import 'package:pos_application_mobile/presentation/widgets/pam_list_scroll/pam_list_scroll.dart';
 
 class ClothScreen extends GetView<ClothController> {
-  const ClothScreen({super.key});
+  ClothScreen({super.key});
 
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   
   Widget _buildHeader() {
     return Container(
@@ -69,14 +70,17 @@ class ClothScreen extends GetView<ClothController> {
       }
 
       return Expanded(
-        child: PAMListScroll(
-          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-          onRefresh: () => controller.fetchData(refresh: true),
-          itemCount: controller.data.length,
-          scrollToRefresh: controller.currentPage == controller.totalPage ? null : controller.fetchData,
-          itemBuilder: (context, index) {
-            return ProductWidget(clothEntity: controller.data[index]);
-          },
+        child: Form(
+          key: _formKey,
+          child: PAMListScroll(
+            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+            onRefresh: () => controller.fetchData(refresh: true),
+            itemCount: controller.data.length,
+            scrollToRefresh: controller.currentPage == controller.totalPage ? null : controller.fetchData,
+            itemBuilder: (context, index) {
+              return ProductWidget(clothFormPayload: controller.data[index], index: index);
+            },
+          ),
         )
       );
     });
@@ -90,7 +94,13 @@ class ClothScreen extends GetView<ClothController> {
     return Scaffold(
       appBar: AppBar(
         title: Text("${"add".tr} ${"product".tr}".toCapitalize()),
-        backgroundColor: Colors.white
+        backgroundColor: Colors.white,
+        leading: IconButton(
+          icon:  const Icon(Icons.arrow_back),
+          onPressed: (){
+            Get.back(result: controller.getAllItems());
+          }
+        ),
       ),
       body: SafeArea(
         child: Column(

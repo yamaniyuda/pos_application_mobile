@@ -50,7 +50,6 @@ class SaleFormController extends GetxController {
   final RxList<ClothColorEntity> _clothColorPayload = <ClothColorEntity>[].obs;
   List<ClothColorEntity> get clothColorPayload => _clothColorPayload;
 
-
   /// The `_amountPaymentMethod` usage for place for storing amount data input for
   /// field amount down payment.
   final RxString _amountPaymentMethod = "".obs;
@@ -58,8 +57,8 @@ class SaleFormController extends GetxController {
 
 
   /// The `_orderDetails` usage for place for stroing data input from cloth
-  final RxMap<String, dynamic> _orderDetails = <String, dynamic>{}.obs;
-  Map<String, dynamic> get orderDetails => _orderDetails.value;
+  final RxMap _orderDetails = {}.obs;
+  RxMap get orderDetails => _orderDetails;
 
 
   /// The `_debounce` variabel for handling input chnage with debounce time.
@@ -89,6 +88,12 @@ class SaleFormController extends GetxController {
 
   void _disposeAllDepedencyForm() {
     Get.delete<ClothController>(force: true);
+  }
+
+
+  void setOrderDetail(Map itemsDetail) {
+    _orderDetails.addAll(orderDetails);
+    update();
   }
   
 

@@ -8,9 +8,7 @@ part of 'cloth_price_type_dto.dart';
 
 ClothPriceTypeDTO _$ClothPriceTypeDTOFromJson(Map<String, dynamic> json) =>
     ClothPriceTypeDTO(
-      createdBy: json['created_by'] == null
-          ? null
-          : CreatedByDTO.fromJson(json['created_by'] as Map<String, dynamic>),
+      createdBy: json['created_by'] as String?,
       description: json['description'] as String?,
       id: json['id'] as String?,
       name: json['name'] as String?,

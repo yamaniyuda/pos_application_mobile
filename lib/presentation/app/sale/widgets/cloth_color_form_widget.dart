@@ -11,13 +11,18 @@ class ClothColorFormWidget extends StatelessWidget {
 
   final controller = Get.find<SaleFormController>();
 
-  void _addClothItemHandler() {
-    Get.to(
-      () => const ClothScreen(),
+  void _addClothItemHandler() async {
+    final result = await Get.to(
+      () => ClothScreen(),
       binding: BindingsBuilder(() { 
         Get.put(ClothController(), permanent: true);
       })
     );
+    
+    if (result is Map) {
+      controller.orderDetails(result);
+      controller.update();
+    }
   }
 
   @override
@@ -73,19 +78,84 @@ class ClothColorFormWidget extends StatelessWidget {
                   width: double.infinity,
                   height: 200,
                   padding: const EdgeInsets.only(
-                    left: 20,
-                    right: 20,
+                    left: 10,
+                    right: 10,
                     bottom: 20
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const SizedBox(height: 20),
-                      const Icon(Icons.shopping_cart_checkout_sharp, size: 70),
-                      Text("add cloth items".tr.toCapitalize())
-                    ],
-                  ),
+                  child: GetBuilder<SaleFormController>(builder: (controller) {
+                    if (controller.orderDetails.isNotEmpty) {
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: controller.orderDetails.entries.map<Widget>(
+                          (e) {
+                            final int quantity = e.value["qyt"];
+                            final int price = e.value["price"] * quantity;
+
+                            return Container(
+                              margin: const EdgeInsets.only(bottom: 10),
+                              child: Row(
+                                children: [
+                                  const Icon(
+                                    Icons.fiber_manual_record,
+                                    size: 10,
+                                  ),
+                                  const SizedBox(width: 10),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      // Flexible(
+                                      //   child: Text(
+                                      //     "${e.value["qyt"]} Pcs",
+                                      //     style: GoogleFonts.lato(
+                                      //       // fontSize: 12
+                                      //     ),
+                                      //   )
+                                      // ),
+                                      Text(
+                                        "${e.value["name"]}",
+                                      ),
+                                      Text(
+                                        "des: ${e.value["color_name"]} - ${e.value["size_name"]}",
+                                        style: GoogleFonts.lato(
+                                          fontSize: 12
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  Flexible(
+                                    child: Text(
+                                      "${e.value["qyt"]} Pcs",
+                                      style: GoogleFonts.lato(
+                                        // fontSize: 12
+                                      ),
+                                    )
+                                  ),
+                                  Flexible(
+                                    child: Text(
+                                      "$price",
+                                      style: GoogleFonts.lato(
+                                        // fontSize: 12
+                                      ),
+                                    )
+                                  ),
+                                ],
+                              ),
+                            );
+                          }
+                        ).toList(),
+                      );
+                    }
+
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const SizedBox(height: 20),
+                        const Icon(Icons.shopping_cart_checkout_sharp, size: 70),
+                        Text("add cloth items".tr.toCapitalize())
+                      ],
+                    );
+                  },)
                 ),
               ],
             )

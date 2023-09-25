@@ -5,7 +5,7 @@ import 'package:pos_application_mobile/domain/repositories/repository.dart';
 
 abstract class RegencyRepository extends Repository {
   final RegencyDataSource dataSource;
-  final $RegencyMapper mapper;
+  final RegencyMapper mapper;
 
   RegencyRepository({
     required this.mapper,
