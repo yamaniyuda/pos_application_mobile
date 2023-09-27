@@ -203,7 +203,7 @@ class AppScreens {
 
     GetPage(
       name: _Paths.sale,
-      page: () => const SaleScreen(),
+      page: () => SaleScreen(),
       binding: SaleBinding()
     ),
     GetPage(

@@ -14,7 +14,7 @@ abstract class OrderRepository extends Repository {
   });
 
   Future<List<OrderEntity>> fetchData(Map<String, dynamic>? queryParameters);
-  Future<OrderEntity> storeData(OrderPayload payload);
+  Future<String> storeData(OrderPayload payload);
   Future<void> deleteData(String id);
   Future<OrderEntity>  updateData(String id, OrderPayload payload);
 }

@@ -28,6 +28,9 @@ class CustomerChooseWidget extends StatelessWidget {
             floatingLabelBehavior: FloatingLabelBehavior.always,
             fillColor: Colors.black.withOpacity(.05)
           ),
+          onChanged: (value) {
+            print(value);
+          },
           // onSaved: (p0) => controller.customerTypePayload = p0!,
         ),
 

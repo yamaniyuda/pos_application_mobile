@@ -23,10 +23,9 @@ class OrderRepositoryImpl extends OrderRepository {
   }
 
   @override
-  Future<OrderEntity> storeData(OrderPayload payload) async {
-    final OrderDTO dataDTO = await dataSource.storeData(payload);
-    final OrderEntity dataEntity = mapper.convert<OrderDTO, OrderEntity>(dataDTO);
-    return dataEntity;
+  Future<String> storeData(OrderPayload payload) async {
+    final String dataDTO = await dataSource.storeData(payload);
+    return dataDTO;
   }
   
   @override

@@ -2,12 +2,16 @@
 
 import 'dart:async';
 
+import 'package:dio/dio.dart';
 import 'package:get/get.dart';
+import 'package:pos_application_mobile/app/extensions/string_extention.dart';
 import 'package:pos_application_mobile/data/payloads/order_payload.dart';
 import 'package:pos_application_mobile/domain/entities/cloth_color_entity.dart';
 import 'package:pos_application_mobile/domain/use_cases/cloth/cloth.dart';
 import 'package:pos_application_mobile/domain/use_cases/order/order.dart' as Order;
 import 'package:pos_application_mobile/presentation/app/sale/controllers/cloth_controller.dart';
+import 'package:pos_application_mobile/presentation/widgets/pam_alert/pam_alert.dart';
+import 'package:pos_application_mobile/presentation/widgets/pam_alert/pam_snackbar.dart';
 
 class SaleFormController extends GetxController {
   /// Data customer type which not show input customer name.
@@ -60,6 +64,14 @@ class SaleFormController extends GetxController {
   final RxMap _orderDetails = {}.obs;
   RxMap get orderDetails => _orderDetails;
 
+  RxDouble finalTotalPrice = 0.0.obs;
+
+  RxString paymentMethodChoose = "cash".obs;
+  RxInt discountNominal = 0.obs;
+
+  RxInt sumTotalItem = 0.obs;
+  RxInt sumTotalPcs = 0.obs;
+
 
   /// The `_debounce` variabel for handling input chnage with debounce time.
   Timer? _debounce;
@@ -69,6 +81,7 @@ class SaleFormController extends GetxController {
   @override
   void onInit() {
     _fetchBySkuUseCase = FetchBySkuUseCase();
+    _orderStoreDataUseCase = Order.StoreDataUseCase();
     addClothColorPayload();
     super.onInit();
   }
@@ -84,12 +97,20 @@ class SaleFormController extends GetxController {
     _debounce?.cancel();
     super.dispose();
   }
-
+  
+  void setPaymentMethod(String paymentMethod) {
+    _paymentMethod.value = paymentMethod;
+  }
 
   void _disposeAllDepedencyForm() {
     Get.delete<ClothController>(force: true);
   }
 
+
+  void setCustomerPayloadId(String id) {
+    _customerPayloadId.value = id;
+    print(_customerPayloadId.value);
+  }
 
   void setOrderDetail(Map itemsDetail) {
     _orderDetails.addAll(orderDetails);
@@ -144,23 +165,6 @@ class SaleFormController extends GetxController {
   }
 
 
-  /// Store Sale.
-  /// 
-  /// The `storeSale` usage for do store data `payload` to remote API.
-  /// and will show `SnackBar` for representation process is success
-  /// or failed
-  /// 
-  /// ```dart
-  /// await storeSale()
-  /// ```
-  Future<void> storeSale() async {
-    try {
-      OrderPayload orderPayload = _orderPayloadBuilder();
-    } catch (e) {
-
-    }
-  }
-
 
   Future<void> addClothColorPayloadAddHandler(List<ClothColorEntity> clothColorBackUp) async {
     await Future.delayed(const Duration(milliseconds: 100));
@@ -184,15 +188,20 @@ class SaleFormController extends GetxController {
   /// 
   /// The `_wrapsPayload` usage for build payload will to be usage for params in
   /// payload storeing data.
-  OrderPayload _orderPayloadBuilder() {
-    return OrderPayload(
-      paymentMethod: _paymentMethod.value, 
-      amountDownPayment: _amountPaymentMethod.value, 
-      customerCategory: _customerTypePayload.value["label"], 
+  OrderPayload _orderPayloadBuilder(int amountDownPayment) {
+    print(_customerPayloadId.value);
+    return  OrderPayload(
+      paymentMethod: _paymentMethod.value,
+      amountDownPayment: amountDownPayment,
+      customerCategory: (_customerTypePayload.value["label"] as String).toCapitalize(), 
       customerId: _customerPayloadId.value, 
-      orderDetails: List.from(
-        _orderDetails.entries.map((e) => e.value)
-      )
+      orderDetails: orderDetails.entries.map<OrderDetailPayload>((e) {
+        return OrderDetailPayload(
+          clothSizeId: e.value["cloth_size_id"],
+          clothSizePriceId: e.value["cloth_size_price_id"],
+          qyt: e.value["qyt"]
+        );
+      }).toList()
     );
   }
 
@@ -215,9 +224,10 @@ class SaleFormController extends GetxController {
   /// 
   /// The `changeCustomerTypePayload` function will handling chnage data for
   /// property `_customerPayloadId`.
-  void changeCustomerTypePayload(String value, String label) {
+  void changeCustomerTypePayload(String label, String value) {
+
     _customerTypePayload.value = {
-      "label": label,
+      "label": label.toLowerCase(),
       "value": value
     };
   }
@@ -273,5 +283,37 @@ class SaleFormController extends GetxController {
   bool isShowInputTotalPayment(String value) {
     if (value == "") return false;
     return paymentMethodOptions[1] == value;
+  }
+
+
+  Future<void> storeSale(int amountDownPayment) async {
+    try {
+      PAMAlertWidget.showLoadingAlert(Get.context!);
+      await _orderStoreDataUseCase.call(_orderPayloadBuilder(amountDownPayment));
+
+      // back from load screen
+      Get.back();
+
+      // back from form screen
+      Get.back(result: "after store");
+
+      print("finish");
+    }  on DioException catch (e) {
+      Get.back();
+      PAMSnackBarWidget.show(
+        title: "failed".tr.toCapitalize(),
+        message: e.response!.data["message"],
+        type: PAMSnackBarWidgetType.danger
+      );
+    } catch (e, f) {
+      print(e);
+      print(f);
+      Get.back();
+      PAMSnackBarWidget.show(
+        title: "failed".tr.toCapitalize(),
+        message: "failed to process data, please try again".tr.toCapitalize(),
+        type: PAMSnackBarWidgetType.danger
+      );
+    }
   }
 }

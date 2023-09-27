@@ -9,7 +9,7 @@ import 'package:pos_application_mobile/app/extensions/string_extention.dart';
 import 'package:pos_application_mobile/domain/entities/cloth_color_entity.dart';
 import 'package:pos_application_mobile/presentation/app/sale/controllers/cloth_controller.dart';
 import 'package:pos_application_mobile/presentation/app/sale/model/cloth_form_payload.dart';
-import 'package:pos_application_mobile/presentation/app/sale/widgets/product_add_action_widget.dart';
+import 'package:pos_application_mobile/presentation/app/sale/widgets/product_widget/product_add_action_widget.dart';
 
 class ProductAddWidget extends StatelessWidget {
   ProductAddWidget({

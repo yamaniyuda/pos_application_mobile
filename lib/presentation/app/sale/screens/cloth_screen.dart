@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:pos_application_mobile/app/extensions/string_extention.dart';
-import 'package:pos_application_mobile/presentation/app/sale/widgets/product_widget.dart';
+import 'package:pos_application_mobile/presentation/app/sale/widgets/product_widget/product_widget.dart';
 import 'package:pos_application_mobile/presentation/app/sale/controllers/cloth_controller.dart';
 import 'package:pos_application_mobile/presentation/widgets/pam_form/pam_form.dart';
 import 'package:pos_application_mobile/presentation/widgets/pam_list_scroll/pam_list_scroll.dart';

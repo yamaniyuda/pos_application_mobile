@@ -233,7 +233,6 @@ class $ClothPriceTypeMapper implements AutoMapprInterface {
       id: model.id,
       name: model.name,
       description: model.description,
-      createdBy: model.createdBy,
     );
   }
 
@@ -246,7 +245,6 @@ class $ClothPriceTypeMapper implements AutoMapprInterface {
           r'Consider setting the whenSourceIsNull parameter on the MapType<ClothPriceTypeEntity, ClothPriceTypeDTO> to handle null values during mapping.');
     }
     return ClothPriceTypeDTO(
-      createdBy: model.createdBy,
       description: model.description,
       id: model.id,
       name: model.name,

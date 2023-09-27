@@ -5,8 +5,8 @@ import 'package:pos_application_mobile/domain/entities/entity.dart';
 
 class ClothColorEntity extends Entity {
   final String? id;
-  final String? createdBy;
-  final String? updatedBy;
+  // final String? createdBy;
+  // final String? updatedBy;
   final String? sku;
   final String? pathPhoto;
   final ColorEntity? color;
@@ -18,10 +18,10 @@ class ClothColorEntity extends Entity {
     this.clothSizes,
     this.color,
     this.createdAt,
-    this.createdBy,
+    // this.createdBy,
     this.pathPhoto,
     this.sku,
-    this.updatedBy
+    // this.updatedBy
   });
   
   @override
@@ -37,8 +37,8 @@ class ClothColorEntity extends Entity {
   }) {
     return ClothColorEntity(
       id: id ?? this.id,
-      createdBy: createdBy ?? this.createdBy,
-      updatedBy: updatedBy ?? this.updatedBy,
+      // createdBy: createdBy ?? this.createdBy,
+      // updatedBy: updatedBy ?? this.updatedBy,
       sku: sku ?? this.sku,
       pathPhoto: pathPhoto ?? this.pathPhoto,
       color: color ?? this.color,
@@ -48,7 +48,5 @@ class ClothColorEntity extends Entity {
   }
   
   @override
-  List<Object?> get props => [id, createdAt, createdBy, updatedBy, sku, pathPhoto, color, clothSizes];
-
- 
+  List<Object?> get props => [id, createdAt, sku, pathPhoto, color, clothSizes];
 }

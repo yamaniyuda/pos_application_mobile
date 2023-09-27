@@ -10,11 +10,11 @@ class ClothColorDTO implements DTO {
   @JsonKey(name: "id")
   late String? id;
 
-  @JsonKey(name: "created_by")
-  late String? createdBy;
+  // @JsonKey(name: "created_by")
+  // late String? createdBy;
 
-  @JsonKey(name: "updated_by")
-  late String? updatedBy;
+  // @JsonKey(name: "updated_by")
+  // late String? updatedBy;
 
   @JsonKey(name: "sku")
   late String? sku;
@@ -36,10 +36,10 @@ class ClothColorDTO implements DTO {
     this.clothSizes,
     this.color,
     this.createdAt,
-    this.createdBy,
+    // this.createdBy,
     this.pathPhoto,
     this.sku,
-    this.updatedBy
+    // this.updatedBy
   });
 
   factory ClothColorDTO.fromJson(Map<String, dynamic> json) {

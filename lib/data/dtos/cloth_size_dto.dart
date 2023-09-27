@@ -1,7 +1,9 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:pos_application_mobile/data/dtos/cloth_size_price_dto.dart';
+import 'package:pos_application_mobile/data/dtos/created_by_dto.dart';
 import 'package:pos_application_mobile/data/dtos/dto.dart';
 import 'package:pos_application_mobile/data/dtos/size_dto.dart';
+import 'package:pos_application_mobile/data/dtos/updated_by_dto.dart';
 
 part 'cloth_size_dto.g.dart';
 
@@ -10,11 +12,11 @@ class ClothSizeDTO implements DTO {
   @JsonKey(name: "id")
   late String? id;
 
-  @JsonKey(name: "created_by")
-  late String? createdBy;
+  // @JsonKey(name: "created_by")
+  // late CreatedByDTO? createdBy;
 
-  @JsonKey(name: "updated_by")
-  late String? updatedBy;
+  // @JsonKey(name: "updated_by")
+  // late UpdatedByDTO? updatedBy;
 
   @JsonKey(name: "stock")
   late int? stock;
@@ -34,12 +36,12 @@ class ClothSizeDTO implements DTO {
   ClothSizeDTO({
     this.clothSizePrices,
     this.createdAt,
-    this.createdBy,
+    // this.createdBy,
     this.id,
     this.size,
     this.price,
     this.stock,
-    this.updatedBy
+    // this.updatedBy
   });
   
   factory ClothSizeDTO.fromJson(Map<String, dynamic> json) {

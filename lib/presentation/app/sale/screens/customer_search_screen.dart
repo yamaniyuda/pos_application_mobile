@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:pos_application_mobile/app/config/routes/app_screens.dart';
 import 'package:pos_application_mobile/app/extensions/string_extention.dart';
 import 'package:pos_application_mobile/presentation/app/sale/controllers/customer_search_controller.dart';
+import 'package:pos_application_mobile/presentation/app/sale/controllers/sale_form_controller.dart';
 import 'package:pos_application_mobile/presentation/widgets/pam_form/pam_form.dart';
 import 'package:pos_application_mobile/presentation/widgets/pam_list_scroll/pam_list_scroll.dart';
 
@@ -15,6 +16,7 @@ class CustomerSearchScreen extends GetView {
 
   @override
   final controller = Get.put(CustomerSearchController());
+  final saleFormController = Get.find<SaleFormController>();
 
   Widget _buildHeader() {
     return Container(
@@ -107,6 +109,9 @@ class CustomerSearchScreen extends GetView {
                     tileColor: Colors.white,
                     subtitle: Text("${controller.dataCustomer[index].email ?? "-"}".toCapitalize()),
                     onTap: () {
+                      print(controller.dataCustomer[index].id);
+                      saleFormController.setCustomerPayloadId(controller.dataCustomer[index].id);
+
                       Get.back(
                         result: {
                           "label": controller.dataCustomer[index].name,

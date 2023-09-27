@@ -15,12 +15,12 @@ ClothDTO _$ClothDTOFromJson(Map<String, dynamic> json) => ClothDTO(
           ?.map((e) => ClothColorDTO.fromJson(e as Map<String, dynamic>))
           .toList(),
       createdAt: json['created_at'] as String?,
-      createdBy: (json['created_by'] == null || json['created_by'] is String)
+      createdBy: json['created_by'] == null
           ? null
           : CreatedByDTO.fromJson(json['created_by'] as Map<String, dynamic>),
       id: json['id'] as String?,
       status: json['status'] as bool?,
-      updatedBy: (json['updated_by'] == null || json['updated_by'] is String)
+      updatedBy: json['updated_by'] == null
           ? null
           : UpdatedByDTO.fromJson(json['updated_by'] as Map<String, dynamic>),
     );

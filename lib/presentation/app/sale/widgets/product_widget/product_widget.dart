@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pos_application_mobile/presentation/app/sale/controllers/cloth_controller.dart';
 import 'package:pos_application_mobile/presentation/app/sale/model/cloth_form_payload.dart';
-import 'package:pos_application_mobile/presentation/app/sale/widgets/product_add_widget.dart';
+import 'package:pos_application_mobile/presentation/app/sale/widgets/product_widget/product_add_widget.dart';
 import 'package:pos_application_mobile/presentation/widgets/pam_badge/pam_badge.dart';
 
 class ProductWidget extends StatelessWidget {

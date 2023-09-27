@@ -13,7 +13,7 @@ class ClothDTO implements DTO {
   late String? id;
 
   @JsonKey(name: "created_by")
-  late dynamic createdBy;
+  late CreatedByDTO? createdBy;
 
   @JsonKey(name: "updated_by")
   late UpdatedByDTO? updatedBy;

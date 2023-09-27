@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:pos_application_mobile/app/extensions/string_extention.dart';
 import 'package:pos_application_mobile/presentation/app/sale/controllers/customer_choose_controller.dart';
 import 'package:pos_application_mobile/presentation/app/sale/controllers/sale_form_controller.dart';
-import 'package:pos_application_mobile/presentation/app/sale/widgets/customer_choose_item.dart';
+import 'package:pos_application_mobile/presentation/app/sale/widgets/customer_widget/customer_choose_item.dart';
 import 'package:pos_application_mobile/presentation/widgets/pam_bottom/pam_bottom.dart';
 
 class CustomerChooseScreen extends StatelessWidget {
@@ -23,8 +23,8 @@ class CustomerChooseScreen extends StatelessWidget {
   /// - `label`: The value that will later be show in form input.
   void _onTabHandler () {
     saleFormController.changeCustomerTypePayload(
-      controller.chooseValue,
       controller.chooseLabel,
+      controller.chooseValue,
     );
     
     Get.back(

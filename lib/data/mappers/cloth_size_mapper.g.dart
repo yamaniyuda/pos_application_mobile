@@ -231,12 +231,10 @@ class $ClothSizeMapper implements AutoMapprInterface {
     return ClothSizeEntity(
       clothSizePrices: ClothSizeMapper.listClothSizePriceDtoToEntity(model),
       createdAt: model.createdAt,
-      createdBy: model.createdBy,
       id: model.id,
       size: ClothSizeMapper.sizeDtoToEntity(model),
       stock: model.stock,
       price: ClothSizeMapper.closthSizePriceDtoToEndity(model),
-      updatedBy: model.updatedBy,
     );
   }
 
@@ -250,12 +248,10 @@ class $ClothSizeMapper implements AutoMapprInterface {
     return ClothSizeDTO(
       clothSizePrices: ClothSizeMapper.listClothSizePriceEntityToDto(model),
       createdAt: model.createdAt,
-      createdBy: model.createdBy,
       id: model.id,
       size: ClothSizeMapper.sizeEntityToDto(model),
       price: ClothSizeMapper.clothSizePriceEntityToDto(model),
       stock: model.stock,
-      updatedBy: model.updatedBy,
     );
   }
 }

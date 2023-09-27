@@ -20,7 +20,7 @@ class MainScreen extends GetView<MainController> {
           index: controller.currentIndex,
           children: [
             const HomeScreen(),
-            const SaleScreen(),
+            SaleScreen(),
             const BookingScreen(),
             ProductScreen(),
             const StockScreen(),

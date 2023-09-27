@@ -234,10 +234,8 @@ class $ClothColorMapper implements AutoMapprInterface {
       clothSizes: ClothColorMapper.listClothSizeDtoToEntity(model),
       color: ClothColorMapper.colorDtoToEntity(model),
       createdAt: model.createdAt,
-      createdBy: model.createdBy,
       pathPhoto: model.pathPhoto,
       sku: model.sku,
-      updatedBy: model.updatedBy,
     );
   }
 
@@ -254,10 +252,8 @@ class $ClothColorMapper implements AutoMapprInterface {
       clothSizes: ClothColorMapper.listClothDtoEntityToDto(model),
       color: ClothColorMapper.colorEntityToDto(model),
       createdAt: model.createdAt,
-      createdBy: model.createdBy,
       pathPhoto: model.pathPhoto,
       sku: model.sku,
-      updatedBy: model.updatedBy,
     );
   }
 }

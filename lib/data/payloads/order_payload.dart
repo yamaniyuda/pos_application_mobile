@@ -1,7 +1,7 @@
 class OrderPayload {
   late String? id;
   late String paymentMethod;
-  late String? amountDownPayment;
+  late int? amountDownPayment;
   late String customerCategory;
   late String? customerId;
   late List<OrderDetailPayload> orderDetails;
@@ -19,6 +19,7 @@ class OrderPayload {
     return {
       "payment_method": paymentMethod,
       "amount_down_payment": amountDownPayment,
+      "customer_id": customerId ?? null,
       "customer_category": customerCategory,
       "order_details": List.from(
         orderDetails.map((e) => e.toJson())
@@ -42,7 +43,7 @@ class OrderDetailPayload {
     return {
       "cloth_size_id": clothSizeId,
       "cloth_size_price_id": clothSizePriceId,
-      "qyt": qyt
+      "qty": qyt
     };
   }
 }

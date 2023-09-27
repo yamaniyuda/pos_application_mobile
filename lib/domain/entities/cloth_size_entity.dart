@@ -1,12 +1,14 @@
 
 import 'package:pos_application_mobile/domain/entities/cloth_size_price_entity.dart';
+import 'package:pos_application_mobile/domain/entities/created_by_entity.dart';
 import 'package:pos_application_mobile/domain/entities/entity.dart';
 import 'package:pos_application_mobile/domain/entities/size_entity.dart';
+import 'package:pos_application_mobile/domain/entities/updated_by_entity.dart';
 
 class ClothSizeEntity extends Entity {
   final String? id;
-  final String? createdBy;
-  final String? updatedBy;
+  // final CreatedByEntity? createdBy;
+  // final UpdatedByEntity? updatedBy;
   int? stock;
   final String? createdAt;
   final SizeEntity? size;
@@ -16,19 +18,19 @@ class ClothSizeEntity extends Entity {
   ClothSizeEntity({
     this.clothSizePrices,
     this.createdAt,
-    this.createdBy,
+    // this.createdBy,
     this.id,
     this.size,
     this.stock,
     this.price,
-    this.updatedBy
+    // this.updatedBy
   });
   
   @override
   ClothSizeEntity copyWith({
     String? id,
-    String? createdBy,
-    String? updatedBy,
+    CreatedByEntity? createdBy,
+    UpdatedByEntity? updatedBy,
     int? stock,
     String? createdAt,
     SizeEntity? size,
@@ -37,18 +39,18 @@ class ClothSizeEntity extends Entity {
   }) {
     return ClothSizeEntity(
       id: id ?? this.id,
-      createdBy: createdBy ?? this.createdBy,
+      // createdBy: createdBy ?? this.createdBy,
       createdAt: createdAt ?? this.createdAt,
       clothSizePrices: clothSizePrices ?? this.clothSizePrices,
       size: size ?? this.size,
       price: price ?? this.price,
       stock: stock ?? this.stock,
-      updatedBy: updatedBy ?? this.updatedBy
+      // updatedBy: updatedBy ?? this.updatedBy
     );
   }
   
   @override
-  List<Object?> get props => [id, createdBy, updatedBy, stock, createdAt, clothSizePrices];
+  List<Object?> get props => [id, stock, createdAt, clothSizePrices];
   
   set setStock(int stock) {
     this.stock = stock;

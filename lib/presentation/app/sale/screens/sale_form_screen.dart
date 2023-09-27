@@ -5,11 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:pos_application_mobile/app/extensions/string_extention.dart';
 import 'package:pos_application_mobile/app/utils/system_utils.dart';
 import 'package:pos_application_mobile/presentation/app/sale/controllers/sale_form_controller.dart';
-import 'package:pos_application_mobile/presentation/app/sale/widgets/customer_choose_widget.dart';
-import 'package:pos_application_mobile/presentation/app/sale/widgets/sale_total_widget.dart';
-import 'package:pos_application_mobile/presentation/widgets/pam_bottom/pam_bottom.dart';
+import 'package:pos_application_mobile/presentation/app/sale/widgets/customer_widget/customer_choose_widget.dart';
+import 'package:pos_application_mobile/presentation/app/sale/widgets/sale_widget/sale_total_widget.dart';
 
-import '../widgets/cloth_color_form_widget.dart';
+import '../widgets/cloth_widget/cloth_color_form_widget.dart';
 
 class SaleFormScreen extends GetView<SaleFormController> {
   const SaleFormScreen({super.key});
@@ -25,6 +24,7 @@ class SaleFormScreen extends GetView<SaleFormController> {
     SystemUtils.changeStatusAndBottomBarColor(context);
 
     return Scaffold(
+      backgroundColor: Colors.grey[400],
       body: Obx(() {
         if (controller.isLoading == false) {
           return const Center(
@@ -69,39 +69,16 @@ class SaleFormScreen extends GetView<SaleFormController> {
                 /// =======================   
                 ClothColorFormWidget(),
 
-                SliverFillRemaining(
+                const SliverFillRemaining(
                   hasScrollBody: false,
                   child: Column(
                     verticalDirection: VerticalDirection.up,
                     children: [
 
                       /// ===============
-                      /// Submit Button
-                      /// ===============
-                      Container(
-                        color: Colors.white,
-                        padding: const EdgeInsets.only(
-                          top: 20,
-                          left: 20,
-                          right: 20,
-                          bottom: 20
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            PAMBottom(
-                              borderRadius: BorderRadius.circular(10),
-                              title: "submit".tr.toCapitalize(),
-                            ),
-                          ]
-                        )
-                      ),
-
-
-                      /// ===============
                       /// Details price
                       /// ===============
-                      const SaleTotalWidget(),
+                      SaleTotalWidget(),
 
                     ],
                   ),

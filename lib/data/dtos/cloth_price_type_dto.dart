@@ -9,8 +9,8 @@ class ClothPriceTypeDTO implements DTO {
   @JsonKey(name: "id")
   late String? id;
 
-  @JsonKey(name: "created_by")
-  late String? createdBy;
+  // @JsonKey(name: "created_by")
+  // late String? createdBy;
   
   @JsonKey(name: "name")
   late String? name;
@@ -19,7 +19,7 @@ class ClothPriceTypeDTO implements DTO {
   late String? description;
 
   ClothPriceTypeDTO({
-    this.createdBy,
+    // this.createdBy,
     this.description,
     this.id,
     this.name

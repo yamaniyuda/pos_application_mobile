@@ -73,10 +73,10 @@ class OrderDataSource extends RemoteDataSource {
   /// converting the response data.
   ///
   /// Returns a [Future<OrderDTO>] representing the stored customer type data.
-  Future<OrderDTO> storeData(OrderPayload payload) async {
-    final OrderDTO response = await dioClient.postRequest(
+  Future<String> storeData(OrderPayload payload) async {
+    final String response = await dioClient.postRequest(
       "api/orders", 
-      converter: (data) => OrderDTO.fromJson(data), 
+      converter: (data) => data, 
       payload: payload
     );
     return response;
