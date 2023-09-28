@@ -5,6 +5,7 @@ import 'package:pos_application_mobile/domain/entities/customer_entity.dart';
 import 'package:pos_application_mobile/domain/entities/entity.dart';
 import 'package:pos_application_mobile/domain/entities/order_history_log_entity.dart';
 import 'package:pos_application_mobile/domain/entities/order_payment_log_entity.dart';
+import 'package:pos_application_mobile/domain/entities/updated_by_entity.dart';
 
 class OrderEntity extends Entity  {
   final String? id;
@@ -17,7 +18,7 @@ class OrderEntity extends Entity  {
   final int? amountDownPayment;
   final int? total;
   final int? profit;
-  final dynamic updatedBy;
+  final UpdatedByEntity? updatedBy;
   final String? updatedAt;
   final CustomerEntity? customer;
   final List<ClothEntity>? cloths;
@@ -55,7 +56,7 @@ class OrderEntity extends Entity  {
     int? amountDownPayment,
     int? total,
     int? profit,
-    dynamic updatedBy,
+    UpdatedByEntity? updatedBy,
     String? updatedAt,
     CustomerEntity? customer,
     List<ClothEntity>? cloths,
@@ -78,7 +79,7 @@ class OrderEntity extends Entity  {
       total: total ?? this.total,
       totalQty: totalQty ?? this.totalQty,
       updatedAt: updatedAt ?? this.updatedAt,
-      updatedBy: updatedBy ?? this.updatedAt
+      updatedBy: updatedBy ?? this.updatedBy
     );
   }
   

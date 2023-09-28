@@ -20,7 +20,7 @@ class SaleWidget extends StatelessWidget {
     ScreenUtil.init(context);
 
     return InkWell(
-      // onTap: () => Get.toNamed("/product-detail/${orderEntity.id}"),
+      onTap: () => Get.toNamed("/sale-detail/${orderEntity.id}"),
       child: Card(
         child: Padding(
           padding: const EdgeInsets.all(10),

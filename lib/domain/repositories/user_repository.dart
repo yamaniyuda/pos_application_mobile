@@ -14,7 +14,7 @@ abstract class UserRepository extends Repository {
   });
 
   Future<List<UserEntity>> fetchData(Map<String, dynamic> queryParameters);
-  Future<UserEntity> fetchDetailData(String id, Map<String, dynamic> queryParameters);
+  Future<UserEntity> fetchDetailData(String id, Map<String, dynamic>? queryParameters);
   Future<UserEntity> storeData(UserPaylaod paylaod);
   Future<UserEntity> updateData(UserPaylaod params);
   Future<void> deleteData(String id); 

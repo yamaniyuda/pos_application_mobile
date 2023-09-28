@@ -4,6 +4,7 @@ import 'package:pos_application_mobile/data/dtos/created_by_dto.dart';
 import 'package:pos_application_mobile/data/dtos/customer_dto.dart';
 import 'package:pos_application_mobile/data/dtos/order_history_log_dto.dart';
 import 'package:pos_application_mobile/data/dtos/order_payment_log_dto.dart';
+import 'package:pos_application_mobile/data/dtos/updated_by_dto.dart';
 
 part 'order_dto.g.dart';
 
@@ -40,7 +41,7 @@ class OrderDTO {
   late int? profit;
 
   @JsonKey(name: 'updated_by')
-  late dynamic updatedBy; // You can change the type based on your needs
+  late UpdatedByDTO? updatedBy; // You can change the type based on your needs
 
   @JsonKey(name: 'updated_at')
   late String? updatedAt;

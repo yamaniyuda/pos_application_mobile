@@ -40,4 +40,12 @@ class OrderRepositoryImpl extends OrderRepository {
 
     return dataEntity;
   }
+  
+  @override
+  Future<OrderEntity> fetchDetailData(String id) async {
+    final OrderDTO dataDTO = await dataSource.fetchDetailData(id, {});
+    final OrderEntity orderEntity = mapper.convert<OrderDTO, OrderEntity>(dataDTO);
+    
+    return orderEntity;
+  }
 }

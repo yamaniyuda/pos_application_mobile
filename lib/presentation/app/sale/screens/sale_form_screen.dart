@@ -24,7 +24,7 @@ class SaleFormScreen extends GetView<SaleFormController> {
     SystemUtils.changeStatusAndBottomBarColor(context);
 
     return Scaffold(
-      backgroundColor: Colors.grey[400],
+      // backgroundColor: Colors.grey[300],
       body: Obx(() {
         if (controller.isLoading == false) {
           return const Center(

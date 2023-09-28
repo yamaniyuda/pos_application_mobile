@@ -20,7 +20,7 @@ ClothDTO _$ClothDTOFromJson(Map<String, dynamic> json) => ClothDTO(
           : CreatedByDTO.fromJson(json['created_by'] as Map<String, dynamic>),
       id: json['id'] as String?,
       status: json['status'] as bool?,
-      updatedBy: json['updated_by'] == null
+      updatedBy: json['updated_by'] == null || json['updated_by'] is String
           ? null
           : UpdatedByDTO.fromJson(json['updated_by'] as Map<String, dynamic>),
     );

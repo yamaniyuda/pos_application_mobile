@@ -5,7 +5,7 @@ import 'package:pos_application_mobile/app/utils/system_utils.dart';
 
 /// define child in stack screen bottom navigation bar [MainMenu]
 enum ChildMenuMain {
-  homeScreen, accountScreen, productScreen
+  homeScreen, productScreen, saleScreen
 }
 
 /// This controller manages the current index of the bottom
@@ -20,9 +20,10 @@ class MainController extends GetxController {
         _changeColorBar(Get.context!, ChildMenuMain.homeScreen);
         changeTabIndex(0);
         break;
-      case ChildMenuMain.accountScreen:
+      case ChildMenuMain.saleScreen:
         changeTabIndex(1);
         break;
+      
       case ChildMenuMain.productScreen:
         changeTabIndex(3);
         break;
@@ -43,13 +44,12 @@ class MainController extends GetxController {
         _changeColorBar(Get.context!, ChildMenuMain.homeScreen);
       }
 
-      if (index == 3) {
-        _changeColorBar(Get.context!, ChildMenuMain.productScreen);
+      if (index == 1) {
+        _changeColorBar(Get.context!, ChildMenuMain.saleScreen);
       }
 
-      /* handling status bar for account screen */
-      if (index == 4) {
-        _changeColorBar(Get.context!, ChildMenuMain.accountScreen);
+      if (index == 3) {
+        _changeColorBar(Get.context!, ChildMenuMain.productScreen);
       }
     });
   }
@@ -62,13 +62,7 @@ class MainController extends GetxController {
     late Color systemNavigationBarColor = Colors.white;
     late Brightness systemNavigationBarIconBrightness = Brightness.dark;
 
-    if (menu == ChildMenuMain.accountScreen) {
-      statusBarColor = Colors.transparent;
-      statusBarIconBrightness = Brightness.dark;
-      systemNavigationBarColor = Colors.white;
-    }
-
-    if (menu == ChildMenuMain.productScreen) {
+    if ([ChildMenuMain.productScreen, ChildMenuMain.saleScreen].contains(menu)) {
       statusBarColor = Colors.white;
     }
 
@@ -90,5 +84,6 @@ class MainController extends GetxController {
       systemNavigationBarIconBrightness: Brightness.dark
     );
     _currentIndex.value = index;
+    _currentIndex.refresh();
   }
 }

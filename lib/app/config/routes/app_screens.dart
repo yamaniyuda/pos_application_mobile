@@ -96,6 +96,11 @@ class AppScreens {
       binding: StockBinding()
     ),
 
+
+
+    /// ======================
+    /// Color Screen
+    /// ======================
     GetPage(
       name: _Paths.color,
       page: () => const ColorScreen(),
@@ -107,6 +112,11 @@ class AppScreens {
       binding: ColorBinding()
     ),
 
+
+
+    /// ======================
+    /// User Screen
+    /// ======================
     GetPage(
       name: _Paths.user, 
       page: () => const UserScreen(),
@@ -118,6 +128,11 @@ class AppScreens {
       binding: UserBinding()
     ),
 
+
+
+    /// ======================
+    /// Customer Type Screen
+    /// ======================
     GetPage(
       name: _Paths.customerType,
       page: () => const CustomerTypeScreen(),
@@ -129,6 +144,11 @@ class AppScreens {
       binding: CustomerTypeBinding()
     ),
 
+
+
+    /// ======================
+    /// Customer Screen
+    /// ======================
     GetPage(
       name: _Paths.customer,
       page: () => const CustomerScreen(),
@@ -140,6 +160,11 @@ class AppScreens {
       binding: CustomerBinding()
     ),
 
+
+
+    /// ======================
+    /// Size Screen
+    /// ======================
     GetPage(
       name: _Paths.size,
       page: () => const SizeScreen(),
@@ -151,6 +176,11 @@ class AppScreens {
       binding: SizeBinding()
     ),
 
+
+
+    /// ======================
+    /// Cloth Category Screen
+    /// ======================
     GetPage(
       name: _Paths.clothCategory,
       page: () => const ClothCategoryScreen(),
@@ -162,6 +192,11 @@ class AppScreens {
       binding: ClothCategoryBinding()
     ),
 
+
+
+    /// ======================
+    /// Supplier Screen
+    /// ======================
     GetPage(
       name: _Paths.supplier,
       page: () => const SupplierScreen(),
@@ -173,6 +208,11 @@ class AppScreens {
       binding: SupplierBinding()
     ),
 
+
+
+    /// ======================
+    /// Cloth Price Type Screen
+    /// ======================
     GetPage(
       name: _Paths.clothPriceType,
       page: () => const ClothPriceTypeScreen(),
@@ -184,6 +224,11 @@ class AppScreens {
       binding: ClothPriceTypeBinding()
     ),
     
+
+
+    /// =====================
+    /// Product Screen
+    /// =====================
     GetPage(
       name: _Paths.productForm,
       page: () => ProductFormScreen(),
@@ -191,7 +236,6 @@ class AppScreens {
         Get.put(ProductFormController());
       })
     ),
-
     GetPage(
       name: _Paths.productDetail,
       page: () => const ProductDetailScreen(),
@@ -201,6 +245,9 @@ class AppScreens {
     ),
 
 
+    /// =====================
+    /// Sale Screen
+    /// =====================
     GetPage(
       name: _Paths.sale,
       page: () => SaleScreen(),
@@ -211,6 +258,13 @@ class AppScreens {
       page: () => const SaleFormScreen(),
       binding: BindingsBuilder(() {
         Get.put(SaleFormController());
+      })
+    ),
+    GetPage(
+      name: _Paths.saleDetail,
+      page: () => const SaleDetailScreen(),
+      binding: BindingsBuilder(() {
+        Get.put(SaleDetailController());
       })
     )
 

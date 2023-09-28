@@ -37,6 +37,28 @@ class ClothController extends GetxController {
     super.onInit();
   }
 
+
+  /// Update Items.
+  /// 
+  /// The `updateItems` will handling update item for data type [ClothFormPayload] 
+  /// and will run update controller for trigger UI for do rerender.
+  /// 
+  /// Params:
+  /// - `payload`: Item representation data cloth with data type [ClothFormPayload].
+  /// - `clothColorId`: unique string for representance data `cloth_color_id`.
+  /// - `clothSizeId`: unique string for representance data `cloth_size_id`.
+  /// - `clothSizePriceId`: unique string for representance data `cloth_size_price_id`
+  /// 
+  /// 
+  /// Usage:
+  /// ```dart
+  /// updateItems(
+  ///   payload: ClothFormPayload(/*...*/),
+  ///   clothColorId: d392kdlfakkk2-3kskfs,
+  ///   clothSizeId: kflssf-32kkfal-32,
+  ///   clothSizePriceId: kslfa-32lkfs-fsk93
+  /// )
+  /// ```
   void updateItems(
       {required ClothFormPayload payload,
       required String clothColorId,

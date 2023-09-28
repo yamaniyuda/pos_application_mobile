@@ -133,7 +133,8 @@ class ClothFormPayload {
       int? clothSizeIndex = _getClothSizeIndexOf(clothColorIndex!, clothSizeId);
       int currentStock = clothEntity.clothColors![clothColorIndex].clothSizes![clothSizeIndex!].stock!;
       int currentStockChoose = _getClothSizeItemQuantity(clothSizeId) ?? 0;
-      if (qty > 0) {
+      if (qty > 0 && currentStock != 0) {
+        
         /// Increment Items Handling.
         if (qty > currentStock ) { qty = currentStock; }
 

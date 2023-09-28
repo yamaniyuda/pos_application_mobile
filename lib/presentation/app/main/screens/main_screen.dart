@@ -27,6 +27,7 @@ class MainScreen extends GetView<MainController> {
           ],
         ),
         bottomNavigationBar: BottomNavigationBar(
+          backgroundColor: Colors.white,
           currentIndex: controller.currentIndex,
           onTap: controller.changeTabIndex,
           unselectedItemColor: Colors.black54,

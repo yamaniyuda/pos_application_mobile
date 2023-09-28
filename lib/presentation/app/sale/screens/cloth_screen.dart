@@ -11,6 +11,11 @@ class ClothScreen extends GetView<ClothController> {
   ClothScreen({super.key});
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  Future<bool> _onBackPressHanlding() async {
+    Get.back(result: controller.getAllItems());
+    return true;
+  }
   
   Widget _buildHeader() {
     return Container(
@@ -91,25 +96,26 @@ class ClothScreen extends GetView<ClothController> {
   Widget build(BuildContext context) {
     ScreenUtil.init(context);
 
-    return Scaffold(
+    return WillPopScope(
+      onWillPop: _onBackPressHanlding,
+      child: Scaffold(
       appBar: AppBar(
-        title: Text("${"add".tr} ${"product".tr}".toCapitalize()),
-        backgroundColor: Colors.white,
-        leading: IconButton(
-          icon:  const Icon(Icons.arrow_back),
-          onPressed: (){
-            Get.back(result: controller.getAllItems());
-          }
+          title: Text("${"add".tr} ${"product".tr}".toCapitalize()),
+          backgroundColor: Colors.white,
+          leading: IconButton(
+            icon:  const Icon(Icons.arrow_back),
+            onPressed: () => _onBackPressHanlding()
+          ),
         ),
-      ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            _buildHeader(),
-            _buildListCustomerType()
-          ],
-        )
-      ),
+        body: SafeArea(
+          child: Column(
+            children: [
+              _buildHeader(),
+              _buildListCustomerType()
+            ],
+          )
+        ),
+      )
     );
   }
 }

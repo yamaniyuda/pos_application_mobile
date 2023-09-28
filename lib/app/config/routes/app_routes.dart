@@ -33,6 +33,7 @@ abstract class Routes {
   static const productDetail = _Paths.productDetail;
   static const sale = _Paths.sale;
   static const saleForm = _Paths.saleForm;
+  static const saleDetail = _Paths.saleDetail;
 }
 
 abstract class _Paths {
@@ -66,4 +67,5 @@ abstract class _Paths {
   static const String productDetail = '/product-detail/:id';
   static const String sale = '/sale';
   static const String saleForm = '/sale-form';
+  static const String saleDetail = '/sale-detail/:id';
 }

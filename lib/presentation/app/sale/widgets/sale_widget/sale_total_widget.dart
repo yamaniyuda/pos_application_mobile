@@ -173,7 +173,6 @@ class _SaleTotalWidgetState extends State<SaleTotalWidget> {
                     )
                   ],
                 ),
-                const SizedBox(height: 10),
 
 
                 /// ===================
@@ -227,7 +226,7 @@ class _SaleTotalWidgetState extends State<SaleTotalWidget> {
                   ),
                 ),
                
-                const SizedBox(height: 30),
+                const SizedBox(height: 20),
                 CustomPaint(
                   painter: SparatorWidget(),
                   size: const Size(double.infinity, 10)
@@ -257,7 +256,7 @@ class _SaleTotalWidgetState extends State<SaleTotalWidget> {
                               DropdownMenuItem(value: "down payment", child: Text("Down Payment")),
                             ],
                             value: paymentMethod,
-                            alignment: Alignment.center,
+                            alignment: Alignment.centerLeft,
                             style: const TextStyle(
                               fontSize: 14,
                               color: Colors.black

@@ -27,7 +27,7 @@ class UserRepositoryImpl extends UserRepository {
   }
 
   @override
-  Future<UserEntity> fetchDetailData(String id, Map<String, dynamic> queryParameters) async {
+  Future<UserEntity> fetchDetailData(String id, Map<String, dynamic>? queryParameters) async {
     final UserDTO dataDTO = await dataSource.fetchDetailData(id, queryParameters);
     final UserEntity dataEntity = mapper.convert<UserDTO, UserEntity>(dataDTO);
     return dataEntity;
