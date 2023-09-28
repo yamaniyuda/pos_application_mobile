@@ -48,54 +48,57 @@ class HeaderWidget extends StatelessWidget {
         color: Colors.white,
         padding: const EdgeInsets.all(20),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  width: 50,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(10)
+            Container(
+              width: double.infinity,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: 50,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(10)
+                      ),
+                      color: Colors.black54.withOpacity(.2)
                     ),
-                    color: Colors.black54.withOpacity(.2)
+                    child: const Icon(Icons.sell, size: 30),
                   ),
-                  child: const Icon(Icons.sell, size: 30),
-                ),
-                const SizedBox(width: 20),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      alignment: Alignment.topLeft,
-                      width: Get.width * .5,
-                      child: Flexible(
-                        child: Text(
-                          (controller.dataDetail.customer?.name ?? "").toCapitalize(),
-                          style: GoogleFonts.lato(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold
+                  const SizedBox(width: 20),
+                  SizedBox(
+                    width: 200,
+                    child: Align(
+                      alignment: Alignment.bottomLeft, // Align text to the bottom left
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            (controller.dataDetail.customer?.name ?? "").toCapitalize(),
+                            style: GoogleFonts.lato(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold
+                            ),
                           ),
-                        ),
+                          Text(controller.dataDetail.customer?.customerType?.name ?? "")
+                        ],
                       ),
                     ),
-                    Text(controller.dataDetail.customer?.customerType?.name ?? "")
-                  ],
-                ),
-                const Spacer(),
-                PamBadge(
-                  text: Text(
-                    controller.dataDetail.status ?? "",
-                    style: GoogleFonts.lato(
-                      fontWeight: FontWeight.bold
-                    ),
-                  ), 
-                  color: _getColorBadge(controller.dataDetail.status ?? "")
-                )
-              ],
+                  ),
+                  const Spacer(),
+                  PamBadge(
+                    text: Text(
+                      controller.dataDetail.status ?? "",
+                      style: GoogleFonts.lato(
+                        fontWeight: FontWeight.bold
+                      ),
+                    ), 
+                    color: _getColorBadge(controller.dataDetail.status ?? "")
+                  )
+                ],
+              ),
             ),
             const SizedBox(height: 20),
 
