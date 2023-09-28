@@ -1,9 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:pos_application_mobile/data/dtos/cloth_size_price_dto.dart';
-import 'package:pos_application_mobile/data/dtos/created_by_dto.dart';
 import 'package:pos_application_mobile/data/dtos/dto.dart';
 import 'package:pos_application_mobile/data/dtos/size_dto.dart';
-import 'package:pos_application_mobile/data/dtos/updated_by_dto.dart';
 
 part 'cloth_size_dto.g.dart';
 
@@ -30,8 +28,17 @@ class ClothSizeDTO implements DTO {
   @JsonKey(name: "cloth_size_prices")
   late List<ClothSizePriceDTO>? clothSizePrices;
 
-  @JsonKey(name: "price")
-  late ClothSizePriceDTO? price;
+  @JsonKey(name: "qty")
+  late int? qty;
+
+  @JsonKey(name: "total")
+  late int? total;
+
+  @JsonKey(
+    name: "price",
+    fromJson: _priceFromJson,
+  )
+  late dynamic price;
 
   ClothSizeDTO({
     this.clothSizePrices,
@@ -51,5 +58,15 @@ class ClothSizeDTO implements DTO {
   @override
   Map<String, dynamic> toJson() {
     return _$ClothSizeDTOToJson(this);
+  }
+
+  static dynamic _priceFromJson(dynamic value) {
+    if (value is int) {
+      return value;
+    }
+
+    return value == null
+      ? null
+      : ClothSizePriceDTO.fromJson(value as Map<String, dynamic>);
   }
 }

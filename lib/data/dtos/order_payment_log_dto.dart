@@ -24,6 +24,9 @@ class OrderPaymentLogDTO implements DTO {
   @JsonKey(name: 'total')
   late int? total;
 
+  @JsonKey(name: "created_at")
+  late String? createdAt;
+
   @JsonKey(name: 'note')
   late String? note;
 
@@ -38,7 +41,8 @@ class OrderPaymentLogDTO implements DTO {
     this.type,
     this.total,
     this.note,
-    this.attachment
+    this.attachment,
+    this.createdAt
   });
   
   factory OrderPaymentLogDTO.fromJson(Map<String, dynamic> json) {

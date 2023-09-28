@@ -14,6 +14,7 @@ OrderHistoryLogDTO _$OrderHistoryLogDTOFromJson(Map<String, dynamic> json) =>
           : CreatedByDTO.fromJson(json['created_by'] as Map<String, dynamic>),
       paymentMethod: json['payment_method'] as String?,
       status: json['status'] as String?,
+      createdAt: json['created_at'] as String?,
       note: json['note'] as String?,
     );
 
@@ -23,5 +24,6 @@ Map<String, dynamic> _$OrderHistoryLogDTOToJson(OrderHistoryLogDTO instance) =>
       'created_by': instance.createdBy,
       'payment_method': instance.paymentMethod,
       'status': instance.status,
+      'created_at': instance.createdAt,
       'note': instance.note,
     };

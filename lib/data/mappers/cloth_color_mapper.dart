@@ -30,6 +30,7 @@ class ClothColorMapper extends $ClothColorMapper {
   }
 
   static List<ClothSizeEntity>? listClothSizeDtoToEntity(ClothColorDTO dto) {
+    print(dto.clothSizes);
     if (dto.clothSizes == null) return null;
 
     return List<ClothSizeEntity>.from(dto.clothSizes!.map(

@@ -5,17 +5,20 @@ import 'package:pos_application_mobile/data/dtos/customer_dto.dart';
 import 'package:pos_application_mobile/data/dtos/order_dto.dart';
 import 'package:pos_application_mobile/data/dtos/order_history_log_dto.dart';
 import 'package:pos_application_mobile/data/dtos/order_payment_log_dto.dart';
+import 'package:pos_application_mobile/data/dtos/updated_by_dto.dart';
 import 'package:pos_application_mobile/data/mappers/cloth_mapper.dart';
 import 'package:pos_application_mobile/data/mappers/created_by_mapper.dart';
 import 'package:pos_application_mobile/data/mappers/customer_mapper.dart';
 import 'package:pos_application_mobile/data/mappers/order_history_log_mapper.dart';
 import 'package:pos_application_mobile/data/mappers/order_payment_log_mapper.dart';
+import 'package:pos_application_mobile/data/mappers/updated_by_mapper.dart';
 import 'package:pos_application_mobile/domain/entities/cloth_entity.dart';
 import 'package:pos_application_mobile/domain/entities/created_by_entity.dart';
 import 'package:pos_application_mobile/domain/entities/customer_entity.dart';
 import 'package:pos_application_mobile/domain/entities/order_entity.dart';
 import 'package:pos_application_mobile/domain/entities/order_history_log_entity.dart';
 import 'package:pos_application_mobile/domain/entities/order_payment_log_entity.dart';
+import 'package:pos_application_mobile/domain/entities/updated_by_entity.dart';
 
 part 'order_mapper.g.dart';
 
@@ -26,7 +29,8 @@ part 'order_mapper.g.dart';
       Field('orderPaymentLog', custom: OrderMapper.listOrderPaymentLogToEntity),
       Field('orderHistoryLog', custom: OrderMapper.listOrderHistoryLogToEntity),
       Field('customer', custom: OrderMapper.customerToEntity),
-      Field('cloths', custom: OrderMapper.listClothToEntity)
+      Field('cloths', custom: OrderMapper.listClothToEntity),
+      Field('updatedBy', custom: OrderMapper.updatedByToEntity)
     ]
   ),
   MapType<OrderEntity, OrderDTO>(
@@ -35,7 +39,8 @@ part 'order_mapper.g.dart';
       Field('orderPaymentLog', custom: OrderMapper.listOrderPaymentLogToDTO),
       Field('orderHistoryLog', custom: OrderMapper.listOrderHistoryLogToDto),
       Field('customer', custom: OrderMapper.customerToDto),
-      Field('cloths', custom: OrderMapper.listClothToDto)
+      Field('cloths', custom: OrderMapper.listClothToDto),
+      Field('updatedBy', custom: OrderMapper.updatedByToDTO)
     ]
   )
 ])
@@ -50,6 +55,16 @@ class OrderMapper extends $OrderMapper {
   }
   /// ========== End Created By ============
   
+
+
+  /// ========== Updated By ================
+  static UpdatedByEntity? updatedByToEntity(OrderDTO dto) {
+    return UpdatedByMapper().tryConvert<UpdatedByDTO, UpdatedByEntity>(dto.updatedBy);
+  }
+  static UpdatedByDTO? updatedByToDTO(OrderEntity entity) {
+    return UpdatedByMapper().tryConvert<UpdatedByEntity, UpdatedByDTO>(entity.updatedBy);
+  }
+  /// ========== End Updated by ============
 
 
   /// ========== Order History Log Entity ===============

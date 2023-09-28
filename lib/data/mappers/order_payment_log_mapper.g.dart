@@ -231,10 +231,11 @@ class $OrderPaymentLogMapper implements AutoMapprInterface {
     }
     return OrderPaymentLogEntity(
       id: model.id,
-      createdBy: null,
+      createdBy: OrderPaymentLogMapper.createdByToEntity(model),
       paymentMethod: model.paymentMethod,
       status: model.status,
       note: model.note,
+      createdAt: model.createdAt,
       type: model.type,
       total: model.total,
       attachment: model.attachment,
@@ -251,13 +252,14 @@ class $OrderPaymentLogMapper implements AutoMapprInterface {
     }
     return OrderPaymentLogDTO(
       id: model.id,
-      createdBy: null,
+      createdBy: OrderPaymentLogMapper.createdByToDto(model),
       paymentMethod: model.paymentMethod,
       status: model.status,
       type: model.type,
       total: model.total,
       note: model.note,
       attachment: model.attachment,
+      createdAt: model.createdAt,
     );
   }
 }

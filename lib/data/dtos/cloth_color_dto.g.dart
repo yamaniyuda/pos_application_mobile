@@ -26,6 +26,6 @@ Map<String, dynamic> _$ClothColorDTOToJson(ClothColorDTO instance) =>
       'sku': instance.sku,
       'path_photo': instance.pathPhoto,
       'color': instance.color,
-      'cloth_sizes': instance.clothSizes,
+      'cloth_size': instance.clothSizes,
       'created_at': instance.createdAt,
     };

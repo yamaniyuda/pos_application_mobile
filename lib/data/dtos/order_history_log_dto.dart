@@ -18,6 +18,9 @@ class OrderHistoryLogDTO implements DTO {
   @JsonKey(name: 'status')
   late String? status;
 
+  @JsonKey(name: "created_at")
+  late String? createdAt;
+
   @JsonKey(name: 'note')
   late String? note;
 
@@ -26,6 +29,7 @@ class OrderHistoryLogDTO implements DTO {
     this.createdBy,
     this.paymentMethod,
     this.status,
+    this.createdAt,
     this.note,
   });
   

@@ -94,8 +94,6 @@ class ProductAddWidget extends StatelessWidget {
                   child: ListView(
                     children: colorObjek.value.clothSizes!.map<Widget>(
                       (e) {
-                 
-
                         return Container(
                           margin: const EdgeInsets.only(bottom: 10),
                           child: Row(

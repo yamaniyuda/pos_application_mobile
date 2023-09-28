@@ -22,7 +22,9 @@ OrderDTO _$OrderDTOFromJson(Map<String, dynamic> json) => OrderDTO(
       cloths: (json['cloths'] as List<dynamic>?)
           ?.map((e) => ClothDTO.fromJson(e as Map<String, dynamic>))
           .toList(),
-      updatedBy: json['updated_by'],
+      updatedBy: json['updated_by'] == null
+          ? null
+          : UpdatedByDTO.fromJson(json['updated_by'] as Map<String, dynamic>),
       updatedAt: json['updated_at'] as String?,
       customer: json['customer'] == null
           ? null

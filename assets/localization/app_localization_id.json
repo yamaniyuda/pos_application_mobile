@@ -77,5 +77,16 @@
   "add": "tambah",
   "image": "gambar",
   "sale": "penjualan",
-  "created by": "dibuat oleh"
+  "created by": "dibuat oleh",
+  "cloth": "baju",
+  "discount": "diskon",
+  "payment method": "metode pembayaran",
+  "add cloth items": "tambah item baju",
+  "code": "kode",
+  "created": "dibuat",
+  "date": "tanggal",
+  "updated": "diperbarui",
+  "quantity": "kuantitas",
+  "payment": "pembayaran",
+  "note": "catatan"
 }

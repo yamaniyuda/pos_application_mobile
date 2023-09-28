@@ -8,6 +8,7 @@ class OrderPaymentLogEntity extends Entity  {
   final String? paymentMethod;
   final String? status;
   final String? note;
+  final String? createdAt;
   final String? type;
   final int? total;
   final String? attachment;
@@ -19,6 +20,7 @@ class OrderPaymentLogEntity extends Entity  {
     this.paymentMethod,
     this.status,
     this.note,
+    this.createdAt,
     this.type,
     this.total,
     this.attachment
@@ -28,6 +30,7 @@ class OrderPaymentLogEntity extends Entity  {
   OrderPaymentLogEntity copyWith({
     String? id,
     CreatedByEntity? createdBy,
+    String? createdAt,
     String? paymentMethod,
     String? status,
     String? note
@@ -42,5 +45,5 @@ class OrderPaymentLogEntity extends Entity  {
   }
   
   @override
-  List<Object?> get props => [id, createdBy, paymentMethod, status, note];
+  List<Object?> get props => [id, createdBy, paymentMethod, status, note, createdAt];
 } 

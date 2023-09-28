@@ -77,5 +77,16 @@
   "add": "add",
   "image": "image",
   "sale": "sale",
-  "created by": "created by"
+  "created by": "created by",
+  "cloth": "cloth",
+  "discount": "discount",
+  "payment method": "payment method",
+  "add cloth items": "add cloth items",
+  "code": "code",
+  "created": "created",
+  "date": "date",
+  "updated": "updated",
+  "quantity": "quantity",
+  "payment": "payment",
+  "note": "note"
 }

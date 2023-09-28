@@ -231,9 +231,10 @@ class $OrderHistoryLogMapper implements AutoMapprInterface {
     }
     return OrderHistoryLogEntity(
       id: model.id,
-      createdBy: null,
+      createdBy: OrderHistoryLogMapper.createdByToEntity(model),
       paymentMethod: model.paymentMethod,
       status: model.status,
+      createdAt: model.createdAt,
       note: model.note,
     );
   }
@@ -248,9 +249,10 @@ class $OrderHistoryLogMapper implements AutoMapprInterface {
     }
     return OrderHistoryLogDTO(
       id: model.id,
-      createdBy: null,
+      createdBy: OrderHistoryLogMapper.createdByToDto(model),
       paymentMethod: model.paymentMethod,
       status: model.status,
+      createdAt: model.createdAt,
       note: model.note,
     );
   }

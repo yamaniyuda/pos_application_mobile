@@ -235,6 +235,8 @@ class $ClothSizeMapper implements AutoMapprInterface {
       size: ClothSizeMapper.sizeDtoToEntity(model),
       stock: model.stock,
       price: ClothSizeMapper.closthSizePriceDtoToEndity(model),
+      qty: model.qty,
+      total: model.total,
     );
   }
 
@@ -252,6 +254,8 @@ class $ClothSizeMapper implements AutoMapprInterface {
       size: ClothSizeMapper.sizeEntityToDto(model),
       price: ClothSizeMapper.clothSizePriceEntityToDto(model),
       stock: model.stock,
-    );
+    )
+      ..qty = model.qty
+      ..total = model.total;
   }
 }

@@ -15,8 +15,11 @@ class ClothDTO implements DTO {
   @JsonKey(name: "created_by")
   late CreatedByDTO? createdBy;
 
-  @JsonKey(name: "updated_by")
-  late UpdatedByDTO? updatedBy;
+  @JsonKey(
+    name: "updated_by",
+    fromJson: _updatedByFromJson
+  )
+  late dynamic updatedBy;
 
   @JsonKey(name: "status")
   late bool? status;
@@ -48,4 +51,10 @@ class ClothDTO implements DTO {
   Map<String, dynamic> toJson() {
     return _$ClothDTOToJson(this);
   }  
+
+  static dynamic _updatedByFromJson(dynamic value) {
+    if (value == null || value is String) return null;
+
+    return UpdatedByDTO.fromJson(value as Map<String, dynamic>);
+  }
 }

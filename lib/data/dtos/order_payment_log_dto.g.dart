@@ -18,6 +18,7 @@ OrderPaymentLogDTO _$OrderPaymentLogDTOFromJson(Map<String, dynamic> json) =>
       total: json['total'] as int?,
       note: json['note'] as String?,
       attachment: json['attachment'] as String?,
+      createdAt: json['created_at'] as String?,
     );
 
 Map<String, dynamic> _$OrderPaymentLogDTOToJson(OrderPaymentLogDTO instance) =>
@@ -28,6 +29,7 @@ Map<String, dynamic> _$OrderPaymentLogDTOToJson(OrderPaymentLogDTO instance) =>
       'status': instance.status,
       'type': instance.type,
       'total': instance.total,
+      'created_at': instance.createdAt,
       'note': instance.note,
       'attachment': instance.attachment,
     };

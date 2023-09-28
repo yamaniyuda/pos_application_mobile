@@ -8,12 +8,14 @@ class OrderHistoryLogEntity extends Entity  {
   final String? paymentMethod;
   final String? status;
   final String? note;
+  final String? createdAt;
 
   OrderHistoryLogEntity({
     this.id,
     this.createdBy,
     this.paymentMethod,
     this.status,
+    this.createdAt,
     this.note,
   });
   
@@ -23,6 +25,7 @@ class OrderHistoryLogEntity extends Entity  {
     CreatedByEntity? createdBy,
     String? paymentMethod,
     String? status,
+    String? createdAt,
     String? note
   }) {
     return OrderHistoryLogEntity(
@@ -30,7 +33,8 @@ class OrderHistoryLogEntity extends Entity  {
       id: id ?? this.id,
       note: note ?? this.note,
       paymentMethod: paymentMethod ?? this.paymentMethod,
-      status: status ?? this.status
+      status: status ?? this.status,
+      createdAt: createdAt ?? this.createdAt
     );
   }
   

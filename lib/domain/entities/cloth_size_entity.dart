@@ -1,4 +1,6 @@
 
+// ignore_for_file: must_be_immutable
+
 import 'package:pos_application_mobile/domain/entities/cloth_size_price_entity.dart';
 import 'package:pos_application_mobile/domain/entities/created_by_entity.dart';
 import 'package:pos_application_mobile/domain/entities/entity.dart';
@@ -13,7 +15,9 @@ class ClothSizeEntity extends Entity {
   final String? createdAt;
   final SizeEntity? size;
   final List<ClothSizePriceEntity>? clothSizePrices;
-  final ClothSizePriceEntity? price;
+  final dynamic price;
+  final int? qty;
+  final int? total;
 
   ClothSizeEntity({
     this.clothSizePrices,
@@ -23,6 +27,8 @@ class ClothSizeEntity extends Entity {
     this.size,
     this.stock,
     this.price,
+    this.qty,
+    this.total
     // this.updatedBy
   });
   
@@ -34,7 +40,9 @@ class ClothSizeEntity extends Entity {
     int? stock,
     String? createdAt,
     SizeEntity? size,
-    ClothSizePriceEntity? price,
+    dynamic price,
+    int? qty,
+    int? total,
     List<ClothSizePriceEntity>? clothSizePrices
   }) {
     return ClothSizeEntity(
@@ -44,6 +52,8 @@ class ClothSizeEntity extends Entity {
       clothSizePrices: clothSizePrices ?? this.clothSizePrices,
       size: size ?? this.size,
       price: price ?? this.price,
+      qty: qty ?? this.qty,
+      total: total ?? this.total,
       stock: stock ?? this.stock,
       // updatedBy: updatedBy ?? this.updatedBy
     );

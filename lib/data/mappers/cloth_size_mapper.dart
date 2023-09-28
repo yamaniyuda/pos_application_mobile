@@ -48,11 +48,13 @@ class ClothSizeMapper extends $ClothSizeMapper {
     return SizeMapper().tryConvert<SizeEntity, SizeDTO>(entity.size);
   }
 
-  static ClothSizePriceEntity? closthSizePriceDtoToEndity(ClothSizeDTO dto) {
+  static dynamic closthSizePriceDtoToEndity(ClothSizeDTO dto) {
+    if (dto.price is int) return dto.price;
     return ClothSizePriceMapper().tryConvert<ClothSizePriceDTO, ClothSizePriceEntity>(dto.price);
   }
 
-  static ClothSizePriceDTO? clothSizePriceEntityToDto(ClothSizeEntity entity) {
+  static dynamic clothSizePriceEntityToDto(ClothSizeEntity entity) {
+    if (entity.price is int) return entity.price;
     return ClothSizePriceMapper().tryConvert<ClothSizePriceEntity, ClothSizePriceDTO>(entity.price);
   }
 }
