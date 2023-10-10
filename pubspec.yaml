@@ -59,6 +59,7 @@ dependencies:
   flutter_launcher_icons: ^0.13.1
   image_picker: ^1.0.4
   json_annotation: ^4.8.1
+  syncfusion_flutter_datepicker: ^23.1.39
 
 dev_dependencies:
   flutter_test:

@@ -26,7 +26,6 @@ class SizeChooseWidget extends GetView {
 
 
   List<SizeEntity> _sizeFilterHidden() {
-    print(hiddenSizes);
     if (hiddenSizes != null) {
       return sizes.where((element) => !hiddenSizes!.contains(element.id)).toList();
     }

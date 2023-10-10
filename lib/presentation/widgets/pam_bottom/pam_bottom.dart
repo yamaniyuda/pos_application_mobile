@@ -7,20 +7,25 @@ enum PAMBottomType {
   general, outline
 }
 
+// ignore: must_be_immutable
 class PAMBottom extends StatelessWidget {
   final String title;
   final void Function()? onTab;
   final bool isLoading;
   final BorderRadiusGeometry? borderRadius;
   final PAMBottomType type;
+  late Color? color;
+  late Color? fontColor;
 
-  const PAMBottom({
+  PAMBottom({
     super.key,
     required this.title,
     this.onTab,
     this.isLoading = false,
     this.type = PAMBottomType.general,
-    this.borderRadius
+    this.borderRadius,
+    this.color,
+    this.fontColor
   });
 
   Widget _buildGeneralButton(BuildContext context) {
@@ -29,7 +34,7 @@ class PAMBottom extends StatelessWidget {
       child: Container(
         height: 50,
         decoration: BoxDecoration(
-          color: Theme.of(context).primaryColor,
+          color: color ?? Theme.of(context).primaryColor,
           borderRadius: borderRadius ?? BorderRadius.circular(100)
         ),
         child: Row(
@@ -44,11 +49,11 @@ class PAMBottom extends StatelessWidget {
               : Text(
               title.toCapitalize(),
               textAlign: TextAlign.center,
-              style: const TextStyle(
-                color: Colors.white,
+              style: TextStyle(
+                color: fontColor ?? Colors.white,
                 fontSize: 16,
                 fontFamily: 'Lato',
-                fontWeight: FontWeight.w400,
+                fontWeight: FontWeight.bold,
               ),
             ),
           ],
@@ -61,7 +66,7 @@ class PAMBottom extends StatelessWidget {
     return OutlinedButton(
       onPressed: onTab,
       style: OutlinedButton.styleFrom(
-        foregroundColor: Theme.of(context).primaryColor, minimumSize: const Size.fromHeight(50),
+        foregroundColor: color ?? Theme.of(context).primaryColor, minimumSize: const Size.fromHeight(50),
         side: BorderSide(
           width: 1,
           color: Theme.of(context).primaryColor
@@ -70,7 +75,7 @@ class PAMBottom extends StatelessWidget {
       child: Text(
         title.toCapitalize(),
         style: GoogleFonts.lato(
-          color: Theme.of(context).primaryColor
+          color: fontColor ?? Theme.of(context).primaryColor
         )
       ),
     );

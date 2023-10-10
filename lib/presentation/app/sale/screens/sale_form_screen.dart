@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:pos_application_mobile/app/extensions/string_extention.dart';
 import 'package:pos_application_mobile/app/utils/system_utils.dart';
+import 'package:pos_application_mobile/presentation/app/sale/controllers/customer_choose_controller.dart';
 import 'package:pos_application_mobile/presentation/app/sale/controllers/sale_form_controller.dart';
 import 'package:pos_application_mobile/presentation/app/sale/widgets/customer_widget/customer_choose_widget.dart';
 import 'package:pos_application_mobile/presentation/app/sale/widgets/sale_widget/sale_total_widget.dart';
@@ -11,8 +12,8 @@ import 'package:pos_application_mobile/presentation/app/sale/widgets/sale_widget
 import '../widgets/cloth_widget/cloth_color_form_widget.dart';
 
 class SaleFormScreen extends GetView<SaleFormController> {
-  const SaleFormScreen({super.key});
-
+  SaleFormScreen({super.key});
+  final customerChooseController = Get.find<CustomerChooseController>();
   
   String _getTitle() {
     return "${"store".tr} ${"sale".tr}".toCapitalize();
@@ -26,7 +27,7 @@ class SaleFormScreen extends GetView<SaleFormController> {
     return Scaffold(
       // backgroundColor: Colors.grey[300],
       body: Obx(() {
-        if (controller.isLoading == false) {
+        if (customerChooseController.chooseLabel == "") {
           return const Center(
             child: CircularProgressIndicator(),
           );

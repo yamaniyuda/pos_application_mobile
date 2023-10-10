@@ -60,10 +60,10 @@ class PaymentListWidget extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Row(
                   children: [
-                    Text("total".tr.toCapitalize()),
+                    Text("type".tr.toCapitalize()),
                     const Spacer(),
                     Text(
-                      "Rp ${oCcy.format(e.total)}",
+                      (e.type ?? '-').toCapitalize(),
                       style: GoogleFonts.lato(
                         fontWeight: FontWeight.bold
                       ),
@@ -75,10 +75,27 @@ class PaymentListWidget extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Row(
                   children: [
-                    Text("note".tr.toCapitalize()), 
+                    Text("total".tr.toCapitalize()),
                     const Spacer(),
                     Text(
-                      e.attachment ?? "-",
+                      "Rp ${oCcy.format(e.total)}",
+                      style: GoogleFonts.lato(
+                        fontWeight: FontWeight.bold
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              const SizedBox(height: 10),
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("note".tr.toCapitalize()), 
+                    Text(
+                      e.note ?? "-",
                       style: GoogleFonts.lato(
                         fontWeight: FontWeight.bold
                       ),

@@ -29,9 +29,7 @@ class SaleDetailController extends GetxController {
       dataDetail = dataRespone;
       
       _isLoading.value = false;
-    } catch (e, f) {
-      print(e);
-      print(f);
+    } catch (e) {
       dataDetail = OrderEntity();
       _isLoading.value = false;
       return;

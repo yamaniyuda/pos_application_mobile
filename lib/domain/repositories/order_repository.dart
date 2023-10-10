@@ -8,6 +8,9 @@ abstract class OrderRepository extends Repository {
   final OrderDataSource dataSource;
   final OrderMapper mapper;
 
+  static const String downPayment = "down payment";
+  static const String cash = "cash";
+
   OrderRepository({
     required this.mapper,
     required this.dataSource

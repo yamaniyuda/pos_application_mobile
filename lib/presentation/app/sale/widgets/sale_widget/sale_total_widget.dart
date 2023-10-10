@@ -21,8 +21,8 @@ class SaleTotalWidget extends StatefulWidget {
 class _SaleTotalWidgetState extends State<SaleTotalWidget> {
   final controller = Get.find<SaleFormController>();
   final oCcy = NumberFormat("#,##0.00", "id_ID");
+  int priceDiscount =  0;
   double priceCutDiscount = 0;
-  double ppnPrice = 0;
   double finalTotal = 0;
   String paymentMethod = "cash";
   double downPaymetNominal = 0;
@@ -45,6 +45,7 @@ class _SaleTotalWidgetState extends State<SaleTotalWidget> {
       final double result = (discount / 100) * controller.sumTotalItem.value;
       setState(() {
         priceCutDiscount = controller.sumTotalItem.value - result;
+        priceDiscount = result.toInt();
       });
       _calculateFinalTotal();
       editingDiscountPrice.text = oCcy.format(result);
@@ -70,7 +71,7 @@ class _SaleTotalWidgetState extends State<SaleTotalWidget> {
   void _downpaymentInputHandling(String value) {
     if (_debounce?.isActive ?? false) _debounce?.cancel();
     _debounce = Timer(const Duration(seconds: 1), () {
-      finalTotal -= double.parse(value);
+      finalTotal -= double.parse(value !=  "" ? value : "0");
     });
     _calculateFinalTotal();
   }
@@ -79,7 +80,7 @@ class _SaleTotalWidgetState extends State<SaleTotalWidget> {
   void _calculateFinalTotal() {
     final double sumTotalItem = controller.sumTotalItem.value.toDouble();
     final double differentDiscountPrice = sumTotalItem - priceCutDiscount;
-    controller.finalTotalPrice.value = (sumTotalItem - differentDiscountPrice - double.parse(editingDownPayment.text)).toDouble();
+    controller.finalTotalPrice.value = (sumTotalItem - differentDiscountPrice - double.parse(editingDownPayment.text != "" ? editingDownPayment.text : "0")).toDouble();
     controller.update();
   }
 
@@ -322,7 +323,10 @@ class _SaleTotalWidgetState extends State<SaleTotalWidget> {
                           controller.paymentMethodChoose.value = paymentMethod;
                           controller.discountNominal.value = priceCutDiscount.toInt();
                           controller.setPaymentMethod(paymentMethod);
-                          controller.storeSale(int.parse(editingDownPayment.text));
+                          controller.storeSale(
+                            int.parse(editingDownPayment.text),
+                            priceDiscount
+                          );
                         },
                       ),
                     ]

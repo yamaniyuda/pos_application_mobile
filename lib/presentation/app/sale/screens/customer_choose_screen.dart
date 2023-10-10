@@ -9,7 +9,7 @@ import 'package:pos_application_mobile/presentation/widgets/pam_bottom/pam_botto
 class CustomerChooseScreen extends StatelessWidget {
   CustomerChooseScreen({super.key});
 
-  final controller = Get.put(CustomerChooseController());
+  final controller = Get.find<CustomerChooseController>();
   final saleFormController = Get.find<SaleFormController>();
 
   

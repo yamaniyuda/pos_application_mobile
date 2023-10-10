@@ -55,7 +55,7 @@ class _ItemChildWidget extends StatelessWidget {
               color: Theme.of(context).primaryColor.withOpacity(.5)
             ),
             child: Text(
-              clothEntity.clothCategory!.name!,
+              clothEntity.clothCategory?.name ?? "",
               style: GoogleFonts.lato(
                 color: Colors.white,
                 fontWeight: FontWeight.bold

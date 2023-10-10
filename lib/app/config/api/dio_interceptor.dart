@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_overrides
+
 part of '../../config/api/dio_client.dart';
 
 class DioInterceptor extends Interceptor {
@@ -12,7 +14,6 @@ class DioInterceptor extends Interceptor {
 
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
-    // TODO: implement onResponse
     super.onResponse(response, handler);
   }
 

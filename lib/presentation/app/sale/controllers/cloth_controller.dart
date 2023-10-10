@@ -1,7 +1,10 @@
+// ignore_for_file: library_prefixes
+
 import 'package:get/get.dart';
 import 'package:pos_application_mobile/domain/entities/cloth_entity.dart';
 import 'dart:async';
 import 'package:pos_application_mobile/domain/use_cases/cloth/cloth.dart' as ClothUseCase;
+import 'package:pos_application_mobile/presentation/app/sale/controllers/customer_choose_controller.dart';
 import 'package:pos_application_mobile/presentation/app/sale/model/cloth_form_payload.dart';
 
 class ClothController extends GetxController {
@@ -29,6 +32,8 @@ class ClothController extends GetxController {
 
   /// Timer for handle debonce search
   Timer? _debonce;
+
+  CustomerChooseController customerChooseController = Get.find<CustomerChooseController>();
 
   @override
   void onInit() {
@@ -97,7 +102,6 @@ class ClothController extends GetxController {
     _currentPage.value = 1;
 
     if (clothEntities.isNotEmpty) {
-      Map dataItems = _getItemsChoose();
       _updateData(clothEntities);
     }
   }
@@ -111,7 +115,7 @@ class ClothController extends GetxController {
   /// Returns:
   ///   A map with the type `Map<String, Map<String, int>>` representing the
   ///   selected items.
-  Map<String, Map<String, int>> _getItemsChoose() {
+  Map<String, Map<String, int>> getItemsChoose() {
     Iterable dataItemsIterable =
         _data.expand<Map<String, dynamic>>((element) sync* {
       if (element.items.isNotEmpty) {
@@ -151,6 +155,7 @@ class ClothController extends GetxController {
       "order": "name",
       "ascending": 1,
       "use_detail_cloth": 1,
+      "customer_category_id": customerChooseController.chooseId,
       "page": _currentPage.value,
     };
 

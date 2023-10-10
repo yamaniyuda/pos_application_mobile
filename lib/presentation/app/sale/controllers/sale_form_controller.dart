@@ -98,6 +98,8 @@ class SaleFormController extends GetxController {
     super.dispose();
   }
   
+
+  /// Set Payment Method
   void setPaymentMethod(String paymentMethod) {
     _paymentMethod.value = paymentMethod;
   }
@@ -109,7 +111,6 @@ class SaleFormController extends GetxController {
 
   void setCustomerPayloadId(String id) {
     _customerPayloadId.value = id;
-    print(_customerPayloadId.value);
   }
 
   void setOrderDetail(Map itemsDetail) {
@@ -188,13 +189,14 @@ class SaleFormController extends GetxController {
   /// 
   /// The `_wrapsPayload` usage for build payload will to be usage for params in
   /// payload storeing data.
-  OrderPayload _orderPayloadBuilder(int amountDownPayment) {
-    print(_customerPayloadId.value);
+  OrderPayload _orderPayloadBuilder(int amountDownPayment, int discount) {    
+
     return  OrderPayload(
       paymentMethod: _paymentMethod.value,
       amountDownPayment: amountDownPayment,
-      customerCategory: (_customerTypePayload.value["label"] as String).toCapitalize(), 
+      customerCategory: (_customerTypePayload.value["label"]  as String).toCapitalize(), 
       customerId: _customerPayloadId.value, 
+      discount: discount,
       orderDetails: orderDetails.entries.map<OrderDetailPayload>((e) {
         return OrderDetailPayload(
           clothSizeId: e.value["cloth_size_id"],
@@ -286,10 +288,11 @@ class SaleFormController extends GetxController {
   }
 
 
-  Future<void> storeSale(int amountDownPayment) async {
+  /// Store Sale.
+  Future<void> storeSale(int amountDownPayment, int discount) async {
     try {
       PAMAlertWidget.showLoadingAlert(Get.context!);
-      await _orderStoreDataUseCase.call(_orderPayloadBuilder(amountDownPayment));
+      await _orderStoreDataUseCase.call(_orderPayloadBuilder(amountDownPayment, discount));
 
       // back from load screen
       Get.back();
@@ -297,9 +300,9 @@ class SaleFormController extends GetxController {
       // back from form screen
       Get.back(result: "after store");
 
-      print("finish");
-    }  on DioException catch (e) {
+    } on DioException catch (e) {
       Get.back();
+      
       PAMSnackBarWidget.show(
         title: "failed".tr.toCapitalize(),
         message: e.response!.data["message"],

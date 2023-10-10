@@ -1,6 +1,5 @@
 import 'package:pos_application_mobile/data/data_source/remote_data_sources/remote_data_source.dart';
 import 'package:pos_application_mobile/data/dtos/order_dto.dart';
-import 'package:pos_application_mobile/data/payloads/customer_type_payload.dart';
 import 'package:pos_application_mobile/data/payloads/order_payload.dart';
 
 class OrderDataSource extends RemoteDataSource {

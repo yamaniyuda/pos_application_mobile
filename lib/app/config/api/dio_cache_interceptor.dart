@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_overrides
+
 part of 'dio_client.dart';
 
 class DioCacheInterceptor extends Interceptor {
@@ -7,7 +9,6 @@ class DioCacheInterceptor extends Interceptor {
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    // TODO: implement onRequest
     super.onRequest(options, handler);
   }
 

@@ -255,9 +255,10 @@ class AppScreens {
     ),
     GetPage(
       name: _Paths.saleForm,
-      page: () => const SaleFormScreen(),
+      page: () => SaleFormScreen(),
       binding: BindingsBuilder(() {
         Get.put(SaleFormController());
+        Get.put(CustomerChooseController());
       })
     ),
     GetPage(

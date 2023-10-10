@@ -56,12 +56,14 @@ class SaleListWidget extends StatelessWidget {
                   ],
                 ),
               ),
-              Padding(
+              const SizedBox(height: 10),
+              Container(
+                width: double.infinity,
                 padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Row(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text("note".tr.toCapitalize()), 
-                    const Spacer(),
                     Text(
                       e.note ?? "-",
                       style: GoogleFonts.lato(

@@ -67,26 +67,28 @@ class SaleController extends GetxController with GetSingleTickerProviderStateMix
     _data.value = [];
   }
 
-  /// Search data ustomer handler
+
+
+  /// Search data handler
   /// 
   /// This function do to handling search by input value and
   /// debonce for 500 milisecond
   /// 
   /// Usage example:
   /// ```dart
-  /// TextFormField(onChanged: searchData)
+  /// TextFormField(onChanged: searchDataColor)
   /// ```
-  void searchData(String value) {
+  void searchData(Map<String, dynamic> queryParameters) {
     if (_debonce?.isActive ?? false) _debonce!.cancel();
     _debonce = Timer(const Duration(milliseconds: 800), () {
       fetchData(
         refresh: true,
-        queryParameters: {
-          "name": value
-        }
+        queryParameters: queryParameters
       );
     });
   }
+
+
 
   /// Fetches data from a remote data source.
   ///

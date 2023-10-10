@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:pos_application_mobile/app/extensions/string_extention.dart';
+import 'package:pos_application_mobile/domain/repositories/order_repository.dart';
 import 'package:pos_application_mobile/presentation/app/sale/controllers/sale_detail_controller.dart';
 import 'package:pos_application_mobile/presentation/widgets/pam_badge/pam_badge.dart';
 import 'package:pos_application_mobile/presentation/widgets/sparator/sparator_widget.dart';
@@ -105,6 +106,7 @@ class HeaderWidget extends StatelessWidget {
             /// ============
             /// Description 
             /// ============
+            _DescriptionItemWidget(label: "order number".tr, value: controller.dataDetail.orderNumber!),
             _DescriptionItemWidget(label: "payment method".tr, value: controller.dataDetail.paymentMethod ?? ""),
             _DescriptionItemWidget(label: "${"created".tr} ${"date".tr}", value: getCreatedValue()),
             _DescriptionItemWidget(label: "${"updated".tr} ${"date".tr}", value: getUpdatedValue()),
@@ -117,6 +119,10 @@ class HeaderWidget extends StatelessWidget {
             ),
             const SizedBox(height: 10),
 
+            if (controller.dataDetail.paymentMethod == OrderRepository.downPayment) _DescriptionItemWidget(
+              label: "amount down payment".tr, 
+              value: "Rp ${oCcy.format(controller.dataDetail.amountDownPayment)}"
+            ),
             _DescriptionItemWidget(label: "quantity".tr, value: controller.dataDetail.totalQty.toString()),
             _DescriptionItemWidget(label: "total", value: "Rp ${oCcy.format(controller.dataDetail.total)}")
           ],

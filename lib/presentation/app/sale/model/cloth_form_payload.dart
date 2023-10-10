@@ -1,16 +1,15 @@
 import 'package:pos_application_mobile/domain/entities/cloth_entity.dart';
 
-
 /// Cloth Form Payload
-/// 
+///
 /// This class usage for data type in form add cloth. Usally used for handling
 /// items choose add to bucked and place put data [ClothEntity].
-/// 
+///
 /// Constructor:
 /// - `items`: this params usage for place to store data [items] choose.
 /// - `clothEntity`: This params usage for place to store data [clothEntity] from remote
 ///                 data source.
-/// 
+///
 /// Items variable form:
 /// ```dart
 /// {
@@ -39,16 +38,12 @@ class ClothFormPayload {
   static const sizeName = "size_name";
   static const colorName = "color_name";
 
-  ClothFormPayload({
-    required this.items,
-    required this.clothEntity,
-    this.totalItem = 0
-  });
+  ClothFormPayload(
+      {required this.items, required this.clothEntity, this.totalItem = 0});
 
   set setTotalItem(int total) {
     totalItem = total;
   }
-
 
   /// Retrieves the index of a cloth color within the cloth entity.
   ///
@@ -81,7 +76,6 @@ class ClothFormPayload {
     return null;
   }
 
-
   /// Retrieves the index of a cloth size within a specified cloth color.
   ///
   /// This function searches for the index of a cloth size with a given identifier
@@ -106,9 +100,12 @@ class ClothFormPayload {
   ///   print('Cloth size not found.');
   /// }
   /// ```
-  int? _getClothSizeIndexOf( int clothColorIndex , String clothSizeId) {
-    for (var i = 0; i < clothEntity.clothColors![clothColorIndex].clothSizes!.length; i++) {
-      if (clothEntity.clothColors![clothColorIndex].clothSizes![i].id == clothSizeId) {
+  int? _getClothSizeIndexOf(int clothColorIndex, String clothSizeId) {
+    for (var i = 0;
+        i < clothEntity.clothColors![clothColorIndex].clothSizes!.length;
+        i++) {
+      if (clothEntity.clothColors![clothColorIndex].clothSizes![i].id ==
+          clothSizeId) {
         return i;
       }
     }
@@ -116,57 +113,78 @@ class ClothFormPayload {
     return null;
   }
 
-
   int? _getClothSizeItemQuantity(String clothSizeId) {
     if (!items.containsKey(clothSizeId)) return null;
     return items[clothSizeId]![ClothFormPayload.qyt];
   }
 
-
-  
-  void updateItems({ required String clothColorId, required String clothSizeId, required String clothSizePriceId, required int qty, bool reset = false }) {
+  void updateItems(
+      {required String clothColorId,
+      required String clothSizeId,
+      required String clothSizePriceId,
+      required int qty,
+      bool reset = false}) {
     try {
       /// Handling when update usage input field
-      if (reset) resetItems(clothColorId: clothColorId, clothSizeId: clothSizeId, clothSizePriceId: clothSizePriceId);
+      if (reset) {
+        resetItems(
+            clothColorId: clothColorId,
+            clothSizeId: clothSizeId,
+            clothSizePriceId: clothSizePriceId);
+      }
 
       int? clothColorIndex = _getClothColorIndexOf(clothColorId);
       int? clothSizeIndex = _getClothSizeIndexOf(clothColorIndex!, clothSizeId);
       int currentStock = clothEntity.clothColors![clothColorIndex].clothSizes![clothSizeIndex!].stock!;
       int currentStockChoose = _getClothSizeItemQuantity(clothSizeId) ?? 0;
-      if (qty > 0 && currentStock != 0) {
-        
+      if (qty > 0 && currentStock >= 0) {
         /// Increment Items Handling.
-        if (qty > currentStock ) { qty = currentStock; }
+        if (qty > currentStock) {
+          qty = currentStock;
+        }
 
         if (!items.containsKey(clothSizeId)) {
-          final Map<String, dynamic> mapTemplateItem = { clothSizeId: "", clothSizePriceId: "", name: "", sizeName: "", colorName: "", qyt: 0, price: 0 };
+          final Map<String, dynamic> mapTemplateItem = {
+            clothSizeId: "",
+            clothSizePriceId: "",
+            name: "",
+            sizeName: "",
+            colorName: "",
+            qyt: 0,
+            price: 0
+          };
 
           items[clothSizeId] = mapTemplateItem;
-          
-          final Map<String, dynamic> detailItem = { 
+
+          final Map<String, dynamic> detailItem = {
             ClothFormPayload.clothSizeId: clothSizeId,
             ClothFormPayload.clothSizePriceId: clothSizePriceId,
             ClothFormPayload.name: clothEntity.clothCategory!.name,
             ClothFormPayload.qyt: currentStockChoose + qty,
-            ClothFormPayload.colorName: clothEntity.clothColors![clothColorIndex].color!.name,
-            ClothFormPayload.sizeName: clothEntity.clothColors![clothColorIndex].clothSizes![clothSizeIndex].size!.name,
-            ClothFormPayload.price: clothEntity.clothColors![clothColorIndex].clothSizes![clothSizeIndex].price!.price!
+            ClothFormPayload.colorName:
+                clothEntity.clothColors![clothColorIndex].color!.name,
+            ClothFormPayload.sizeName: clothEntity.clothColors![clothColorIndex]
+                .clothSizes![clothSizeIndex].size!.name,
+            ClothFormPayload.price: clothEntity.clothColors![clothColorIndex]
+                .clothSizes![clothSizeIndex].price!.price!
           };
 
           items[clothSizeId] = detailItem;
         } else {
           items[clothSizeId]![ClothFormPayload.qyt] = currentStockChoose + qty;
         }
-        
       } else {
         /// Decrement Items Handling.
         if (items.containsKey(clothColorId)) return;
-        if (qty <= -2 || qyt == 0) { qty = -currentStock; }
+        if (qty <= -2 || qyt == 0) {
+          qty = -currentStock;
+        }
         items[clothSizeId]![ClothFormPayload.qyt] = currentStockChoose + qty;
         if (currentStockChoose + qty == 0) items.remove(clothSizeId);
       }
 
-      clothEntity.clothColors![clothColorIndex].clothSizes![clothSizeIndex].setStock = currentStock - qty;
+      clothEntity.clothColors![clothColorIndex].clothSizes![clothSizeIndex]
+          .setStock = currentStock - qty;
 
       calculateTotalItem();
     } catch (e) {
@@ -174,19 +192,23 @@ class ClothFormPayload {
     }
   }
 
-
-  void resetItems({ required String clothColorId, required String clothSizeId, required String clothSizePriceId }) {
+  void resetItems(
+      {required String clothColorId,
+      required String clothSizeId,
+      required String clothSizePriceId}) {
     if (items[clothSizeId] == null) return;
 
-    final currentItemQuantity = int.parse(items[clothSizeId]![ClothFormPayload.qyt].toString());
+    final currentItemQuantity =
+        int.parse(items[clothSizeId]![ClothFormPayload.qyt].toString());
     int clothColorIndex = _getClothColorIndexOf(clothColorId)!;
     int clothSizeIndex = _getClothSizeIndexOf(clothColorIndex, clothSizeId)!;
-    int currentStock = clothEntity.clothColors![clothColorIndex].clothSizes![clothSizeIndex].stock!;
+    int currentStock = clothEntity
+        .clothColors![clothColorIndex].clothSizes![clothSizeIndex].stock!;
     items.remove(clothSizeId);
-    clothEntity.clothColors![clothColorIndex].clothSizes![clothSizeIndex].setStock = currentStock + currentItemQuantity;
+    clothEntity.clothColors![clothColorIndex].clothSizes![clothSizeIndex]
+        .setStock = currentStock + currentItemQuantity;
     calculateTotalItem();
   }
-
 
   /// Calculates the total quantity of items for a cloth entity.
   ///

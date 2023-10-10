@@ -1,5 +1,4 @@
 // import 'package:pos_application_mobile/domain/entities/created_by_entity.dart';
-import 'package:pos_application_mobile/domain/entities/created_by_entity.dart';
 import 'package:pos_application_mobile/domain/entities/entity.dart';
 
 class ClothPriceTypeEntity extends Entity {

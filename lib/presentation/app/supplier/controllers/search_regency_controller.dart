@@ -113,7 +113,7 @@ class SearchRegencyControlelr extends GetxController {
   /// Throws an exception if an error occurs during data fetching.
   ///
   Future<void> fetchDataCustomer({bool refresh = false, Map<String, dynamic>? queryParameters}) async {
-    print(queryParameters);
+
     // Clear data if refreshing
     if (refresh) clearDataCustomer();
 

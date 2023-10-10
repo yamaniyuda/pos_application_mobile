@@ -1,3 +1,5 @@
+// ignore_for_file: library_prefixes
+
 import 'package:dio/dio.dart';
 import 'package:get/get.dart' as Get;
 import 'package:pos_application_mobile/app/config/constants.dart';

@@ -109,7 +109,6 @@ class CustomerSearchScreen extends GetView {
                     tileColor: Colors.white,
                     subtitle: Text("${controller.dataCustomer[index].email ?? "-"}".toCapitalize()),
                     onTap: () {
-                      print(controller.dataCustomer[index].id);
                       saleFormController.setCustomerPayloadId(controller.dataCustomer[index].id);
 
                       Get.back(

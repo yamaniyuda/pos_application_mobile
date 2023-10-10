@@ -101,8 +101,6 @@ class SearchRegencyScreen extends StatelessWidget {
                       value: controller.regencyDatas[index].id as String,
                       groupValue: controller.chooseValue,
                       onChanged: (String? value) {
-                        print("masuk klik");
-                        print(controller.regencyDatas[index].name);
                         controller.changeRadioSelection(
                           value!,
                           controller.regencyDatas[index].name!

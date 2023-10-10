@@ -8,11 +8,12 @@ class PAMFormOptionItemWidget {
 
   PAMFormOptionItemWidget({
     required this.label,
-    required this.value 
+    required this.value ,
   });
 }
 
 class PAMFormOptionsWidget extends FormField<String> {
+
   PAMFormOptionsWidget({
     super.key,
     FormFieldSetter<String>? onSaved,
@@ -20,16 +21,20 @@ class PAMFormOptionsWidget extends FormField<String> {
     required String label,
     required List<PAMFormOptionItemWidget> options, 
     FormFieldValidator<String>? validator,
-    String? initialValue
+    String? initialValue,
+    Function(String?)? onChange,
+    Function()? reset,
+    TextStyle? labelStyle
   }) : super(
     onSaved: onSaved,
     validator: validator,
     initialValue: initialValue,
     builder: (FormFieldState<String> state) {
+    
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(label),
+          Text(label, style: labelStyle),
           const SizedBox(height: 10),
           Wrap(
             runSpacing: 12,
@@ -39,6 +44,10 @@ class PAMFormOptionsWidget extends FormField<String> {
               return InkWell(
                 onTap: () {
                   state.didChange(e.value);
+                  
+                  if (onChange != null) {
+                    onChange(e.value);
+                  }
                 },
                 splashColor: Colors.transparent, // Set the splash color to transparent
                 highlightColor: Colors.transparent,

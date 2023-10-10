@@ -15,6 +15,14 @@ class SaleWidget extends StatelessWidget {
   final OrderEntity orderEntity;
   final oCcy = NumberFormat("#,##0.00", "id_ID");
 
+
+  String _getDate() {
+    final DateFormat dateFormat = DateFormat("dd MM yyyy");
+    final DateTime dateTime = DateTime.parse(orderEntity.createdAt!);
+    return dateFormat.format(dateTime);
+  }
+
+
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context);
@@ -132,6 +140,30 @@ class SaleWidget extends StatelessWidget {
                   const Spacer(),
                   Text(
                     orderEntity.paymentMethod!.toCapitalize(),
+                    style: GoogleFonts.lato(
+                      fontSize: 12
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+
+
+              /// ==============
+              /// Created At
+              /// ==============
+              Row(
+                children: [
+                  Text(
+                    "${"created".tr} ${"date".tr}".toCapitalize(),
+                    style: GoogleFonts.lato(
+                      color: Colors.grey,
+                      fontSize: 12
+                    ),
+                  ),
+                  const Spacer(),
+                  Text(
+                    _getDate(),
                     style: GoogleFonts.lato(
                       fontSize: 12
                     ),

@@ -1,5 +1,4 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:pos_application_mobile/data/dtos/created_by_dto.dart';
 import 'package:pos_application_mobile/data/dtos/dto.dart';
 
 part 'cloth_price_type_dto.g.dart';
