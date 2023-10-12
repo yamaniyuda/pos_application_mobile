@@ -4,7 +4,7 @@ import 'package:pos_application_mobile/data/dtos/dto.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 
-part 'stock_dto.g.dart'
+part 'stock_dto.g.dart';
 
 @JsonSerializable()
 class StockDTO implements DTO {

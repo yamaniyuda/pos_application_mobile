@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:pos_application_mobile/data/dtos/cloth_dto.dart';
 import 'package:pos_application_mobile/data/dtos/cloth_size_dto.dart';
 import 'package:pos_application_mobile/data/dtos/color_dto.dart';
 import 'package:pos_application_mobile/data/dtos/dto.dart';
@@ -31,6 +32,9 @@ class ClothColorDTO implements DTO {
   @JsonKey(name: "created_at")
   late String? createdAt;
 
+  @JsonKey(name: "cloth")
+  late ClothDTO? cloth;
+
   ClothColorDTO({
     this.id,
     this.clothSizes,
@@ -39,6 +43,7 @@ class ClothColorDTO implements DTO {
     // this.createdBy,
     this.pathPhoto,
     this.sku,
+    this.cloth
     // this.updatedBy
   });
 

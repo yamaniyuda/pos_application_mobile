@@ -21,6 +21,7 @@ class $ClothColorMapper implements AutoMapprInterface {
   const $ClothColorMapper();
 
   Type _typeOf<T>() => T;
+
   List<AutoMapprInterface> get _modules => const [];
 
   /// {@macro AutoMapprInterface:canConvert}
@@ -236,6 +237,7 @@ class $ClothColorMapper implements AutoMapprInterface {
       createdAt: model.createdAt,
       pathPhoto: model.pathPhoto,
       sku: model.sku,
+      cloth: ClothColorMapper.clothToEntity(model),
     );
   }
 
@@ -254,6 +256,7 @@ class $ClothColorMapper implements AutoMapprInterface {
       createdAt: model.createdAt,
       pathPhoto: model.pathPhoto,
       sku: model.sku,
+      cloth: ClothColorMapper.clothToDTO(model),
     );
   }
 }

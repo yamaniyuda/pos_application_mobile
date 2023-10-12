@@ -1,4 +1,5 @@
 
+import 'package:pos_application_mobile/domain/entities/cloth_entity.dart';
 import 'package:pos_application_mobile/domain/entities/cloth_size_entity.dart';
 import 'package:pos_application_mobile/domain/entities/color_entity.dart';
 import 'package:pos_application_mobile/domain/entities/entity.dart';
@@ -12,6 +13,7 @@ class ClothColorEntity extends Entity {
   final ColorEntity? color;
   final List<ClothSizeEntity>? clothSizes;
   final String? createdAt;
+  final ClothEntity? cloth;
 
   ClothColorEntity({
     this.id,
@@ -21,6 +23,7 @@ class ClothColorEntity extends Entity {
     // this.createdBy,
     this.pathPhoto,
     this.sku,
+    this.cloth,
     // this.updatedBy
   });
   
@@ -34,6 +37,7 @@ class ClothColorEntity extends Entity {
     ColorEntity? color,
     List<ClothSizeEntity>? clothSizes,
     String? createdAt,
+    ClothEntity? cloth
   }) {
     return ClothColorEntity(
       id: id ?? this.id,
@@ -43,10 +47,11 @@ class ClothColorEntity extends Entity {
       pathPhoto: pathPhoto ?? this.pathPhoto,
       color: color ?? this.color,
       clothSizes: clothSizes ?? this.clothSizes,
-      createdAt: createdAt ?? this.createdAt
+      createdAt: createdAt ?? this.createdAt,
+      cloth: cloth ?? this.cloth
     );
   }
   
   @override
-  List<Object?> get props => [id, createdAt, sku, pathPhoto, color, clothSizes];
+  List<Object?> get props => [id, createdAt, sku, pathPhoto, color, clothSizes, cloth];
 }

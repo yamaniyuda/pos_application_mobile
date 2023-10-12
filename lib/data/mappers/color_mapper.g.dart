@@ -21,6 +21,7 @@ class $ColorMapper implements AutoMapprInterface {
   const $ColorMapper();
 
   Type _typeOf<T>() => T;
+
   List<AutoMapprInterface> get _modules => const [];
 
   /// {@macro AutoMapprInterface:canConvert}

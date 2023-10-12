@@ -21,6 +21,7 @@ class $CustomerTypeMapper implements AutoMapprInterface {
   const $CustomerTypeMapper();
 
   Type _typeOf<T>() => T;
+
   List<AutoMapprInterface> get _modules => const [];
 
   /// {@macro AutoMapprInterface:canConvert}

@@ -1,10 +1,13 @@
 import 'package:auto_mappr_annotation/auto_mappr_annotation.dart';
 import 'package:pos_application_mobile/data/dtos/cloth_color_dto.dart';
+import 'package:pos_application_mobile/data/dtos/cloth_dto.dart';
 import 'package:pos_application_mobile/data/dtos/cloth_size_dto.dart';
 import 'package:pos_application_mobile/data/dtos/color_dto.dart';
+import 'package:pos_application_mobile/data/mappers/cloth_mapper.dart';
 import 'package:pos_application_mobile/data/mappers/cloth_size_mapper.dart';
 import 'package:pos_application_mobile/data/mappers/color_mapper.dart';
 import 'package:pos_application_mobile/domain/entities/cloth_color_entity.dart';
+import 'package:pos_application_mobile/domain/entities/cloth_entity.dart';
 import 'package:pos_application_mobile/domain/entities/cloth_size_entity.dart';
 import 'package:pos_application_mobile/domain/entities/color_entity.dart';
 
@@ -13,11 +16,13 @@ part 'cloth_color_mapper.g.dart';
 @AutoMappr([
   MapType<ClothColorDTO, ClothColorEntity>(fields: [
     Field('color', custom: ClothColorMapper.colorDtoToEntity),
-    Field('clothSizes', custom: ClothColorMapper.listClothSizeDtoToEntity)
+    Field('clothSizes', custom: ClothColorMapper.listClothSizeDtoToEntity),
+    Field('cloth', custom: ClothColorMapper.clothToEntity)
   ]),
   MapType<ClothColorEntity, ClothColorDTO>(fields: [
     Field('color', custom: ClothColorMapper.colorEntityToDto),
-    Field('clothSizes', custom: ClothColorMapper.listClothDtoEntityToDto)
+    Field('clothSizes', custom: ClothColorMapper.listClothDtoEntityToDto),
+    Field('cloth', custom: ClothColorMapper.clothToDTO)
   ]),
 ])
 class ClothColorMapper extends $ClothColorMapper {
@@ -30,7 +35,6 @@ class ClothColorMapper extends $ClothColorMapper {
   }
 
   static List<ClothSizeEntity>? listClothSizeDtoToEntity(ClothColorDTO dto) {
-    print(dto.clothSizes);
     if (dto.clothSizes == null) return null;
 
     return List<ClothSizeEntity>.from(dto.clothSizes!.map(
@@ -42,5 +46,13 @@ class ClothColorMapper extends $ClothColorMapper {
 
     return List<ClothSizeDTO>.from(entity.clothSizes!.map(
         (e) => ClothSizeMapper().convert<ClothSizeEntity, ClothSizeDTO>(e)));
+  }
+
+  static ClothEntity? clothToEntity(ClothColorDTO dto) {
+    return ClothMapper().tryConvert<ClothDTO, ClothEntity>(dto.cloth);
+  }
+
+  static ClothDTO? clothToDTO(ClothColorEntity entity) {
+    return ClothMapper().tryConvert<ClothEntity, ClothDTO>(entity.cloth);
   }
 }

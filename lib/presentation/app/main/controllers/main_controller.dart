@@ -5,7 +5,7 @@ import 'package:pos_application_mobile/app/utils/system_utils.dart';
 
 /// define child in stack screen bottom navigation bar [MainMenu]
 enum ChildMenuMain {
-  homeScreen, productScreen, saleScreen
+  homeScreen, productScreen, saleScreen, stockScreen
 }
 
 /// This controller manages the current index of the bottom
@@ -22,6 +22,10 @@ class MainController extends GetxController {
         break;
       case ChildMenuMain.saleScreen:
         changeTabIndex(1);
+        break;
+
+      case ChildMenuMain.stockScreen:
+        changeTabIndex(4);
         break;
       
       case ChildMenuMain.productScreen:
@@ -51,6 +55,10 @@ class MainController extends GetxController {
       if (index == 3) {
         _changeColorBar(Get.context!, ChildMenuMain.productScreen);
       }
+
+      if (index == 4) {
+        _changeColorBar(Get.context!, ChildMenuMain.stockScreen);
+      }
     });
   }
 
@@ -62,7 +70,7 @@ class MainController extends GetxController {
     late Color systemNavigationBarColor = Colors.white;
     late Brightness systemNavigationBarIconBrightness = Brightness.dark;
 
-    if ([ChildMenuMain.productScreen, ChildMenuMain.saleScreen].contains(menu)) {
+    if ([ChildMenuMain.productScreen, ChildMenuMain.saleScreen, ChildMenuMain.stockScreen].contains(menu)) {
       statusBarColor = Colors.white;
     }
 

@@ -21,6 +21,7 @@ class $ClothSizePriceMapper implements AutoMapprInterface {
   const $ClothSizePriceMapper();
 
   Type _typeOf<T>() => T;
+
   List<AutoMapprInterface> get _modules => const [];
 
   /// {@macro AutoMapprInterface:canConvert}

@@ -21,6 +21,7 @@ class $ClothCategoryMapper implements AutoMapprInterface {
   const $ClothCategoryMapper();
 
   Type _typeOf<T>() => T;
+
   List<AutoMapprInterface> get _modules => const [];
 
   /// {@macro AutoMapprInterface:canConvert}

@@ -3,11 +3,10 @@ import 'package:pos_application_mobile/data/dtos/dto.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:pos_application_mobile/data/dtos/size_dto.dart';
 
-part 'cloth_stock.g.dart';
+part 'cloth_stock_dto.g.dart';
 
 @JsonSerializable()
 class ClothStockDTO implements DTO {
-  
   @JsonKey(name: "id")
   late String? id;
 

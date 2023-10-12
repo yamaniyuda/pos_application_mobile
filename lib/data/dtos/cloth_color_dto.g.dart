@@ -18,6 +18,9 @@ ClothColorDTO _$ClothColorDTOFromJson(Map<String, dynamic> json) =>
       createdAt: json['created_at'] as String?,
       pathPhoto: json['path_photo'] as String?,
       sku: json['sku'] as String?,
+      cloth: json['cloth'] == null
+          ? null
+          : ClothDTO.fromJson(json['cloth'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$ClothColorDTOToJson(ClothColorDTO instance) =>
@@ -26,6 +29,7 @@ Map<String, dynamic> _$ClothColorDTOToJson(ClothColorDTO instance) =>
       'sku': instance.sku,
       'path_photo': instance.pathPhoto,
       'color': instance.color,
-      'cloth_size': instance.clothSizes,
+      'cloth_sizes': instance.clothSizes,
       'created_at': instance.createdAt,
+      'cloth': instance.cloth,
     };

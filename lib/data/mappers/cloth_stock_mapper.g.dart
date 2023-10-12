@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'regency_mapper.dart';
+part of 'cloth_stock_mapper.dart';
 
 // **************************************************************************
 // AutoMapprGenerator
@@ -12,34 +12,34 @@ part of 'regency_mapper.dart';
 // ignore_for_file: unnecessary_lambdas, unnecessary_parenthesis
 // ignore_for_file: unnecessary_raw_strings
 
-/// {@template package:pos_application_mobile/data/mappers/regency_mapper.dart}
+/// {@template package:pos_application_mobile/data/mappers/cloth_stock_mapper.dart}
 /// Available mappings:
-/// - `RegencyDTO` → `RegencyEntity`.
-/// - `RegencyEntity` → `RegencyDTO`.
+/// - `ClothStockDTO` → `ClothStockEntity`.
+/// - `ClothStockEntity` → `ClothStockDTO`.
 /// {@endtemplate}
-class $RegencyMapper implements AutoMapprInterface {
-  const $RegencyMapper();
+class $ClothStockMapper implements AutoMapprInterface {
+  const $ClothStockMapper();
 
   Type _typeOf<T>() => T;
 
   List<AutoMapprInterface> get _modules => const [];
 
   /// {@macro AutoMapprInterface:canConvert}
-  /// {@macro package:pos_application_mobile/data/mappers/regency_mapper.dart}
+  /// {@macro package:pos_application_mobile/data/mappers/cloth_stock_mapper.dart}
   @override
   bool canConvert<SOURCE, TARGET>({bool recursive = true}) {
     final sourceTypeOf = _typeOf<SOURCE>();
     final targetTypeOf = _typeOf<TARGET>();
-    if ((sourceTypeOf == _typeOf<RegencyDTO>() ||
-            sourceTypeOf == _typeOf<RegencyDTO?>()) &&
-        (targetTypeOf == _typeOf<RegencyEntity>() ||
-            targetTypeOf == _typeOf<RegencyEntity?>())) {
+    if ((sourceTypeOf == _typeOf<ClothStockDTO>() ||
+            sourceTypeOf == _typeOf<ClothStockDTO?>()) &&
+        (targetTypeOf == _typeOf<ClothStockEntity>() ||
+            targetTypeOf == _typeOf<ClothStockEntity?>())) {
       return true;
     }
-    if ((sourceTypeOf == _typeOf<RegencyEntity>() ||
-            sourceTypeOf == _typeOf<RegencyEntity?>()) &&
-        (targetTypeOf == _typeOf<RegencyDTO>() ||
-            targetTypeOf == _typeOf<RegencyDTO?>())) {
+    if ((sourceTypeOf == _typeOf<ClothStockEntity>() ||
+            sourceTypeOf == _typeOf<ClothStockEntity?>()) &&
+        (targetTypeOf == _typeOf<ClothStockDTO>() ||
+            targetTypeOf == _typeOf<ClothStockDTO?>())) {
       return true;
     }
     if (recursive) {
@@ -53,7 +53,7 @@ class $RegencyMapper implements AutoMapprInterface {
   }
 
   /// {@macro AutoMapprInterface:convert}
-  /// {@macro package:pos_application_mobile/data/mappers/regency_mapper.dart}
+  /// {@macro package:pos_application_mobile/data/mappers/cloth_stock_mapper.dart}
   @override
   TARGET convert<SOURCE, TARGET>(SOURCE? model) {
     if (canConvert<SOURCE, TARGET>(recursive: false)) {
@@ -69,7 +69,7 @@ class $RegencyMapper implements AutoMapprInterface {
   }
 
   /// {@macro AutoMapprInterface:tryConvert}
-  /// {@macro package:pos_application_mobile/data/mappers/regency_mapper.dart}
+  /// {@macro package:pos_application_mobile/data/mappers/cloth_stock_mapper.dart}
   @override
   TARGET? tryConvert<SOURCE, TARGET>(SOURCE? model) {
     if (canConvert<SOURCE, TARGET>(recursive: false)) {
@@ -88,7 +88,7 @@ class $RegencyMapper implements AutoMapprInterface {
   }
 
   /// {@macro AutoMapprInterface:convertIterable}
-  /// {@macro package:pos_application_mobile/data/mappers/regency_mapper.dart}
+  /// {@macro package:pos_application_mobile/data/mappers/cloth_stock_mapper.dart}
   @override
   Iterable<TARGET> convertIterable<SOURCE, TARGET>(Iterable<SOURCE?> model) {
     if (canConvert<SOURCE, TARGET>(recursive: false)) {
@@ -107,7 +107,7 @@ class $RegencyMapper implements AutoMapprInterface {
   ///
   /// When an item in the source iterable is null, uses `whenSourceIsNull` if defined or null
   ///
-  /// {@macro package:pos_application_mobile/data/mappers/regency_mapper.dart}
+  /// {@macro package:pos_application_mobile/data/mappers/cloth_stock_mapper.dart}
   @override
   Iterable<TARGET?> tryConvertIterable<SOURCE, TARGET>(
       Iterable<SOURCE?> model) {
@@ -124,7 +124,7 @@ class $RegencyMapper implements AutoMapprInterface {
   }
 
   /// {@macro AutoMapprInterface:convertList}
-  /// {@macro package:pos_application_mobile/data/mappers/regency_mapper.dart}
+  /// {@macro package:pos_application_mobile/data/mappers/cloth_stock_mapper.dart}
   @override
   List<TARGET> convertList<SOURCE, TARGET>(Iterable<SOURCE?> model) {
     if (canConvert<SOURCE, TARGET>(recursive: false)) {
@@ -143,7 +143,7 @@ class $RegencyMapper implements AutoMapprInterface {
   ///
   /// When an item in the source iterable is null, uses `whenSourceIsNull` if defined or null
   ///
-  /// {@macro package:pos_application_mobile/data/mappers/regency_mapper.dart}
+  /// {@macro package:pos_application_mobile/data/mappers/cloth_stock_mapper.dart}
   @override
   List<TARGET?> tryConvertList<SOURCE, TARGET>(Iterable<SOURCE?> model) {
     if (canConvert<SOURCE, TARGET>(recursive: false)) {
@@ -159,7 +159,7 @@ class $RegencyMapper implements AutoMapprInterface {
   }
 
   /// {@macro AutoMapprInterface:convertSet}
-  /// {@macro package:pos_application_mobile/data/mappers/regency_mapper.dart}
+  /// {@macro package:pos_application_mobile/data/mappers/cloth_stock_mapper.dart}
   @override
   Set<TARGET> convertSet<SOURCE, TARGET>(Iterable<SOURCE?> model) {
     if (canConvert<SOURCE, TARGET>(recursive: false)) {
@@ -178,7 +178,7 @@ class $RegencyMapper implements AutoMapprInterface {
   ///
   /// When an item in the source iterable is null, uses `whenSourceIsNull` if defined or null
   ///
-  /// {@macro package:pos_application_mobile/data/mappers/regency_mapper.dart}
+  /// {@macro package:pos_application_mobile/data/mappers/cloth_stock_mapper.dart}
   @override
   Set<TARGET?> tryConvertSet<SOURCE, TARGET>(Iterable<SOURCE?> model) {
     if (canConvert<SOURCE, TARGET>(recursive: false)) {
@@ -199,54 +199,66 @@ class $RegencyMapper implements AutoMapprInterface {
   }) {
     final sourceTypeOf = _typeOf<SOURCE>();
     final targetTypeOf = _typeOf<TARGET>();
-    if ((sourceTypeOf == _typeOf<RegencyDTO>() ||
-            sourceTypeOf == _typeOf<RegencyDTO?>()) &&
-        (targetTypeOf == _typeOf<RegencyEntity>() ||
-            targetTypeOf == _typeOf<RegencyEntity?>())) {
+    if ((sourceTypeOf == _typeOf<ClothStockDTO>() ||
+            sourceTypeOf == _typeOf<ClothStockDTO?>()) &&
+        (targetTypeOf == _typeOf<ClothStockEntity>() ||
+            targetTypeOf == _typeOf<ClothStockEntity?>())) {
       if (canReturnNull && model == null) {
         return null;
       }
-      return (_map__RegencyDTO__To__RegencyEntity((model as RegencyDTO?))
-          as TARGET);
+      return (_map__ClothStockDTO__To__ClothStockEntity(
+          (model as ClothStockDTO?)) as TARGET);
     }
-    if ((sourceTypeOf == _typeOf<RegencyEntity>() ||
-            sourceTypeOf == _typeOf<RegencyEntity?>()) &&
-        (targetTypeOf == _typeOf<RegencyDTO>() ||
-            targetTypeOf == _typeOf<RegencyDTO?>())) {
+    if ((sourceTypeOf == _typeOf<ClothStockEntity>() ||
+            sourceTypeOf == _typeOf<ClothStockEntity?>()) &&
+        (targetTypeOf == _typeOf<ClothStockDTO>() ||
+            targetTypeOf == _typeOf<ClothStockDTO?>())) {
       if (canReturnNull && model == null) {
         return null;
       }
-      return (_map__RegencyEntity__To__RegencyDTO((model as RegencyEntity?))
-          as TARGET);
+      return (_map__ClothStockEntity__To__ClothStockDTO(
+          (model as ClothStockEntity?)) as TARGET);
     }
     throw Exception('No ${model.runtimeType} -> $targetTypeOf mapping.');
   }
 
-  RegencyEntity _map__RegencyDTO__To__RegencyEntity(RegencyDTO? input) {
+  ClothStockEntity _map__ClothStockDTO__To__ClothStockEntity(
+      ClothStockDTO? input) {
     final model = input;
     if (model == null) {
       throw Exception(
-          r'Mapping RegencyDTO → RegencyEntity failed because RegencyDTO was null, and no default value was provided. '
-          r'Consider setting the whenSourceIsNull parameter on the MapType<RegencyDTO, RegencyEntity> to handle null values during mapping.');
+          r'Mapping ClothStockDTO → ClothStockEntity failed because ClothStockDTO was null, and no default value was provided. '
+          r'Consider setting the whenSourceIsNull parameter on the MapType<ClothStockDTO, ClothStockEntity> to handle null values during mapping.');
     }
-    return RegencyEntity(
+    return ClothStockEntity(
+      clothColor: ClothStockMapper.clothColorToEntity(model),
+      createdAt: model.createdAt,
+      createdBy: model.createdBy,
       id: model.id,
-      name: model.name,
-      provinceId: model.provinceId,
+      minStock: model.minStock,
+      size: ClothStockMapper.sizeToEntity(model),
+      stock: model.stock,
+      updatedAt: model.updatedAt,
     );
   }
 
-  RegencyDTO _map__RegencyEntity__To__RegencyDTO(RegencyEntity? input) {
+  ClothStockDTO _map__ClothStockEntity__To__ClothStockDTO(
+      ClothStockEntity? input) {
     final model = input;
     if (model == null) {
       throw Exception(
-          r'Mapping RegencyEntity → RegencyDTO failed because RegencyEntity was null, and no default value was provided. '
-          r'Consider setting the whenSourceIsNull parameter on the MapType<RegencyEntity, RegencyDTO> to handle null values during mapping.');
+          r'Mapping ClothStockEntity → ClothStockDTO failed because ClothStockEntity was null, and no default value was provided. '
+          r'Consider setting the whenSourceIsNull parameter on the MapType<ClothStockEntity, ClothStockDTO> to handle null values during mapping.');
     }
-    return RegencyDTO(
+    return ClothStockDTO(
+      clothColor: ClothStockMapper.clothClorToDTO(model),
+      createdAt: model.createdAt,
+      createdBy: model.createdBy,
       id: model.id,
-      name: model.name,
-      provinceId: model.provinceId,
+      minStock: model.minStock,
+      size: ClothStockMapper.sizeToDTO(model),
+      stock: model.stock,
+      updatedAt: model.updatedAt,
     );
   }
 }

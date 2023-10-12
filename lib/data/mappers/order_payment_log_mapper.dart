@@ -15,7 +15,7 @@ part 'order_payment_log_mapper.g.dart';
   ),
   MapType<OrderPaymentLogEntity, OrderPaymentLogDTO>(
     fields: [
-      Field('createdBy', custom: OrderPaymentLogMapper.createdByToEntity),
+      Field('createdBy', custom: OrderPaymentLogMapper.createdByToDto),
     ]
   )
 ])

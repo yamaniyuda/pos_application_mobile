@@ -10,11 +10,21 @@ import 'package:pos_application_mobile/domain/entities/stock_entity.dart';
 
 part 'stock_mapper.g.dart';
 @AutoMappr([
-  MapType<StockDTO, StockEntity>(),
-  MapType<StockEntity, StockDTO>()
+  MapType<StockDTO, StockEntity>(
+    fields: [
+      Field('createdBy', custom: StockMapper.createdByToEntity),
+      Field('clothStock', custom: StockMapper.clothStockToEntity)
+    ]
+  ),
+  MapType<StockEntity, StockDTO>(
+    fields: [
+      Field('createdBy', custom: StockMapper.createdByToDTO),
+      Field('clothStock', custom: StockMapper.clothStockToDTO)
+    ]
+  )
 ])
 class StockMapper extends $StockMapper {
-    
+
   static CreatedByEntity? createdByToEntity(StockDTO dto) {
     return CreatedByMapper().tryConvert<CreatedByDTO, CreatedByEntity>(dto.createdBy);
   }
